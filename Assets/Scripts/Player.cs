@@ -38,10 +38,10 @@ public class Player : MonoBehaviourPun
     void Update()
     {
         // photonview kontrolü
-        if (!photonView.IsMine)
-        {
-            return;
-        }
+        if (photonView.IsMine)
+            {
+            
+        
 
         // Karakterin sola ve saða hareket etmesi
         float moveInput = Input.GetAxis("Horizontal");
@@ -82,6 +82,7 @@ public class Player : MonoBehaviourPun
 
 
 
+                }
             }
         }
 
