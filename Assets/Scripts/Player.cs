@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-
-public class Player : MonoBehaviour
+using Photon.Pun;
+public class Player : MonoBehaviourPun
 {
     public SpriteRenderer PlayerSprite;
     public SpriteRenderer WeaponSprite;
@@ -20,6 +20,13 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        //KAMERA TAKÝP ÝÇÝN PHOTON KODU
+        /*if (photonView.IsMine)
+        {
+            Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
+        }*/
+
+
         PlayerSprite.sprite = Character.CharacterImage;
         WeaponSprite.sprite = Character.WeaponImage;
         movementSpeed = Character.CharacterSpeed;
@@ -30,6 +37,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        // photonview kontrolü
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
         // Karakterin sola ve saða hareket etmesi
         float moveInput = Input.GetAxis("Horizontal");
         rb2d.velocity = new Vector2(moveInput * movementSpeed, rb2d.velocity.y);
@@ -118,12 +131,11 @@ public class Player : MonoBehaviour
         isSkillOnCooldown = false;
     }
 
-    private IEnumerator bazukaSpawn(Bazuka Skill)
+    private IEnumerator bazukaSpawn(Bazuka skill)
     {
         isSkillOnCooldown = true;
-        GameObject bazukaa = Instantiate(Skill.fireballPrefab);
-        Debug.Log("spawn");
-        yield return new WaitForSeconds(Skill.cooldown);
+        GameObject bazukaa = PhotonNetwork.Instantiate(skill.fireballPrefab.name, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(skill.cooldown);
         isSkillOnCooldown = false;
     }
 
