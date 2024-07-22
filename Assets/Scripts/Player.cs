@@ -134,6 +134,7 @@ public class Player : MonoBehaviourPun
     {
         isSkillOnCooldown = isInvincible;
         PlayerSprite.enabled = !isInvincible;
+        WeaponSprite.enabled = !isInvincible;
     }
     /* 
       private IEnumerator Invincibility()
