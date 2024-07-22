@@ -15,6 +15,7 @@ public class ActiveSkill : ScriptableObject
     }
 }
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "Bazuka", menuName = "ActiveSkillTypes/Bazuka")]
 public class Bazuka : ActiveSkill
 {
@@ -30,6 +31,7 @@ public class Bazuka : ActiveSkill
     }
 }
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "Inviciblety", menuName = "ActiveSkillTypes/Inviciblety")]
 public class Inviciblety : ActiveSkill
 {
@@ -41,6 +43,7 @@ public class Inviciblety : ActiveSkill
     }
 }
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "MagicWall", menuName = "ActiveSkillTypes/MagicWall")]
 public class MagicWall : ActiveSkill
 {
@@ -52,6 +55,7 @@ public class MagicWall : ActiveSkill
     }
 }
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "Catapult", menuName = "ActiveSkillTypes/Catapult")]
 public class Catapult : ActiveSkill
 {

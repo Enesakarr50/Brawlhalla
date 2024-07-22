@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
+[System.Serializable]
 [CreateAssetMenu(fileName ="Class")]
 public class CharacterData : ScriptableObject
 {
