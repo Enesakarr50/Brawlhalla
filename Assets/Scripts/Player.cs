@@ -44,8 +44,8 @@ public class Player : MonoBehaviourPun
         
 
         // Karakterin sola ve saða hareket etmesi
-        float moveInput = Input.GetAxis("Horizontal");
-        rb2d.velocity = new Vector2(moveInput * movementSpeed, rb2d.velocity.y);
+       
+        rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * movementSpeed, rb2d.velocity.y);
 
         // Karakterin zýplamasý ve double jump
         if (Input.GetKeyDown(KeyCode.W) && jumpCount < maxJumpCount)
@@ -89,24 +89,17 @@ public class Player : MonoBehaviourPun
         // Dash
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
         {
-            if (moveInput > 0)
-            {
-                transform.position += new Vector3(2, 0, 0);
-            }
-            else if (moveInput < 0)
-            {
-                transform.position += new Vector3(-2, 0, 0);
-            }
-            isDashing = true;
+            
             StartCoroutine(DashCount());
-        }
+                photonView.RPC("DashCount", RpcTarget.AllBuffered, true);
+            }
 
         // Karakterin yönünü deðiþtirme (sola ve saða bakma)
-        if (moveInput > 0)
+        if (Input.GetAxis("Horizontal") > 0)
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
-        else if (moveInput < 0)
+        else if (Input.GetAxis("Horizontal") < 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
@@ -136,17 +129,7 @@ public class Player : MonoBehaviourPun
         PlayerSprite.enabled = !isInvincible;
         WeaponSprite.enabled = !isInvincible;
     }
-    /* 
-      private IEnumerator Invincibility()
-    {
-
-        isSkillOnCooldown = true;
-        PlayerSprite.enabled = false;
-        yield return new WaitForSeconds(Character.Skill.Duration);
-        PlayerSprite.enabled = true;
-        yield return new WaitForSeconds(Character.Skill.CoolDown);
-        isSkillOnCooldown = false;
-    } */
+    
     private IEnumerator bazukaSpawn()
     {
         isSkillOnCooldown = true;
@@ -173,7 +156,24 @@ public class Player : MonoBehaviourPun
 
     private IEnumerator DashCount()
     {
+
+        photonView.RPC("SetDash", RpcTarget.AllBuffered, true);
         yield return new WaitForSeconds(2);
+        photonView.RPC("SetDash", RpcTarget.AllBuffered, true);
         isDashing = false;
     }
+    [PunRPC]
+    void SetDash(bool isInvincible)
+    {
+        if (Input.GetAxis("Horizontal") > 0)
+        {
+            transform.position += new Vector3(2, 0, 0);
+        }
+        else if (Input.GetAxis("Horizontal") < 0)
+        {
+            transform.position += new Vector3(-2, 0, 0);
+        }
+        isDashing = true;
+    }
+
 }
