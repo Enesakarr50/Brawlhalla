@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Photon.Pun;
+using System.Linq.Expressions;
 public class Player : MonoBehaviourPun
 {
     public SpriteRenderer PlayerSprite;
@@ -133,6 +134,7 @@ public class Player : MonoBehaviourPun
     {
         isSkillOnCooldown = true;
         GameObject bazukaa = Instantiate(Character.Skill.ProjectilePrefeab,gameObject.transform.position,Quaternion.identity);
+        bazukaa.GetComponent<Rigidbody2D>().velocity = new Vector3(gameObject.transform.localScale.x, 0,0) * Character.Skill.ProjectileSpeed;
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
