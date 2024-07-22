@@ -33,6 +33,6 @@ public class Inviciblety : ActiveSkill
     public int duration;
     public override void Activate(GameObject character)
     {
-            character.GetComponent<SpriteRenderer>().enabled = false;          
+       character.GetComponent<SpriteRenderer>().enabled = false;          
     }
 }
