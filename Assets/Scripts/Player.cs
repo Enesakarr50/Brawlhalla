@@ -91,8 +91,7 @@ public class Player : MonoBehaviourPun
         {
             
             StartCoroutine(DashCount());
-                photonView.RPC("DashCount", RpcTarget.AllBuffered, true);
-            }
+        }
 
         // Karakterin yönünü deðiþtirme (sola ve saða bakma)
         if (Input.GetAxis("Horizontal") > 0)
@@ -163,7 +162,7 @@ public class Player : MonoBehaviourPun
         isDashing = false;
     }
     [PunRPC]
-    void SetDash(bool isInvincible)
+    void SetDash()
     {
         if (Input.GetAxis("Horizontal") > 0)
         {
