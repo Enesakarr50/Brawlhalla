@@ -158,11 +158,12 @@ public class Player : MonoBehaviourPun
 
         photonView.RPC("SetDash", RpcTarget.AllBuffered, true);
         yield return new WaitForSeconds(2);
-        photonView.RPC("SetDash", RpcTarget.AllBuffered, true);
+        photonView.RPC("SetDash", RpcTarget.AllBuffered, false);
         isDashing = false;
     }
+
     [PunRPC]
-    void SetDash()
+    void SetDash(bool isDash)
     {
         if (Input.GetAxis("Horizontal") > 0)
         {
