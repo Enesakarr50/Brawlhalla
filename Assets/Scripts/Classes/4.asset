@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: 4
   m_EditorClassIdentifier: 
   CharacterName: 
-  CharacterSpeed: 0
-  CharacterJumpForce: 0
-  characterJumpCount: 0
+  CharacterSpeed: 1
+  CharacterJumpForce: 10
+  characterJumpCount: 1
   weaponName: 
   CharDesc: 
   CharacterImage: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
