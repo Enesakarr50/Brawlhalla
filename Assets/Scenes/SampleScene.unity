@@ -465,7 +465,7 @@ MonoBehaviour:
   WeaponSprite: {fileID: 1395012467}
   movementSpeed: 0
   jumpForce: 0
-  Character: {fileID: 11400000, guid: 6d7a092f2ce9ccf44b19a993d65a44cd, type: 2}
+  Character: {fileID: 11400000, guid: 0ee842e0c06b7d941885e7a8eb1680a0, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
