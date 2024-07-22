@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 845877bc5d15b2041a44e9a561264a0b, type: 3}
   m_Name: Bazuka
-  m_EditorClassIdentifier: Assembly-CSharp::Bazuka
-  icon: {fileID: 0}
-  cooldown: 2
-  fireballPrefab: {fileID: 8618206765518914777, guid: 71ddf69d5ad28d04da8ebf5473f8b871, type: 3}
-  speed: 0
-  knockBackPower: 0
-  radius: 0
+  m_EditorClassIdentifier: 
+  SkillName: Bazuka
+  CoolDown: 30
+  Duration: 0
+  ProjectileSpeed: 0
+  Radius: 0
+  SkillIcon: {fileID: 0}
+  ProjectilePrefeab: {fileID: 8618206765518914777, guid: 71ddf69d5ad28d04da8ebf5473f8b871, type: 3}

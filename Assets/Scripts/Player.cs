@@ -54,31 +54,29 @@ public class Player : MonoBehaviourPun
             jumpCount++;
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && Character._activeSkill != null && !isSkillOnCooldown)
+        if (Input.GetKeyDown(KeyCode.E) && Character.Skill != null && !isSkillOnCooldown)
         {
-           // Character._activeSkill.Activate(gameObject);
             
-
-            switch (Character._activeSkill)
+             switch (Character.Skill.SkillName)
             {
-                case Inviciblety:
+                case ("Inviciblety"):
+                    Debug.Log("a");
+                    StartCoroutine(Invincibility());
+                    break;
+
+                case ("Bazuka"):
                    
-                    StartCoroutine(TempInvincibility((Inviciblety)Character._activeSkill));
+                    StartCoroutine(bazukaSpawn());
                     break;
 
-                case Bazuka:
-                   
-                    StartCoroutine(bazukaSpawn((Bazuka)Character._activeSkill));
-                    break;
-
-                case MagicWall :
+                case ("MagicWall"):
                     
-                    StartCoroutine(magicwall((MagicWall)Character._activeSkill));
+                    StartCoroutine(magicwall());
                     break;
 
-                case Catapult:
+                case ("Catapult"):
                     
-                    StartCoroutine(catapult((Catapult)Character._activeSkill));
+                    StartCoroutine(catapult());
                     break;
 
 
@@ -120,38 +118,38 @@ public class Player : MonoBehaviourPun
         }
     }
 
-    private IEnumerator TempInvincibility(Inviciblety skill)
+    private IEnumerator Invincibility()
     {
 
         isSkillOnCooldown = true;
         PlayerSprite.enabled = false;
-        yield return new WaitForSeconds(skill.duration);
+        yield return new WaitForSeconds(Character.Skill.Duration);
         PlayerSprite.enabled = true;
-        yield return new WaitForSeconds(skill.cooldown);
+        yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 
-    private IEnumerator bazukaSpawn(Bazuka skill)
+    private IEnumerator bazukaSpawn()
     {
         isSkillOnCooldown = true;
-        GameObject bazukaa = PhotonNetwork.Instantiate(skill.fireballPrefab.name, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(skill.cooldown);
+        GameObject bazukaa = Instantiate(Character.Skill.ProjectilePrefeab,gameObject.transform.position,Quaternion.identity);
+        yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 
-    private IEnumerator magicwall(MagicWall Skill)
+    private IEnumerator magicwall()
     {
         isSkillOnCooldown = true;
         Debug.Log("magic okeyss");
-        yield return new WaitForSeconds(Skill.cooldown);
+        yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 
-    private IEnumerator catapult(Catapult Skill)
+    private IEnumerator catapult()
     {
         isSkillOnCooldown = true;
         Debug.Log("cata okeyss");
-        yield return new WaitForSeconds(Skill.cooldown);
+        yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 

@@ -16,7 +16,6 @@ public class CharacterData : ScriptableObject
     public Sprite CharacterImage;
     public Sprite WeaponImage;
     public Sprite _passiveSkill;
-    public ActiveSkill _activeSkill;
-    public GameObject ProjectilePrefab;
+    public Skill Skill;
 
 }

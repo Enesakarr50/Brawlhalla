@@ -32,7 +32,7 @@ public class CharacterSellection : MonoBehaviour
             CharImage.sprite = CurrentData.CharacterImage;
             WeaponImage.sprite = CurrentData.WeaponImage;
             PasifSkill.sprite = CurrentData._passiveSkill;
-            ActiveSkill.sprite = CurrentData._activeSkill.icon;
+            //ActiveSkill.sprite = CurrentData._activeSkill.icon;
         } 
     }
 
