@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
+
+[System.Serializable]
 public class ActiveSkill : ScriptableObject
 {
     public Sprite icon;

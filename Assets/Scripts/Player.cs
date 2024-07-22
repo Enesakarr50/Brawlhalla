@@ -49,22 +49,22 @@ public class Player : MonoBehaviour
             switch (Character._activeSkill)
             {
                 case Inviciblety:
-                    Debug.Log("a");
+                   
                     StartCoroutine(TempInvincibility((Inviciblety)Character._activeSkill));
                     break;
 
                 case Bazuka:
-                    Debug.Log("a");
+                   
                     StartCoroutine(bazukaSpawn((Bazuka)Character._activeSkill));
                     break;
 
                 case MagicWall :
-                    Debug.Log("c");
+                    
                     StartCoroutine(magicwall((MagicWall)Character._activeSkill));
                     break;
 
                 case Catapult:
-                    Debug.Log("d");
+                    
                     StartCoroutine(catapult((Catapult)Character._activeSkill));
                     break;
 
@@ -109,6 +109,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator TempInvincibility(Inviciblety skill)
     {
+
         isSkillOnCooldown = true;
         PlayerSprite.enabled = false;
         yield return new WaitForSeconds(skill.duration);
