@@ -122,6 +122,22 @@ public class Player : MonoBehaviourPun
     }
     private IEnumerator Invincibility()
     {
+        photonView.RPC("SetInvincibility", RpcTarget.AllBuffered, true);
+        yield return new WaitForSeconds(Character.Skill.Duration);
+        photonView.RPC("SetInvincibility", RpcTarget.AllBuffered, false);
+        yield return new WaitForSeconds(Character.Skill.CoolDown);
+        isSkillOnCooldown = false;
+    }
+
+    [PunRPC]
+    void SetInvincibility(bool isInvincible)
+    {
+        isSkillOnCooldown = isInvincible;
+        PlayerSprite.enabled = !isInvincible;
+    }
+    /* 
+      private IEnumerator Invincibility()
+    {
 
         isSkillOnCooldown = true;
         PlayerSprite.enabled = false;
@@ -129,8 +145,7 @@ public class Player : MonoBehaviourPun
         PlayerSprite.enabled = true;
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
-    }
-
+    } */
     private IEnumerator bazukaSpawn()
     {
         isSkillOnCooldown = true;
