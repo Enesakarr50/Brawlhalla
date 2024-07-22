@@ -84,7 +84,7 @@ public class Player : MonoBehaviourPun
 
                 }
             }
-        }
+        
 
         // Dash
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
@@ -116,9 +116,10 @@ public class Player : MonoBehaviourPun
         if (isGrounded)
         {
             jumpCount = 0; // Zýplama sayacýný sýfýrlayýn
+     
         }
     }
-
+    }
     private IEnumerator Invincibility()
     {
 
