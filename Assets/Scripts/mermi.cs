@@ -15,7 +15,7 @@ public class mermi : MonoBehaviourPun
             {
                 photonView.RPC("KnockBack", RpcTarget.OthersBuffered);
             }
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
 
         }
 
