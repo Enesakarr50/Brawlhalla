@@ -30,7 +30,7 @@ public class PlayerFire : MonoBehaviourPun
             if (Input.GetMouseButton(0) && Time.time >= nextFireTime) // Sol fare tuþu ile ateþ etme
             {
                 nextFireTime = Time.time + _characterData.FireRate;
-                Shoot();
+                Shot();
             }
         }
         
@@ -55,26 +55,25 @@ public class PlayerFire : MonoBehaviourPun
     
 
     
-     public void Shoot()
-            {
-       
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 0f; // Z eksenini sýfýrla çünkü 2D oyunda Z ekseni kullanýlmaz
+    void Shot()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0f; // Z eksenini sýfýrla çünkü 2D oyunda Z ekseni kullanýlmaz
 
-            // Ateþ etme yönünü belirle
-            Vector2 direction = (mousePosition - firePoint.position).normalized;
+        // Ateþ etme yönünü belirle
+        Vector2 direction = (mousePosition - firePoint.position).normalized;
 
-            // Mermiyi oluþtur
-            GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
-            bullet.GetComponent<mermi>()._cD = _characterData;
-            photonView.RPC("ShootFire", RpcTarget.AllBuffered, bullet,direction);
+        // Mermiyi oluþtur
+        GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
 
-
-
+        photonView.RPC("ShootFire", RpcTarget.AllBuffered, bullet, direction);
     }
 
-    [PunRPC] public void ShootFire(GameObject bul ,Vector2 dir)
+    [PunRPC]
+    public void ShootFire(GameObject bul ,Vector2 dir)
     {
+        bul.GetComponent<mermi>()._cD = _characterData;
+        Debug.Log("yrk");
         Rigidbody2D rb = bul.GetComponent<Rigidbody2D>();
         rb.velocity = dir * _characterData.FireSpeed; // Mermiyi belirlenen yöne doðru fýrlat
     }
