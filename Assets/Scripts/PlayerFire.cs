@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.Demo.Asteroids;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.U2D.Animation;
@@ -29,7 +30,6 @@ public class PlayerFire : MonoBehaviourPun
             if (Input.GetMouseButton(0) && Time.time >= nextFireTime) // Sol fare tuþu ile ateþ etme
             {
                 nextFireTime = Time.time + _characterData.FireRate;
-                photonView.RPC("Shoot",RpcTarget.AllBuffered);
             }
         }
         
@@ -53,9 +53,9 @@ public class PlayerFire : MonoBehaviourPun
 
     
 
-    [PunRPC]
-    void Shoot()
-    {
+    
+     public void Shoot()
+            {
        
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0f; // Z eksenini sýfýrla çünkü 2D oyunda Z ekseni kullanýlmaz
@@ -66,10 +66,15 @@ public class PlayerFire : MonoBehaviourPun
             // Mermiyi oluþtur
             GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
             bullet.GetComponent<mermi>()._cD = _characterData;
+            photonView.RPC("ShootFire", RpcTarget.AllBuffered, bullet,direction);
 
 
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.velocity = direction * _characterData.FireSpeed; // Mermiyi belirlenen yöne doðru fýrlat
-             
+
+    }
+
+    [PunRPC] public void ShootFire(GameObject bul ,Vector2 dir)
+    {
+        Rigidbody2D rb = bul.GetComponent<Rigidbody2D>();
+        rb.velocity = dir * _characterData.FireSpeed; // Mermiyi belirlenen yöne doðru fýrlat
     }
 }
