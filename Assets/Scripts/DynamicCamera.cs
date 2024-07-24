@@ -1,6 +1,7 @@
 using UnityEditor.U2D.Animation;
 using UnityEngine;
 
+
 public class DynamicCamera : MonoBehaviour
 {
     public Transform player1;
