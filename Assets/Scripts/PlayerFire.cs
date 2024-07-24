@@ -1,9 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
 
-public class PlayerFire : MonoBehaviour
+public class PlayerFire : MonoBehaviourPun
 {
     public CharacterData _characterData;
     public GameObject bulletPrefab; // Mermi prefab'ý
@@ -21,14 +22,17 @@ public class PlayerFire : MonoBehaviour
 
     void Update()
     {
-
-        RotateFirePointToMouse();
-
-        if (Input.GetMouseButton(0) && Time.time >= nextFireTime) // Sol fare tuþu ile ateþ etme
+        if (photonView.IsMine)
         {
-            nextFireTime = Time.time + _characterData.FireRate;
-            Shoot();
+            RotateFirePointToMouse();
+
+            if (Input.GetMouseButton(0) && Time.time >= nextFireTime) // Sol fare tuþu ile ateþ etme
+            {
+                nextFireTime = Time.time + _characterData.FireRate;
+                Shoot();
+            }
         }
+        
     }
     void RotateFirePointToMouse()
     {

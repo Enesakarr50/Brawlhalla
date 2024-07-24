@@ -38,8 +38,8 @@ public class Player : MonoBehaviourPun
     void Update()
     {
         // photonview kontrolü
-        if (photonView.IsMine)
-            {
+      if (photonView.IsMine)
+        {
             
         
 
@@ -110,7 +110,7 @@ public class Player : MonoBehaviourPun
             jumpCount = 0; // Zýplama sayacýný sýfýrlayýn
      
         }
-    }
+      }
     }
     private IEnumerator Invincibility()
     {
