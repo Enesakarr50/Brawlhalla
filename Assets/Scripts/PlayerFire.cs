@@ -22,8 +22,7 @@ public class PlayerFire : MonoBehaviourPun
 
     void Update()
     {
-        if (photonView.IsMine)
-        {
+        
             RotateFirePointToMouse();
 
             if (Input.GetMouseButton(0) && Time.time >= nextFireTime) // Sol fare tuþu ile ateþ etme
@@ -31,7 +30,7 @@ public class PlayerFire : MonoBehaviourPun
                 nextFireTime = Time.time + _characterData.FireRate;
                 photonView.RPC("Shoot", RpcTarget.AllBuffered);
             }
-        }
+        
         
     }
     void RotateFirePointToMouse()
@@ -56,8 +55,8 @@ public class PlayerFire : MonoBehaviourPun
     [PunRPC]
     void Shoot()
     {
-        Debug.Log("a");
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+       
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0f; // Z eksenini sýfýrla çünkü 2D oyunda Z ekseni kullanýlmaz
 
             // Ateþ etme yönünü belirle
