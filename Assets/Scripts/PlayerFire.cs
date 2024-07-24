@@ -65,8 +65,7 @@ public class PlayerFire : MonoBehaviourPun
 
         // Mermiyi oluþtur
         GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
-        bullet.GetComponent<mermi>()._cD = _characterData;
-
+        
         ShootFire(bullet, direction);
         
     }
@@ -74,7 +73,7 @@ public class PlayerFire : MonoBehaviourPun
     [PunRPC]
     void ShootFire(GameObject bul ,Vector2 dir)
     {
-        
+        bul.GetComponent<mermi>()._cD = _characterData;
         Rigidbody2D rb = bul.GetComponent<Rigidbody2D>();
         rb.velocity = dir * _characterData.FireSpeed; // Mermiyi belirlenen yöne doðru fýrlat
     }
