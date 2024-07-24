@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class mermi : MonoBehaviour
 {
     public CharacterData _cD;
+
+   
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();

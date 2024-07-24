@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: 
   CharacterName: 
-  CharIndex: 0
   CharacterSpeed: 3
   CharacterJumpForce: 10
   characterJumpCount: 2
+  FireRate: 0.38
+  FireSpeed: 22.35
+  KnockBackRate: 1
   weaponName: 
   CharDesc: 
   CharacterImage: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
   WeaponImage: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
   _passiveSkill: {fileID: 0}
   Skill: {fileID: 11400000, guid: 784acbc09bb264b4b92f29cc32042883, type: 2}
-  ProjectilePrefab: {fileID: 8618206765518914777, guid: 71ddf69d5ad28d04da8ebf5473f8b871, type: 3}
+  projectilePrefab: {fileID: 3361236618418220482, guid: 3a62b5cbb4cd0fe40804e914e9a7c017, type: 3}
