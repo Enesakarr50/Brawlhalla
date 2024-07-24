@@ -19,12 +19,22 @@ public class DynamicCamera : MonoBehaviour
 
     private void Update()
     {
+        
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        if (players.Length == 2 && IsTwo == false)
+        
+        if (players.Length == 2)
         {
+            virtualCamera.transform.position = new Vector3((
+                   players[0].transform.position.x + players[1].transform.position.x) / 2
+                , (players[0].transform.position.y + players[1].transform.position.y) / 2
+                , -10);
             targetGroup.m_Targets[0].target = players[0].transform;
             targetGroup.m_Targets[1].target = players[1].transform;
             IsTwo = true;
+        }
+        else
+        {
+            IsTwo = false;
         }
   
     }
