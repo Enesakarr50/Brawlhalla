@@ -29,7 +29,7 @@ public class PlayerFire : MonoBehaviourPun
             if (Input.GetMouseButton(0) && Time.time >= nextFireTime) // Sol fare tuþu ile ateþ etme
             {
                 nextFireTime = Time.time + _characterData.FireRate;
-                Shoot();
+                photonView.RPC("Shoot", RpcTarget.AllBuffered);
             }
         }
         
@@ -51,9 +51,13 @@ public class PlayerFire : MonoBehaviourPun
         firePoint.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
+    
+
+    [PunRPC]
     void Shoot()
     {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Debug.Log("a");
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0f; // Z eksenini sýfýrla çünkü 2D oyunda Z ekseni kullanýlmaz
 
             // Ateþ etme yönünü belirle
@@ -63,12 +67,9 @@ public class PlayerFire : MonoBehaviourPun
             GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
             bullet.GetComponent<mermi>()._cD = _characterData;
 
-        if (photonView.IsMine)
-        {
+
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             rb.velocity = direction * _characterData.FireSpeed; // Mermiyi belirlenen yöne doðru fýrlat
-        }
-            
              
     }
 }
