@@ -22,15 +22,16 @@ public class PlayerFire : MonoBehaviourPun
 
     void Update()
     {
-        
+        if (photonView.IsMine)
+        {
             RotateFirePointToMouse();
 
             if (Input.GetMouseButton(0) && Time.time >= nextFireTime) // Sol fare tuþu ile ateþ etme
             {
                 nextFireTime = Time.time + _characterData.FireRate;
-                photonView.RPC("Shoot", RpcTarget.AllBuffered);
+                photonView.RPC("Shoot",RpcTarget.AllBuffered);
             }
-        
+        }
         
     }
     void RotateFirePointToMouse()
