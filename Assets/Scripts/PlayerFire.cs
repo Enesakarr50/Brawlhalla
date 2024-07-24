@@ -60,7 +60,7 @@ public class PlayerFire : MonoBehaviourPun
         Vector2 direction = (mousePosition - firePoint.position).normalized;
 
         // Mermiyi oluþtur
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
         bullet.GetComponent<mermi>()._cD = _characterData;
 
 
