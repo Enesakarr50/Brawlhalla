@@ -115,9 +115,9 @@ public class Player : MonoBehaviourPun
     }
     private IEnumerator Invincibility()
     {
-        photonView.RPC("SetInvincibility", RpcTarget.AllBuffered, true);
+        photonView.RPC("SetInvincibility", RpcTarget.OthersBuffered, true);
         yield return new WaitForSeconds(Character.Skill.Duration);
-        photonView.RPC("SetInvincibility", RpcTarget.AllBuffered, false);
+        photonView.RPC("SetInvincibility", RpcTarget.OthersBuffered, false);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
