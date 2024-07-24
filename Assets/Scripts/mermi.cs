@@ -13,6 +13,7 @@ public class mermi : MonoBehaviourPun
         {
             photonView.RPC("isKock", RpcTarget.AllBuffered, true);
         }
+        Destroy(gameObject);
     }
 
     [PunRPC]
@@ -20,6 +21,6 @@ public class mermi : MonoBehaviourPun
     {
         Vector2 pushDirection = _rigidbody2.position - (Vector2)transform.position;
         _rigidbody2.AddForce(pushDirection.normalized * _cD.KnockBackRate, ForceMode2D.Impulse);
-        Destroy(gameObject);
+        
     }
 }
