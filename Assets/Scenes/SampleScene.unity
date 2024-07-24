@@ -389,7 +389,7 @@ MonoBehaviour:
   player1: {fileID: 0}
   player2: {fileID: 0}
   smoothSpeed: 0.125
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 5, z: -5}
   minZoom: 40
   maxZoom: 10
   zoomLimiter: 50
