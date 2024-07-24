@@ -18,7 +18,7 @@ MonoBehaviour:
   characterJumpCount: 2
   FireRate: 0.25
   FireSpeed: 36.5
-  KnockBackRate: 5
+  KnockBackRate: 0.1
   weaponName: 
   CharDesc: 
   CharacterImage: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
