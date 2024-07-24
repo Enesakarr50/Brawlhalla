@@ -4,6 +4,8 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Photon.Pun;
 using System.Linq.Expressions;
+using UnityEditor.Tilemaps;
+using UnityEditor.U2D.Animation;
 public class Player : MonoBehaviourPun
 {
     public SpriteRenderer PlayerSprite;
@@ -18,16 +20,13 @@ public class Player : MonoBehaviourPun
     public bool isGrounded;
     private bool isDashing;
     private bool isSkillOnCooldown;
+    public Transform firePoint;
 
     private void Start()
     {
-        //KAMERA TAKÝP ÝÇÝN PHOTON KODU
-        /*if (photonView.IsMine)
-        {
-            Camera.main.GetComponent<CameraFollow>().SetTarget(transform);
-        }*/
 
-
+        GameObject fp = GameObject.FindGameObjectWithTag("FirePoint");
+        firePoint = fp.transform;
         PlayerSprite.sprite = Character.CharacterImage;
         WeaponSprite.sprite = Character.WeaponImage;
         movementSpeed = Character.CharacterSpeed;
@@ -116,8 +115,10 @@ public class Player : MonoBehaviourPun
     private IEnumerator Invincibility()
     {
         photonView.RPC("SetInvincibility", RpcTarget.OthersBuffered, true);
+        gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 0.2f);
         yield return new WaitForSeconds(Character.Skill.Duration);
         photonView.RPC("SetInvincibility", RpcTarget.OthersBuffered, false);
+        gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 1f);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
@@ -133,8 +134,11 @@ public class Player : MonoBehaviourPun
     private IEnumerator bazukaSpawn()
     {
         isSkillOnCooldown = true;
-        GameObject bazukaa = Instantiate(Character.Skill.ProjectilePrefeab,gameObject.transform.position,Quaternion.identity);
-        bazukaa.GetComponent<Rigidbody2D>().velocity = new Vector3(gameObject.transform.localScale.x, 0,0) * Character.Skill.ProjectileSpeed;
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = (mousePosition - gameObject.transform.position).normalized;
+        mousePosition.z = 0f;
+        GameObject bazukaa = Instantiate(Character.Skill.ProjectilePrefeab,gameObject.transform.position,firePoint.transform.rotation);
+        bazukaa.GetComponent<Rigidbody2D>().velocity = direction * Character.Skill.ProjectileSpeed;
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
