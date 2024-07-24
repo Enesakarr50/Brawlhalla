@@ -30,6 +30,7 @@ public class PlayerFire : MonoBehaviourPun
             if (Input.GetMouseButton(0) && Time.time >= nextFireTime) // Sol fare tuþu ile ateþ etme
             {
                 nextFireTime = Time.time + _characterData.FireRate;
+                Shoot();
             }
         }
         
