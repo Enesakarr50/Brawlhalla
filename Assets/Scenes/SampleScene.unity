@@ -388,11 +388,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1: {fileID: 0}
   player2: {fileID: 0}
-  smoothSpeed: 0.125
+  smoothSpeed: 99999
   offset: {x: 0, y: 5, z: -5}
-  minZoom: 40
-  maxZoom: 10
-  zoomLimiter: 50
+  minZoom: 12
+  maxZoom: 6
+  zoomLimiter: 6
   mainCamera: {fileID: 519420031}
 --- !u!1 &742568414
 GameObject:

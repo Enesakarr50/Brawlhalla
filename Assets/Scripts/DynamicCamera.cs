@@ -43,6 +43,6 @@ public class DynamicCamera : MonoBehaviour
     {
         float distance = Vector3.Distance(player1.position, player2.position);
         float newZoom = Mathf.Lerp(maxZoom, minZoom, distance / zoomLimiter);
-        mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, newZoom, Time.deltaTime);
+        mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, newZoom, Time.deltaTime);
     }
 }
