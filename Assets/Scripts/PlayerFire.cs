@@ -65,9 +65,10 @@ public class PlayerFire : MonoBehaviourPun
 
         // Mermiyi oluþtur
         GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
+        bullet.GetComponent<mermi>()._cD = _characterData;
 
         ShootFire(bullet, direction);
-        bullet.GetComponent<mermi>()._cD = _characterData;
+        
     }
 
     [PunRPC]
