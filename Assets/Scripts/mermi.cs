@@ -11,14 +11,15 @@ public class mermi : MonoBehaviourPun
         _rigidbody2 = collision.gameObject.GetComponent<Rigidbody2D>();
         if (_rigidbody2 != null)
         {
-            photonView.RPC("isKock", RpcTarget.AllBuffered, true);
+            photonView.RPC("KnockBack", RpcTarget.AllBuffered);
         }
         Destroy(gameObject);
     }
 
     [PunRPC]
-    void KnockBack(bool isKock)
+    void KnockBack()
     {
+        Debug.Log("s");
         Vector2 pushDirection = _rigidbody2.position - (Vector2)transform.position;
         _rigidbody2.AddForce(pushDirection.normalized * _cD.KnockBackRate, ForceMode2D.Impulse);
         
