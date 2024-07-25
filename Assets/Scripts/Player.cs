@@ -1,11 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Photon.Pun;
-using System.Linq.Expressions;
-using UnityEditor.Tilemaps;
-using UnityEditor.U2D.Animation;
+
 public class Player : MonoBehaviourPun
 {
     public SpriteRenderer PlayerSprite;
@@ -24,7 +20,7 @@ public class Player : MonoBehaviourPun
 
     private void Start()
     {
-
+        // Baþlangýç ayarlarý
         GameObject fp = GameObject.FindGameObjectWithTag("FirePoint");
         firePoint = fp.transform;
         PlayerSprite.sprite = Character.CharacterImage;
@@ -37,88 +33,75 @@ public class Player : MonoBehaviourPun
 
     void Update()
     {
-        // photonview kontrolü
-      if (photonView.IsMine)
+        if (photonView.IsMine)
         {
-            
-        
+            // Yatay hareket
+            rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * movementSpeed, rb2d.velocity.y);
 
-        // Karakterin sola ve saða hareket etmesi
-       
-        rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * movementSpeed, rb2d.velocity.y);
-
-        // Karakterin zýplamasý ve double jump
-        if (Input.GetKeyDown(KeyCode.W) && jumpCount < maxJumpCount)
-        {
-            rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
-            jumpCount++;
-        }
-
-        if (Input.GetKeyDown(KeyCode.E) && Character.Skill != null && !isSkillOnCooldown)
-        {
-            
-             switch (Character.Skill.SkillName)
+            // Zýplama ve çift zýplama
+            if (Input.GetKeyDown(KeyCode.W) && jumpCount < maxJumpCount)
             {
-                case ("Inviciblety"):
-                    Debug.Log("a");
-                    StartCoroutine(Invincibility());
-                    break;
-
-                case ("Bazuka"):
-                   
-                    StartCoroutine(bazukaSpawn());
-                    break;
-
-                case ("MagicWall"):
-                    
-                    StartCoroutine(magicwall());
-                    break;
-
-                case ("Catapult"):
-                    
-                    StartCoroutine(catapult());
-                    break;
-
-
-
-
-                }
+                rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
+                jumpCount++;
             }
-        
 
-        // Dash
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
-        {
-            
-            StartCoroutine(DashCount());
-        }
+            // Skill kullanýmý
+            if (Input.GetKeyDown(KeyCode.E) && Character.Skill != null && !isSkillOnCooldown)
+            {
+                UseSkill();
+            }
 
-        // Karakterin yönünü deðiþtirme (sola ve saða bakma)
-        if (Input.GetAxis("Horizontal") > 0)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-        else if (Input.GetAxis("Horizontal") < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
+            // Dash
+            if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
+            {
+                StartCoroutine(DashCount());
+            }
 
-        // Zemin kontrolü
-        isGrounded = Physics2D.OverlapCircle(transform.position, 0.5f, groundLayer);
-        if (isGrounded)
-        {
-            jumpCount = 0; // Zýplama sayacýný sýfýrlayýn
-     
+            // Yön deðiþtirme
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (Input.GetAxis("Horizontal") < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+
+            // Zemin kontrolü
+            isGrounded = Physics2D.OverlapCircle(transform.position, 0.5f, groundLayer);
+            if (isGrounded)
+            {
+                jumpCount = 0; // Zýplama sýfýrlama
+            }
         }
-      }
     }
+
+    private void UseSkill()
+    {
+        switch (Character.Skill.SkillName)
+        {
+            case "Inviciblety":
+                StartCoroutine(Invincibility());
+                break;
+            case "Bazuka":
+                StartCoroutine(BazukaSpawn());
+                break;
+            case "MagicWall":
+                StartCoroutine(MagicWall());
+                break;
+            case "Catapult":
+                StartCoroutine(Catapult());
+                break;
+        }
+    }
+
     private IEnumerator Invincibility()
     {
-        photonView.RPC("SetInvincibility", RpcTarget.OthersBuffered, true);
-        gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 0.2f);
+        photonView.RPC("SetInvincibility", RpcTarget.AllBuffered, true);
+        PlayerSprite.material.color = new Color(1, 1, 1, 0.2f);
         yield return new WaitForSeconds(Character.Skill.Duration);
-        photonView.RPC("SetInvincibility", RpcTarget.OthersBuffered, false);
-        gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 1f);
+        photonView.RPC("SetInvincibility", RpcTarget.AllBuffered, false);
+        PlayerSprite.material.color = new Color(1, 1, 1, 1f);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
@@ -130,38 +113,59 @@ public class Player : MonoBehaviourPun
         PlayerSprite.enabled = !isInvincible;
         WeaponSprite.enabled = !isInvincible;
     }
-    
-    private IEnumerator bazukaSpawn()
+
+    private IEnumerator BazukaSpawn()
     {
         isSkillOnCooldown = true;
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = (mousePosition - gameObject.transform.position).normalized;
+        Vector2 direction = (mousePosition - transform.position).normalized;
         mousePosition.z = 0f;
-        GameObject bazukaa = Instantiate(Character.Skill.ProjectilePrefeab,gameObject.transform.position,firePoint.transform.rotation);
-        bazukaa.GetComponent<Rigidbody2D>().velocity = direction * Character.Skill.ProjectileSpeed;
+
+        photonView.RPC("SpawnBazuka", RpcTarget.All, transform.position, firePoint.rotation, direction);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 
-    private IEnumerator magicwall()
+    [PunRPC]
+    void SpawnBazuka(Vector3 position, Quaternion rotation, Vector2 direction)
+    {
+        GameObject bazuka = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, position, rotation);
+        bazuka.GetComponent<Rigidbody2D>().velocity = direction * Character.Skill.ProjectileSpeed;
+    }
+
+    private IEnumerator MagicWall()
     {
         isSkillOnCooldown = true;
-        Debug.Log("magic okeyss");
+        photonView.RPC("SpawnMagicWall", RpcTarget.All, transform.position);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 
-    private IEnumerator catapult()
+    [PunRPC]
+    void SpawnMagicWall(Vector3 position)
+    {
+        // Magic Wall oluþturma mekaniði YAZILACAK
+        Debug.Log("Magic Wall spawned at " + position);
+    }
+
+    private IEnumerator Catapult()
     {
         isSkillOnCooldown = true;
-        Debug.Log("cata okeyss");
+        photonView.RPC("SpawnCatapult", RpcTarget.All, transform.position);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
+
+    [PunRPC]
+    void SpawnCatapult(Vector3 position)
+    {
+        // Catapult mekaniði YAZILACAK
+        Debug.Log("Catapult spawned at " + position);
+    }
+
 
     private IEnumerator DashCount()
     {
-
         photonView.RPC("SetDash", RpcTarget.AllBuffered, true);
         yield return new WaitForSeconds(2);
         photonView.RPC("SetDash", RpcTarget.AllBuffered, false);
@@ -181,5 +185,4 @@ public class Player : MonoBehaviourPun
         }
         isDashing = true;
     }
-
 }
