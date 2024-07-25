@@ -1,5 +1,8 @@
-using Photon.Pun;
+/*using Photon.Pun;
+using Photon.Pun.Demo.Asteroids;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class PlayerFire : MonoBehaviourPun
@@ -8,6 +11,7 @@ public class PlayerFire : MonoBehaviourPun
     public GameObject bulletPrefab; // Mermi prefab'ý
     public Transform firePoint; // Merminin fýrlatýlacaðý nokta
     float nextFireTime;
+
 
     private void Start()
     {
@@ -29,10 +33,11 @@ public class PlayerFire : MonoBehaviourPun
                 Shot();
             }
         }
+        
     }
-
     void RotateFirePointToMouse()
     {
+
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f; // Z eksenini sýfýrla çünkü 2D oyunda Z ekseni kullanýlmaz
 
@@ -47,6 +52,9 @@ public class PlayerFire : MonoBehaviourPun
         firePoint.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
+    
+
+    
     void Shot()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -55,17 +63,19 @@ public class PlayerFire : MonoBehaviourPun
         // Ateþ etme yönünü belirle
         Vector2 direction = (mousePosition - firePoint.position).normalized;
 
-        // Mermiyi oluþtur ve RPC ile ateþ etme bilgisini tüm oyunculara gönder
+        // Mermiyi oluþtur
         GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
-        photonView.RPC("ShootFire", RpcTarget.All, bullet.GetPhotonView().ViewID, direction);
+        
+        ShootFire(bullet, direction);
+        
     }
 
     [PunRPC]
-    void ShootFire(int bulletViewID, Vector2 dir)
+    void ShootFire(GameObject bul ,Vector2 dir)
     {
-        GameObject bullet = PhotonView.Find(bulletViewID).gameObject;
-        bullet.GetComponent<mermi>()._cD = _characterData;
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.velocity = dir * _characterData.FireSpeed; // Mermiyi belirlenen yöne doðru fýrlatmak için
+        bul.GetComponent<mermi>()._cD = _characterData;
+        Rigidbody2D rb = bul.GetComponent<Rigidbody2D>();
+        rb.velocity = dir * _characterData.FireSpeed; // Mermiyi belirlenen yöne doðru fýrlat
     }
 }
+*/
