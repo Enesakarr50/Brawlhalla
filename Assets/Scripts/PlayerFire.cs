@@ -62,7 +62,6 @@ public class PlayerFire : MonoBehaviourPun
     void ShootFire(int bulletViewID, Vector2 dir)
     {
         GameObject bullet = PhotonView.Find(bulletViewID).gameObject;
-        bullet.GetComponent<Mermi>()._cD = _characterData;
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.velocity = dir * _characterData.FireSpeed; // Mermiyi belirlenen yöne doðru fýrlatmak için
     }

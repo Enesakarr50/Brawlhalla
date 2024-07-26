@@ -250,4 +250,20 @@ public class Player : MonoBehaviourPun
         }
         isDashing = true;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Bullet")
+        {
+            Vector3 dir = collision.transform.position - transform.position;
+            dir.z = 0;
+            photonView.RPC("KnockBack", RpcTarget.All,dir);
+        }
+    }
+
+    [PunRPC]
+    void KnockBack(Vector3 direction)
+    {
+        gameObject.transform.position += direction;
+    }
 }
