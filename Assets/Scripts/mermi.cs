@@ -14,7 +14,7 @@ public class mermi : MonoBehaviourPun
             {
                 // Çarpýþma noktasýnýn normalini tersine çevirerek yönü belirleyin
                 Vector2 pushDirection = -collision.contacts[0].normal;
-                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, pushDirection.normalized * 200);
+                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, pushDirection.normalized * 10);
                 PhotonNetwork.Destroy(gameObject);
             }
         }
