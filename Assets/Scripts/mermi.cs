@@ -38,18 +38,20 @@ public class Mermi : MonoBehaviourPun
                 // Apply knockback using Rigidbody2D's velocity
                 rb.velocity = direction * _cD.KnockBackRate;
 
-                // Check if this client is the owner or the MasterClient before destroying
-                if (photonView.IsMine || PhotonNetwork.IsMasterClient)
+                // Transfer ownership to the MasterClient if not already owned by the MasterClient
+                if (!PhotonNetwork.IsMasterClient)
+                {
+                    photonView.TransferOwnership(PhotonNetwork.MasterClient);
+                }
+
+                // Now destroy the object
+                if (PhotonNetwork.IsMasterClient)
                 {
                     PhotonNetwork.Destroy(gameObject);
-                }
-                else
-                {
-                    // Optionally, log or handle the case where the object can't be destroyed
-                    Debug.LogError("Cannot destroy object; not owner or MasterClient.");
                 }
             }
         }
     }
+
 
 }
