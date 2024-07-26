@@ -22,7 +22,7 @@ public class mermi : MonoBehaviourPun
         
             if (_rigidbody2 != null)
             {
-            photonView.RPC("KnockBack", RpcTarget.OthersBuffered);
+            photonView.RPC("KnockBack", RpcTarget.AllViaServer);
             }
     }
 
