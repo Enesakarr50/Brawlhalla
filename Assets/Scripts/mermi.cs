@@ -16,12 +16,12 @@ public class mermi : MonoBehaviourPun
                 {
                     Vector2 pushDirection = collision.transform.position - transform.position;
                     photonView.RPC("KnockBack", RpcTarget.OthersBuffered, pv.ViewID, pushDirection.normalized * 10);
-                    StartCoroutine("dest");
+                    
                 }
             }
      
         }
-        
+        StartCoroutine("dest");
     }
 
     [PunRPC]
