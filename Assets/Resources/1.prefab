@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c456e25cf087e7641808749bf6c9fa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cD: {fileID: 0}
+  _cD: {fileID: 11400000, guid: c2d9c5c9f14cc4a49bb9f16a330fc413, type: 2}
   _rigidbody2: {fileID: 0}
 --- !u!58 &1919660496243553422
 CircleCollider2D:
@@ -183,7 +183,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 2314637602805065395}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
