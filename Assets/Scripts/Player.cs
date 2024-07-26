@@ -265,6 +265,6 @@ public class Player : MonoBehaviourPun
     [PunRPC]
     void KnockBack(Vector3 direction,Mermi _mermi)
     {
-        gameObject.transform.position += direction * _mermi._cD.KnockBackRate;
+        rb2d.velocity = direction * _mermi._cD.KnockBackRate;
     }
 }
