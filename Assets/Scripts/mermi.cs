@@ -20,10 +20,9 @@ public class mermi : MonoBehaviourPun
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
-            
             if (_rigidbody2 != null)
             {
-            photonView.RPC("KnockBack", RpcTarget.All);
+            photonView.RPC("KnockBack", RpcTarget.OthersBuffered);
             }
     }
 
