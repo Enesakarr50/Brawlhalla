@@ -28,7 +28,7 @@ public class mermi : MonoBehaviourPun
     }
 
     [PunRPC]
-    void KnockBack(int targetViewID, Vector2 direction)
+    void KnockBack(int targetViewID, Vector3 direction)
     {
         PhotonView targetView = PhotonView.Find(targetViewID);
         if (targetView != null)
@@ -36,9 +36,7 @@ public class mermi : MonoBehaviourPun
             Rigidbody2D rb = targetView.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                // Merminin geldiði yönün tersine itme
-                Vector2 pushDirection = -direction;
-                rb.AddForce(pushDirection.normalized * -pushForce);
+                targetView.gameObject.transform.position += direction;
             }
         }
 
