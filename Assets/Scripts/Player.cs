@@ -255,15 +255,16 @@ public class Player : MonoBehaviourPun
     {
         if(collision.gameObject.tag == "Bullet")
         {
+            Mermi mer = collision.gameObject.GetComponent<Mermi>();
             Vector3 dir = collision.transform.position - transform.position;
             dir.z = 0;
-            photonView.RPC("KnockBack", RpcTarget.All,dir);
+            photonView.RPC("KnockBack", RpcTarget.All,dir,mer);
         }
     }
 
     [PunRPC]
-    void KnockBack(Vector3 direction)
+    void KnockBack(Vector3 direction,Mermi _mermi)
     {
-       rb2d.velocity = direction;
+       rb2d.AddForce(direction * _mermi._cD.KnockBackRate);
     }
 }

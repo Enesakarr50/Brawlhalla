@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class Mermi : MonoBehaviourPun
 {
+    public CharacterData _cD;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 }
