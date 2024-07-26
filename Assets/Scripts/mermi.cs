@@ -28,6 +28,7 @@ public class mermi : MonoBehaviourPun
             if (rb != null)
             {
                 rb.AddForce(force, ForceMode2D.Impulse);
+                Destroy(gameObject);
             }
         }
     }
