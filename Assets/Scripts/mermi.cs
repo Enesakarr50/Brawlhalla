@@ -38,7 +38,7 @@ public class mermi : MonoBehaviourPun
             {
                 // Merminin geldiði yönün tersine itme
                 Vector2 pushDirection = -direction;
-                rb.AddForce(pushDirection.normalized * -pushForce, ForceMode2D.Impulse);
+                rb.AddForce(pushDirection.normalized * -pushForce);
             }
         }
 
