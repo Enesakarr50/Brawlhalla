@@ -6,16 +6,21 @@ public class mermi : MonoBehaviourPun
     public CharacterData _cD;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (photonView.IsMine)
         {
-            PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
-            if (pv != null && !pv.IsMine)
+            if (collision.gameObject.CompareTag("Player"))
             {
-                Vector2 pushDirection = collision.transform.position - transform.position;
-                photonView.RPC("KnockBack", RpcTarget.OthersBuffered, pv.ViewID, pushDirection.normalized * 10);
+                PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
+                if (pv != null && !pv.IsMine)
+                {
+                    Vector2 pushDirection = collision.transform.position - transform.position;
+                    photonView.RPC("KnockBack", RpcTarget.OthersBuffered, pv.ViewID, pushDirection.normalized * 10);
 
+                }
             }
+            PhotonNetwork.Destroy(gameObject);
         }
+        
     }
 
     [PunRPC]
@@ -28,7 +33,7 @@ public class mermi : MonoBehaviourPun
             if (rb != null)
             {
                 rb.AddForce(force, ForceMode2D.Impulse);
-                PhotonNetwork.Destroy(gameObject);
+                
             }
         }
     }
