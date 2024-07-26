@@ -6,6 +6,7 @@ public class mermi : MonoBehaviourPun
     public float pushForce = 200f; // Ýtme kuvveti
     private Rigidbody2D _rigidbody2D;
     private Vector2 _direction; // Merminin hareket yönü
+    public CharacterData _cD;
 
     private void Start()
     {
