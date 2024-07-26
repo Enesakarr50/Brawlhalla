@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class mermi : MonoBehaviourPun
+public class Mermi : MonoBehaviourPun
 {
     private Rigidbody2D _rigidbody2D;
     private Vector2 _direction; // Merminin hareket yönü
@@ -21,13 +21,13 @@ public class mermi : MonoBehaviourPun
             if (pv != null && !pv.IsMine) // Çarpýlan oyuncu yerel deðilse
             {
                 // Merminin hareket yönünü gönder
-                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, _direction);
+                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, (Vector2)_direction);
             }
         }
     }
 
     [PunRPC]
-    void KnockBack(int targetViewID, Vector3 direction)
+    void KnockBack(int targetViewID, Vector2 direction)
     {
         PhotonView targetView = PhotonView.Find(targetViewID);
         if (targetView != null)
@@ -35,7 +35,8 @@ public class mermi : MonoBehaviourPun
             Rigidbody2D rb = targetView.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                targetView.gameObject.transform.position += direction * _cD.KnockBackRate;
+                // Apply knockback using Rigidbody2D's velocity
+                rb.velocity = direction * _cD.KnockBackRate;
             }
         }
     }
