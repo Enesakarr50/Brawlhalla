@@ -5,7 +5,6 @@ using UnityEngine;
 public class mermi : MonoBehaviourPun
 {
     public CharacterData _cD;
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (photonView.IsMine)
@@ -16,16 +15,13 @@ public class mermi : MonoBehaviourPun
                 if (pv != null && !pv.IsMine)
                 {
                     Vector2 pushDirection = collision.transform.position - transform.position;
-                    photonView.RPC("KnockBack", RpcTarget.AllBuffered, pv.ViewID, pushDirection.normalized * 10);
-
-                    // Mermiyi yok etmeden önce sahipliði doðrulayýn
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        PhotonNetwork.Destroy(gameObject);
-                    }
+                    photonView.RPC("KnockBack", RpcTarget.OthersBuffered, pv.ViewID, pushDirection.normalized * 10);
+                    StartCoroutine("dest");
                 }
             }
+     
         }
+        
     }
 
     [PunRPC]
@@ -38,7 +34,15 @@ public class mermi : MonoBehaviourPun
             if (rb != null)
             {
                 rb.AddForce(force, ForceMode2D.Impulse);
+
+                
             }
         }
+    }
+    IEnumerator dest()
+    {
+        yield return new WaitForSeconds(0.1f);
+        PhotonNetwork.Destroy(gameObject);
+
     }
 }
