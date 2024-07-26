@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
 public class mermi : MonoBehaviourPun
@@ -12,10 +13,8 @@ public class mermi : MonoBehaviourPun
             PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
             if (pv != null && !pv.IsMine)
             {
-                // Çarpýþma noktasýnýn normalini tersine çevirerek yönü belirleyin
                 Vector2 pushDirection = -collision.contacts[0].normal;
-                // Kuvveti biraz artýrarak test edin
-                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, pushDirection.normalized * 10);
+                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, pushDirection.normalized * 200);
                 PhotonNetwork.Destroy(gameObject);
             }
         }
@@ -30,10 +29,16 @@ public class mermi : MonoBehaviourPun
             Rigidbody2D rb = pv.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                // Kuvveti güncellemeler arasýnda uygulayýn
-                rb.velocity = Vector2.zero; // Önce mevcut hýzýný sýfýrlayýn
-                rb.AddForce(force, ForceMode2D.Impulse);
+                // Kuvvet uygulamasýný FixedUpdate içerisinde yapýn
+                StartCoroutine(ApplyForceAfterDelay(rb, force, 0.1f));
             }
         }
+    }
+
+    private IEnumerator ApplyForceAfterDelay(Rigidbody2D rb, Vector2 force, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        rb.velocity = Vector2.zero; // Hýzý sýfýrla
+        rb.AddForce(force, ForceMode2D.Impulse); // Kuvveti uygula
     }
 }
