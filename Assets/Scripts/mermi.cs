@@ -20,8 +20,8 @@ public class mermi : MonoBehaviourPun
     void KnockBack()
     {
         
-        Vector2 pushDirection = _rigidbody2.position - (Vector2)transform.position;
-        _rigidbody2.AddForce(pushDirection.normalized * 10, ForceMode2D.Impulse);
+        Vector2 pushDirection =  (Vector2)transform.position - _rigidbody2.position;
+        _rigidbody2.AddForce(pushDirection.normalized * 200, ForceMode2D.Impulse);
         PhotonNetwork.Destroy(gameObject);
     }
 }
