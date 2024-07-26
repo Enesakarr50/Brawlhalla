@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c456e25cf087e7641808749bf6c9fa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pushForce: 200
   _cD: {fileID: 11400000, guid: d4fa449e8e33b594a8a2500ea779436f, type: 2}
-  _rigidbody2: {fileID: 0}
 --- !u!58 &1919660496243553422
 CircleCollider2D:
   m_ObjectHideFlags: 0
