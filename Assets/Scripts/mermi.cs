@@ -7,8 +7,7 @@ public class mermi : MonoBehaviourPun
     public CharacterData _cD;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (photonView.IsMine)
-        {
+        
             if (collision.gameObject.CompareTag("Player"))
             {
                 PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
@@ -20,7 +19,7 @@ public class mermi : MonoBehaviourPun
                 }
             }
      
-        }
+        
         StartCoroutine("dest");
     }
 
