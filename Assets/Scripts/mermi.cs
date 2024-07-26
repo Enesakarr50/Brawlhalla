@@ -5,11 +5,22 @@ public class mermi : MonoBehaviourPun
 {
     public CharacterData _cD;
     public Rigidbody2D _rigidbody2;
-   
+    private void Start()
+    {
+        GameObject[] Players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject p in Players)
+        {
+            PhotonView pv = p.GetComponent<PhotonView>();
+            if (!pv.IsMine)
+            {
+                _rigidbody2 = p.GetComponent<Rigidbody2D>();
+            }
+        }
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
-            _rigidbody2 = collision.gameObject.GetComponent<Rigidbody2D>();
+            
             if (_rigidbody2 != null)
             {
             photonView.RPC("KnockBack", RpcTarget.All);
