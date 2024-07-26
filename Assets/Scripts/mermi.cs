@@ -23,7 +23,6 @@ public class mermi : MonoBehaviourPun
             {
                 // Merminin hareket yönünü gönder
                 photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, _direction);
-                PhotonNetwork.Destroy(this.gameObject);
             }
         }
     }
@@ -38,7 +37,7 @@ public class mermi : MonoBehaviourPun
             if (rb != null)
             {
                 targetView.gameObject.transform.position += direction * pushForce;
-                
+                PhotonNetwork.Destroy(gameObject);
             }
         }
     }
