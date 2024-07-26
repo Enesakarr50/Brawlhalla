@@ -3,34 +3,47 @@ using UnityEngine;
 
 public class mermi : MonoBehaviourPun
 {
-    public CharacterData _cD;
+    public float pushForce = 200f; // Ýtme kuvveti
+    private Rigidbody2D _rigidbody2D;
+    private Vector2 _direction; // Merminin hareket yönü
+
+    private void Start()
+    {
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _direction = _rigidbody2D.velocity.normalized; // Baþlangýçta merminin yönünü belirleyin
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
-            if (pv != null && !pv.IsMine)
+            if (pv != null && !pv.IsMine) // Çarpýlan oyuncu yerel deðilse
             {
-                // Çarpýþma noktasýnýn normalini tersine çevirerek yönü belirleyin
-                Vector2 pushDirection = -collision.contacts[0].normal;
-                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, pushDirection.normalized * 10);
-                PhotonNetwork.Destroy(gameObject);
+                // Merminin hareket yönünü gönder
+                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, _direction);
             }
         }
     }
 
     [PunRPC]
-    void KnockBack(int viewID, Vector2 force)
+    void KnockBack(int targetViewID, Vector2 direction)
     {
-        PhotonView pv = PhotonView.Find(viewID);
-        if (pv != null)
+        PhotonView targetView = PhotonView.Find(targetViewID);
+        if (targetView != null)
         {
-            Rigidbody2D rb = pv.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = targetView.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.AddForce(force, ForceMode2D.Impulse);
+                // Merminin geldiði yönün tersine itme
+                Vector2 pushDirection = -direction;
+                rb.AddForce(pushDirection.normalized * pushForce, ForceMode2D.Impulse);
             }
+        }
+
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }
