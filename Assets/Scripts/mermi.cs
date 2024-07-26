@@ -10,7 +10,7 @@ public class mermi : MonoBehaviourPun
     {
         
             _rigidbody2 = collision.gameObject.GetComponent<Rigidbody2D>();
-            if (_rigidbody2 != null)
+            if (_rigidbody2 != null && photonView.IsMine)
             {
                 KnockBack();
             }
@@ -23,6 +23,5 @@ public class mermi : MonoBehaviourPun
         Vector2 pushDirection = _rigidbody2.position - (Vector2)transform.position;
         _rigidbody2.AddForce(pushDirection.normalized * 10, ForceMode2D.Impulse);
         PhotonNetwork.Destroy(gameObject);
-
     }
 }

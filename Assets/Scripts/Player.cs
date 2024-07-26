@@ -1,11 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using Photon.Pun;
-using System.Linq.Expressions;
-using UnityEditor.Tilemaps;
-using UnityEditor.U2D.Animation;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 
 public class Player : MonoBehaviourPun
 {
@@ -102,10 +97,10 @@ public class Player : MonoBehaviourPun
 
     private IEnumerator Invincibility()
     {
-        photonView.RPC("SetInvincibility", RpcTarget.AllBuffered, true);
+        photonView.RPC("SetInvincibility", RpcTarget.OthersBuffered, true);
         PlayerSprite.material.color = new Color(1, 1, 1, 0.2f);
         yield return new WaitForSeconds(Character.Skill.Duration);
-        photonView.RPC("SetInvincibility", RpcTarget.AllBuffered, false);
+        photonView.RPC("SetInvincibility", RpcTarget.OthersBuffered, false);
         PlayerSprite.material.color = new Color(1, 1, 1, 1f);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;

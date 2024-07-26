@@ -1,9 +1,4 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Photon.Pun.Demo.Asteroids;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 public class PlayerFire : MonoBehaviourPun
 {
