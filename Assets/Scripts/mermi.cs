@@ -3,34 +3,54 @@ using UnityEngine;
 
 public class mermi : MonoBehaviourPun
 {
+    private Rigidbody2D targetRigidbody;
     public CharacterData _cD;
+
+    private void Start()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in players)
+        {
+            PhotonView pv = player.GetComponent<PhotonView>();
+            if (!pv.IsMine) // Yerel oyuncu deðilse
+            {
+                targetRigidbody = player.GetComponent<Rigidbody2D>();
+            }
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
-            if (pv != null && !pv.IsMine)
+            if (pv != null && !pv.IsMine) // Çarpýlan oyuncu yerel deðilse
             {
-                // Çarpýþma noktasýnýn normalini kullanarak yönü belirleyin
-                Vector2 pushDirection = collision.contacts[0].normal;
-                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, pushDirection.normalized * 200);
-                PhotonNetwork.Destroy(gameObject);
+                // Merminin hareket yönünü hesaplayýn
+                Vector2 collisionNormal = collision.contacts[0].normal;
+                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, collisionNormal);
             }
         }
     }
 
     [PunRPC]
-    void KnockBack(int viewID, Vector2 force)
+    void KnockBack(int targetViewID, Vector2 collisionNormal)
     {
-        PhotonView pv = PhotonView.Find(viewID);
-        if (pv != null)
+        PhotonView targetView = PhotonView.Find(targetViewID);
+        if (targetView != null)
         {
-            Rigidbody2D rb = pv.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = targetView.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.AddForce(force, ForceMode2D.Impulse);
+                // Çarpma yönünün tersine itme
+                Vector2 pushDirection = -collisionNormal;
+                rb.AddForce(pushDirection.normalized * 200, ForceMode2D.Impulse);
             }
+        }
+
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }
