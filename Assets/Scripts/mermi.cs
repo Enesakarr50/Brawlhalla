@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
 public class mermi : MonoBehaviourPun
@@ -18,7 +19,7 @@ public class mermi : MonoBehaviourPun
 
                 }
             }
-            PhotonNetwork.Destroy(gameObject);
+     
         }
         
     }
@@ -36,5 +37,11 @@ public class mermi : MonoBehaviourPun
                 
             }
         }
+    }
+    IEnumerator dest()
+    {
+        yield return new WaitForSeconds(0.1f);
+        PhotonNetwork.Destroy(gameObject);
+
     }
 }
