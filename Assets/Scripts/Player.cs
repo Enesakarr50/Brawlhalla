@@ -204,21 +204,13 @@ public class Player : MonoBehaviourPun
 
     private IEnumerator CatapultCoroutine()
     {
-        // Oyuncunun þu anki pozisyonunu alýn
-        Vector3 playerPosition = transform.position;
-
-        // Her nesne arasýnda yatay mesafe
-        float horizontalSpacing = 2f;
-
-        // Ýlk nesnenin x pozisyonu, oyuncunun konumuna göre ayarlanýr
-        float startX = playerPosition.x - horizontalSpacing;
-
-        // 3 pozisyon oluþturun
         for (int i = 0; i < 3; i++)
         {
-            // Spawn pozisyonunu hesapla
-            float spawnX = startX + i * horizontalSpacing;
-            Vector3 spawnPosition = new Vector3(spawnX, playerPosition.y + 10f, 0f); // Haritanýn üstünden spawnlýyor
+            // Oyuncunun anlýk pozisyonunu al
+            Vector3 playerPosition = transform.position;
+
+            // Spawn pozisyonunu hesapla (oyuncunun üstünden)
+            Vector3 spawnPosition = new Vector3(playerPosition.x, playerPosition.y + 10f, 0f);
 
             // Nesneyi spawnla
             GameObject fallingObject = PhotonNetwork.Instantiate("FallingObjectPrefab", spawnPosition, Quaternion.identity);
@@ -227,12 +219,14 @@ public class Player : MonoBehaviourPun
             Rigidbody2D rb = fallingObject.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.gravityScale = 1f;
+                rb.gravityScale = 3f;
             }
 
-            yield return new WaitForSeconds(0.5f);
+            // Yarým saniye bekle
+            yield return new WaitForSeconds(0.3f);
         }
     }
+
 
 
     private IEnumerator DashCount()
