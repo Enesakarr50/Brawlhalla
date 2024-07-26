@@ -36,7 +36,7 @@ public class mermi : MonoBehaviourPun
             Rigidbody2D rb = targetView.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                targetView.gameObject.transform.position += direction * pushForce;
+                targetView.gameObject.transform.position += direction;
                 PhotonNetwork.Destroy(gameObject);
             }
         }
