@@ -11,7 +11,8 @@ public class mermi : MonoBehaviourPun
             PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
             if (pv != null && !pv.IsMine)
             {
-                Vector2 pushDirection = collision.transform.position - transform.position;
+                Vector3 pushDirection = collision.transform.position - transform.position;
+                pushDirection.z = 0;
                 photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, pushDirection.normalized * 10);
 
             }
