@@ -41,7 +41,7 @@ public class mermi : MonoBehaviourPun
     }
     IEnumerator dest()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1f);
         PhotonNetwork.Destroy(gameObject);
 
     }
