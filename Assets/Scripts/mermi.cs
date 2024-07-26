@@ -4,6 +4,7 @@ using UnityEngine;
 public class mermi : MonoBehaviourPun
 {
     public CharacterData _cD;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -11,9 +12,11 @@ public class mermi : MonoBehaviourPun
             PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
             if (pv != null && !pv.IsMine)
             {
-                Vector2 pushDirection = collision.transform.position - transform.position;
+                // Çarpýþma noktasýnýn normalini tersine çevirerek yönü belirleyin
+                Vector2 pushDirection = -collision.contacts[0].normal;
+                // Kuvveti biraz artýrarak test edin
                 photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, pushDirection.normalized * 10);
-
+                PhotonNetwork.Destroy(gameObject);
             }
         }
     }
@@ -27,6 +30,8 @@ public class mermi : MonoBehaviourPun
             Rigidbody2D rb = pv.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
+                // Kuvveti güncellemeler arasýnda uygulayýn
+                rb.velocity = Vector2.zero; // Önce mevcut hýzýný sýfýrlayýn
                 rb.AddForce(force, ForceMode2D.Impulse);
             }
         }
