@@ -31,4 +31,6 @@ public class CharacterData : ScriptableObject
 
     public GameObject projectilePrefab;
 
+   
+
 }

@@ -144,14 +144,52 @@ public class Player : MonoBehaviourPun
     [PunRPC]
     void SpawnMagicWall(Vector3 position)
     {
+        StartCoroutine(MagicWallCoroutine(position));
         // Magic Wall oluþturma mekaniði YAZILACAK
         Debug.Log("Magic Wall spawned at " + position);
+    }
+
+    private IEnumerator MagicWallCoroutine(Vector3 position)
+    {
+        GameObject wall = PhotonNetwork.Instantiate("MagicWallPrefab", position, Quaternion.identity);
+        Rigidbody2D wallRb = wall.GetComponent<Rigidbody2D>();
+        if (wallRb != null)
+        {
+            wallRb.velocity = new Vector2(10f, 0f); // Duvarýn hýzýný ayarlayýn
+        }
+
+        Vector3 initialScale = wall.transform.localScale;
+        Vector3 targetScale = new Vector3(2f, 5f, 0f); // Büyüme hedefi
+
+        float growthDuration = 1f; // Büyüme süresi
+        float elapsedTime = 0f;
+
+        while (elapsedTime < growthDuration)
+        {
+            wall.transform.localScale = Vector3.Lerp(initialScale, targetScale, elapsedTime / growthDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Duvarý yarým ay þekline dönüþtürme
+        float halfMoonDuration = 1f; // Yarým ay olma süresi
+        elapsedTime = 0f;
+        Vector3 finalScale = new Vector3(0f, targetScale.y, targetScale.z);
+
+        while (elapsedTime < halfMoonDuration)
+        {
+            wall.transform.localScale = Vector3.Lerp(targetScale, finalScale, elapsedTime / halfMoonDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        PhotonNetwork.Destroy(wall); // Duvarý yok et
     }
 
     private IEnumerator Catapult()
     {
         isSkillOnCooldown = true;
-        photonView.RPC("SpawnCatapult", RpcTarget.All, transform.position);
+        photonView.RPC("SpawnCatapult", RpcTarget.All, firePoint.position);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
@@ -159,8 +197,41 @@ public class Player : MonoBehaviourPun
     [PunRPC]
     void SpawnCatapult(Vector3 position)
     {
-        // Catapult mekaniði YAZILACAK
-        Debug.Log("Catapult spawned at " + position);
+        StartCoroutine(CatapultCoroutine());
+        Debug.Log("Catapult activated at " + position);
+    }
+
+
+    private IEnumerator CatapultCoroutine()
+    {
+        // Oyuncunun þu anki pozisyonunu alýn
+        Vector3 playerPosition = transform.position;
+
+        // Her nesne arasýnda yatay mesafe
+        float horizontalSpacing = 2f;
+
+        // Ýlk nesnenin x pozisyonu, oyuncunun konumuna göre ayarlanýr
+        float startX = playerPosition.x - horizontalSpacing;
+
+        // 3 pozisyon oluþturun
+        for (int i = 0; i < 3; i++)
+        {
+            // Spawn pozisyonunu hesapla
+            float spawnX = startX + i * horizontalSpacing;
+            Vector3 spawnPosition = new Vector3(spawnX, playerPosition.y + 10f, 0f); // Haritanýn üstünden spawnlýyor
+
+            // Nesneyi spawnla
+            GameObject fallingObject = PhotonNetwork.Instantiate("FallingObjectPrefab", spawnPosition, Quaternion.identity);
+
+            // Aþaðýya düþme mekaniði
+            Rigidbody2D rb = fallingObject.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.gravityScale = 1f;
+            }
+
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
 

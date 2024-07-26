@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Catapult
   m_EditorClassIdentifier: 
   SkillName: Catapult
-  CoolDown: 30
+  CoolDown: 0
   Duration: 0
-  ProjectileSpeed: 0
+  ProjectileSpeed: 5
   Radius: 0
   SkillIcon: {fileID: 0}
-  ProjectilePrefeab: {fileID: 0}
+  ProjectilePrefeab: {fileID: 3361236618418220482, guid: d89cb24872a66ab418706ee082442342, type: 3}
