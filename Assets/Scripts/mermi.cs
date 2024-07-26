@@ -10,7 +10,7 @@ public class mermi : MonoBehaviourPun
     {
         
             _rigidbody2 = collision.gameObject.GetComponent<Rigidbody2D>();
-            if (_rigidbody2 != null && photonView.IsMine)
+            if (_rigidbody2 != null)
             {
             photonView.RPC("KnockBack", RpcTarget.All);
             }
