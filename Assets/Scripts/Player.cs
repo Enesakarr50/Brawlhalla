@@ -264,6 +264,6 @@ public class Player : MonoBehaviourPun
     [PunRPC]
     void KnockBack(Vector3 direction)
     {
-        gameObject.transform.position += direction;
+        gameObject.transform.position -= direction;
     }
 }
