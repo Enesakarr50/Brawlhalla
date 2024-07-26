@@ -258,13 +258,13 @@ public class Player : MonoBehaviourPun
             Mermi mer = collision.gameObject.GetComponent<Mermi>();
             Vector3 dir = collision.transform.position - transform.position;
             dir.z = 0;
-            photonView.RPC("KnockBack", RpcTarget.All,dir,mer);
+            photonView.RPC("KnockBack", RpcTarget.All,dir);
         }
     }
 
     [PunRPC]
-    void KnockBack(Vector3 direction,Mermi _mermi)
+    void KnockBack(Vector3 direction)
     {
-        rb2d.velocity = direction * _mermi._cD.KnockBackRate;
+        rb2d.velocity = direction;
     }
 }
