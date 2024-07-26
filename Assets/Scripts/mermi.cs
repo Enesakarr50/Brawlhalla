@@ -37,6 +37,7 @@ public class Mermi : MonoBehaviourPun
             {
                 // Apply knockback using Rigidbody2D's velocity
                 rb.velocity = direction * _cD.KnockBackRate;
+                PhotonNetwork.Destroy(gameObject);
             }
         }
     }
