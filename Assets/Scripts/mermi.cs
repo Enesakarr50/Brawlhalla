@@ -4,34 +4,31 @@ using UnityEngine;
 public class mermi : MonoBehaviourPun
 {
     public CharacterData _cD;
-    public Rigidbody2D _rigidbody2;
-    private void Start()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        GameObject[] Players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject p in Players)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            PhotonView pv = p.GetComponent<PhotonView>();
-            if (!pv.IsMine)
+            PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
+            if (pv != null && !pv.IsMine)
             {
-                _rigidbody2 = p.GetComponent<Rigidbody2D>();
+                Vector2 pushDirection = collision.transform.position - transform.position;
+                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, pushDirection.normalized * 5);
+                PhotonNetwork.Destroy(gameObject);
             }
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
-            if (_rigidbody2 != null)
-            {
-            photonView.RPC("KnockBack", RpcTarget.AllViaServer);
-            }
-    }
 
     [PunRPC]
-    void KnockBack()
+    void KnockBack(int viewID, Vector2 force)
     {
-        
-        Vector2 pushDirection = _rigidbody2.position - (Vector2)transform.position;
-        _rigidbody2.AddForce(pushDirection.normalized * 200, ForceMode2D.Impulse);
-        PhotonNetwork.Destroy(gameObject);
+        PhotonView pv = PhotonView.Find(viewID);
+        if (pv != null)
+        {
+            Rigidbody2D rb = pv.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.AddForce(force, ForceMode2D.Impulse);
+            }
+        }
     }
 }
