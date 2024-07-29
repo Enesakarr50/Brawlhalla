@@ -8,17 +8,20 @@ public class mermi : MonoBehaviourPun
     public float kncokBack;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (photonView.IsMine)
+        {
             if (collision.gameObject.CompareTag("Player"))
             {
                 PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
                 if (pv != null && !pv.IsMine)
                 {
-                    Vector3 pushDirection = new Vector3 (collision.transform.position.x - transform.position.x, 0,0);
+                    Vector3 pushDirection = new Vector3(collision.transform.position.x - transform.position.x, 0, 0);
                     photonView.RPC("KnockBack", RpcTarget.OthersBuffered, pv.ViewID, pushDirection.normalized * kncokBack);
-                    
+
                 }
             }
+
+        }
 
 
         PhotonNetwork.Destroy(gameObject);
