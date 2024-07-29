@@ -1,10 +1,9 @@
 using Photon.Pun;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CharacterSelection : MonoBehaviourPun
+public class CharacterSelection : MonoBehaviourPunCallbacks
 {
     public CharacterData[] Characters;
     public CharacterData CurrentData;
@@ -25,45 +24,43 @@ public class CharacterSelection : MonoBehaviourPun
     // Seçim metodu
     public void ChooseChar(int index)
     {
-        if (GameObject.FindGameObjectWithTag("Player") == null)
+        if (Characters == null || Characters.Length == 0)
         {
-            if (Characters == null || Characters.Length == 0)
-            {
-                Debug.LogError("Characters array is null or empty.");
-                return;
-            }
-
-            if (index < 0 || index >= Characters.Length)
-            {
-                Debug.LogError("Index out of bounds: " + index);
-                return;
-            }
-
-            CurrentData = Characters[index];
-            if (CurrentData == null)
-            {
-                Debug.LogError("Character data at index " + index + " is null.");
-                return;
-            }
-
-            if (PlayerPrefab == null)
-            {
-                Debug.LogError("PlayerPrefab is null.");
-                return;
-            }
-
-            Player playerComponent = PlayerPrefab.GetComponent<Player>();
-            if (playerComponent == null)
-            {
-                Debug.LogError("Player component not found on PlayerPrefab.");
-                return;
-            }
-
-            playerComponent.Character = CurrentData;
-
-            // Send an RPC to update the UI for all players
-            photonView.RPC("UpdateUIForAllPlayers", RpcTarget.All, photonView.IsMine, index);
+            Debug.LogError("Characters array is null or empty.");
+            return;
         }
+
+        if (index < 0 || index >= Characters.Length)
+        {
+            Debug.LogError("Index out of bounds: " + index);
+            return;
+        }
+
+        CurrentData = Characters[index];
+        if (CurrentData == null)
+        {
+            Debug.LogError("Character data at index " + index + " is null.");
+            return;
+        }
+
+        if (PlayerPrefab == null)
+        {
+            Debug.LogError("PlayerPrefab is null.");
+            return;
+        }
+
+        Player playerComponent = PlayerPrefab.GetComponent<Player>();
+        if (playerComponent == null)
+        {
+            Debug.LogError("Player component not found on PlayerPrefab.");
+            return;
+        }
+
+        playerComponent.Character = CurrentData;
+
+        // Send an RPC to update the UI for all players
+        bool isMine = photonView.IsMine;
+        photonView.RPC("UpdateUIForAllPlayers", RpcTarget.All, isMine, index);
     }
 
     [PunRPC]
