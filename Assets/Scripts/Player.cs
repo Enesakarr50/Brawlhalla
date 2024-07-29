@@ -240,12 +240,12 @@ public class Player : MonoBehaviourPun
                 Rigidbody2D rb = fallingObject.GetComponent<Rigidbody2D>();
                 if (rb != null)
                 {
-                    rb.gravityScale = 3f;
+                    rb.gravityScale = 1f;
                 }
             }
 
             // Yarým saniye bekle
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(1f);
         }
     }
 
