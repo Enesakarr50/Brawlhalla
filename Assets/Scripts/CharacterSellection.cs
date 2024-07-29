@@ -31,6 +31,14 @@ public class CharacterSellection : MonoBehaviourPun
 
     public void SpawnPlayer()
     {
-        SceneManager.LoadScene(1);
+        if(CurrentData != null)
+        {
+            SceneManager.LoadScene(1);
+        }
+        else
+        {
+            Debug.Log("Karakter Seçilmedi. Karakter seçilmesi lazým!");
+        }
+        
     }
 }
