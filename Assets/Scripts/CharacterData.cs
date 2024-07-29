@@ -24,6 +24,7 @@ public class CharacterData : ScriptableObject
     public Sprite CharacterImage;
     public Sprite WeaponImage;
     public Sprite _passiveSkill;
+    public Sprite _activeSkill;
 
 
     public Skill Skill;
