@@ -1,8 +1,10 @@
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CharacterSelection : MonoBehaviourPun
+public class CharacterSellection : MonoBehaviourPun
 {
     public CharacterData[] Characters;
     public CharacterData CurrentData;
@@ -13,27 +15,22 @@ public class CharacterSelection : MonoBehaviourPun
     public Image PasifSkill;
     public Image ActiveSkill;
 
-    public void ChooseChar(int index)
+    public void choseChar(int intex)
     {
         if (GameObject.FindGameObjectWithTag("Player") == null)
         {
-            CurrentData = Characters[index];
+
+            CurrentData = Characters[intex];
             PlayerPrefab.GetComponent<Player>().Character = CurrentData;
             CharImage.sprite = CurrentData.CharacterImage;
             WeaponImage.sprite = CurrentData.WeaponImage;
             PasifSkill.sprite = CurrentData._passiveSkill;
             ActiveSkill.sprite = CurrentData._activeSkill;
-
-            // Karakter seçimini diðer oyunculara bildir
-            photonView.RPC("OnCharacterSelected", RpcTarget.OthersBuffered, index);
         }
     }
 
-    [PunRPC]
-    public void OnCharacterSelected(int index)
+    public void SpawnPlayer()
     {
-        // Diðer oyuncunun seçimini güncelle
-        Debug.Log($"Other player selected: {Characters[index].CharacterImage}");
-        // Burada UI güncellemesi yapabilirsiniz.
+        SceneManager.LoadScene(1);
     }
 }
