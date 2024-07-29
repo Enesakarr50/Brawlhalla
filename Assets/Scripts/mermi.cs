@@ -5,6 +5,7 @@ using UnityEngine;
 public class mermi : MonoBehaviourPun
 {
     public CharacterData _cD;
+    public float kncokBack;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         
@@ -14,7 +15,7 @@ public class mermi : MonoBehaviourPun
                 if (pv != null && !pv.IsMine)
                 {
                     Vector3 pushDirection = new Vector3 (collision.transform.position.x - transform.position.x, 0,0);
-                    photonView.RPC("KnockBack", RpcTarget.OthersBuffered, pv.ViewID, pushDirection.normalized * 10);
+                    photonView.RPC("KnockBack", RpcTarget.OthersBuffered, pv.ViewID, pushDirection.normalized * kncokBack);
                     
                 }
             }
@@ -32,7 +33,7 @@ public class mermi : MonoBehaviourPun
             Rigidbody2D rb = pv.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.transform.position += force;
+                rb.gameObject.transform.position = Vector3.Lerp(pv.gameObject.transform.position, pv.gameObject.transform.position + force, 1);
 
                 
             }
