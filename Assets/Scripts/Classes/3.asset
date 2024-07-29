@@ -21,7 +21,7 @@ MonoBehaviour:
   InGamePlayer: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
   InGameWeapon: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
   CharacterImage: {fileID: 21300000, guid: 8ad620e5fca04af41b597d72a5183929, type: 3}
-  WeaponImage: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  WeaponImage: {fileID: 21300000, guid: 7987bb69050272c45bd19731eba86781, type: 3}
   _passiveSkill: {fileID: 21300000, guid: df33d1d3fc731944281c0c77a9d205ad, type: 3}
   _activeSkill: {fileID: 21300000, guid: 1e7f82e9de7baed438c91f99636c96c0, type: 3}
   Skill: {fileID: 11400000, guid: 57530d57d985a144a9d634922add4b6d, type: 2}
