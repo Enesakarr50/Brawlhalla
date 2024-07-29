@@ -125,6 +125,8 @@ public class CharacterSelection : MonoBehaviourPun
     {
         if (CurrentData != null)
         {
+            GameObject Player = PhotonNetwork.Instantiate("Player",new Vector2(0,0), new Quaternion(0,0,0,0));
+            DontDestroyOnLoad(Player);
             SceneManager.LoadScene(1);
         }
         else
