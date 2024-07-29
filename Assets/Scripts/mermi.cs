@@ -33,7 +33,7 @@ public class mermi : MonoBehaviourPun
             Rigidbody2D rb = pv.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.AddForce(force, ForceMode2D.Impulse);
+                rb.gameObject.transform.position = Vector3.Lerp(pv.gameObject.transform.position, pv.gameObject.transform.position + force, 1);
 
                 
             }
