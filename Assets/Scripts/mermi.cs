@@ -15,7 +15,7 @@ public class mermi : MonoBehaviourPun
                 if (pv != null && !pv.IsMine)
                 {
                     Vector3 pushDirection = new Vector3 (collision.transform.position.x - transform.position.x, 0,0);
-                    photonView.RPC("KnockBack", RpcTarget.OthersBuffered, pv.ViewID, pushDirection.normalized * kncokBack);
+                    photonView.RPC("KnockBack", RpcTarget.AllBuffered, pv.ViewID, pushDirection.normalized * kncokBack);
                     
                 }
             }
