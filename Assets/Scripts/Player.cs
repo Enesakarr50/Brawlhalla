@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviourPun
 {
@@ -121,22 +122,24 @@ public class Player : MonoBehaviourPun
         Vector2 direction = (mousePosition - transform.position).normalized;
         mousePosition.z = 0f;
 
-        photonView.RPC("SpawnBazuka", RpcTarget.AllViaServer, transform.position, firePoint.rotation, direction);
+
+        GameObject bazuka = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, transform.position, firePoint.rotation);
+        photonView.RPC("SpawnBazuka", RpcTarget.All, bazuka, direction);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 
     [PunRPC]
-    void SpawnBazuka(Vector3 position, Quaternion rotation, Vector2 direction)
+    void SpawnBazuka(GameObject bazuka, Vector2 direction)
     {
-        GameObject bazuka = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, position, rotation);
+       
         bazuka.GetComponent<Rigidbody2D>().velocity = direction * Character.Skill.ProjectileSpeed;
     }
 
     private IEnumerator MagicWall()
     {
         isSkillOnCooldown = true;
-        photonView.RPC("SpawnMagicWall", RpcTarget.AllViaServer, transform.position);
+        photonView.RPC("SpawnMagicWall", RpcTarget.All, transform.position);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
@@ -206,7 +209,7 @@ public class Player : MonoBehaviourPun
 
         if (targetViewID != -1)
         {
-            photonView.RPC("SpawnCatapult", RpcTarget.AllViaServer, targetViewID);
+            photonView.RPC("SpawnCatapult", RpcTarget.All, targetViewID);
         }
 
         yield return new WaitForSeconds(Character.Skill.CoolDown);
@@ -251,9 +254,9 @@ public class Player : MonoBehaviourPun
 
     private IEnumerator DashCount()
     {
-        photonView.RPC("SetDash", RpcTarget.AllViaServer, true);
+        photonView.RPC("SetDash", RpcTarget.All, true);
         yield return new WaitForSeconds(2);
-        photonView.RPC("SetDash", RpcTarget.AllViaServer, false);
+        photonView.RPC("SetDash", RpcTarget.All, false);
         isDashing = false;
     }
 
