@@ -7,10 +7,6 @@ public class CharacterSellection : MonoBehaviour
     public CharacterData[] Characters;
     public CharacterData CurrentData;
     public GameObject PlayerPrefab;
-    
-
-    public TextMeshProUGUI CharNameTMP;
-    public TextMeshProUGUI CharDescTMP;
 
     public Image CharImage;
     public Image WeaponImage;
@@ -24,8 +20,6 @@ public class CharacterSellection : MonoBehaviour
             
             CurrentData = Characters[intex];
             PlayerPrefab.GetComponent<Player>().Character = CurrentData;
-            CharNameTMP.text = CurrentData.CharacterName;
-            CharDescTMP.text = CurrentData.CharDesc;
             CharImage.sprite = CurrentData.CharacterImage;
             WeaponImage.sprite = CurrentData.WeaponImage;
             PasifSkill.sprite = CurrentData._passiveSkill;
@@ -35,7 +29,6 @@ public class CharacterSellection : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        Instantiate(PlayerPrefab);
-        //SceneManager.MoveGameObjectToScene(m_MyGameObject, SceneManager.GetSceneByName(m_Scene));
+
     }
 }

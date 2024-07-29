@@ -21,8 +21,11 @@ MonoBehaviour:
   KnockBackRate: 900
   weaponName: 
   CharDesc: 
-  CharacterImage: {fileID: -5177388603050735206, guid: 8884154dfe85442a3a3578be807dbcdf, type: 3}
-  WeaponImage: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
+  InGamePlayer: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
+  InGameWeapon: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
+  CharacterImage: {fileID: 0}
+  WeaponImage: {fileID: 0}
   _passiveSkill: {fileID: 0}
+  _activeSkill: {fileID: 0}
   Skill: {fileID: 11400000, guid: f2bfd3c6bb07b154caef9ae2d1cbd5a1, type: 2}
   projectilePrefab: {fileID: 3361236618418220482, guid: 3670c972d5af7d84f86e3e297cf821ff, type: 3}

@@ -20,6 +20,8 @@ public class CharacterData : ScriptableObject
     public string weaponName;
     public string CharDesc;
 
+    public Sprite InGamePlayer;
+    public Sprite InGameWeapon;
 
     public Sprite CharacterImage;
     public Sprite WeaponImage;
