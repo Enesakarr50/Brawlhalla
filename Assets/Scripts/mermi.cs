@@ -18,8 +18,8 @@ public class mermi : MonoBehaviourPun
                     
                 }
             }
-     
-        
+
+        Destroy(gameObject.GetComponent<Rigidbody2D>());
         StartCoroutine("dest");
     }
 
@@ -41,6 +41,7 @@ public class mermi : MonoBehaviourPun
     IEnumerator dest()
     {
         yield return new WaitForSeconds(1f);
+       
         PhotonNetwork.Destroy(gameObject);
 
     }
