@@ -23,8 +23,8 @@ public class Player : MonoBehaviourPun
         // Baþlangýç ayarlarý
         GameObject fp = GameObject.FindGameObjectWithTag("FirePoint");
         firePoint = fp.transform;
-        PlayerSprite.sprite = Character.CharacterImage;
-        WeaponSprite.sprite = Character.WeaponImage;
+        PlayerSprite.sprite = Character.InGamePlayer;
+        WeaponSprite.sprite = Character.InGameWeapon;
         movementSpeed = Character.CharacterSpeed;
         jumpForce = Character.CharacterJumpForce;
         maxJumpCount = Character.characterJumpCount;
