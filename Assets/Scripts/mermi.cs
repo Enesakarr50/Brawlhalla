@@ -42,5 +42,6 @@ public class mermi : MonoBehaviourPun
         knockbackStartTime = Time.time;
         knockbackStartPos = transform.position;
         knockbackEndPos = transform.position + direction.normalized * knockbackDistance;
+        PhotonNetwork.Destroy(gameObject);
     }
 }
