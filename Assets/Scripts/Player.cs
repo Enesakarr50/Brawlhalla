@@ -234,7 +234,7 @@ public class Player : MonoBehaviourPun
                 Vector3 spawnPosition = new Vector3(playerPosition.x, playerPosition.y + 10f, 0f);
 
                 // Nesneyi spawnla
-                GameObject fallingObject = Instantiate(GameObject.Find("FallingObjectPrefab"), spawnPosition, Quaternion.identity);
+                GameObject fallingObject = Instantiate(Character.Skill.ProjectilePrefeab, spawnPosition, Quaternion.identity);
 
                 // Aþaðýya düþme mekaniði
                 Rigidbody2D rb = fallingObject.GetComponent<Rigidbody2D>();
