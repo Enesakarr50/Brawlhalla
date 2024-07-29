@@ -33,7 +33,7 @@ public class mermi : MonoBehaviourPun
             Rigidbody2D rb = pv.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.AddForce(force);
+                rb.AddForce(force, ForceMode2D.Force);
 
                 
             }
