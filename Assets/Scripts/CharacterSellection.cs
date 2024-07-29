@@ -33,7 +33,7 @@ public class CharacterSelection : MonoBehaviourPun
     public void OnCharacterSelected(int index)
     {
         // Diðer oyuncunun seçimini güncelle
-        Debug.Log($"Other player selected: {Characters[index].CharacterName}");
+        Debug.Log($"Other player selected: {Characters[index].CharacterImage}");
         // Burada UI güncellemesi yapabilirsiniz.
     }
 }

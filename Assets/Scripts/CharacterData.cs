@@ -4,7 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="Class")]
 public class CharacterData : ScriptableObject
 {
-    public string CharacterName;
 
 
     public int CharacterSpeed;
@@ -15,10 +14,6 @@ public class CharacterData : ScriptableObject
     public float FireRate;
     public float FireSpeed;
     public float KnockBackRate;
-
-
-    public string weaponName;
-    public string CharDesc;
 
     public Sprite InGamePlayer;
     public Sprite InGameWeapon;
