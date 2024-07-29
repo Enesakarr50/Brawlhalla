@@ -185,6 +185,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   isGrounded: 0
+  isSkillOnCooldown: 0
   firePoint: {fileID: 0}
 --- !u!114 &4410094624726623612
 MonoBehaviour:
@@ -201,7 +202,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 1
+  Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 0
   ObservedComponents:

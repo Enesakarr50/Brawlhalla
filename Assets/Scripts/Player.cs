@@ -15,7 +15,7 @@ public class Player : MonoBehaviourPun
     public LayerMask groundLayer;
     public bool isGrounded;
     private bool isDashing;
-    private bool isSkillOnCooldown;
+    public bool isSkillOnCooldown;
     public Transform firePoint;
 
     private void Start()
@@ -245,7 +245,7 @@ public class Player : MonoBehaviourPun
             }
 
             // Yarým saniye bekle
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(5f);
         }
     }
 
