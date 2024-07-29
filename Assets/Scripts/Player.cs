@@ -195,37 +195,49 @@ public class Player : MonoBehaviourPun
     }
 
     [PunRPC]
-    void SpawnCatapult(Vector3 position)
+    void SpawnCatapult(Vector3 position, int targetViewID)
     {
-        StartCoroutine(CatapultCoroutine());
+        StartCoroutine(CatapultCoroutine(targetViewID));
         Debug.Log("Catapult activated at " + position);
     }
 
-
-    private IEnumerator CatapultCoroutine()
+    private IEnumerator CatapultCoroutine(int targetViewID)
     {
         for (int i = 0; i < 3; i++)
         {
-            // Oyuncunun anlýk pozisyonunu al
-            Vector3 playerPosition = transform.position;
-
-            // Spawn pozisyonunu hesapla (oyuncunun üstünden)
-            Vector3 spawnPosition = new Vector3(playerPosition.x, playerPosition.y + 10f, 0f);
-
-            // Nesneyi spawnla
-            GameObject fallingObject = PhotonNetwork.Instantiate("FallingObjectPrefab", spawnPosition, Quaternion.identity);
-
-            // Aþaðýya düþme mekaniði
-            Rigidbody2D rb = fallingObject.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            // Hedef oyuncunun PhotonView'ini bul
+            PhotonView targetView = PhotonView.Find(targetViewID);
+            if (targetView != null)
             {
-                rb.gravityScale = 3f;
+                // Hedef oyuncunun anlýk pozisyonunu al
+                Vector3 playerPosition = targetView.transform.position;
+
+                // Spawn pozisyonunu hesapla (oyuncunun üstünden)
+                Vector3 spawnPosition = new Vector3(playerPosition.x, playerPosition.y + 10f, 0f);
+
+                // Nesneyi spawnla
+                GameObject fallingObject = PhotonNetwork.Instantiate("FallingObjectPrefab", spawnPosition, Quaternion.identity);
+
+                // Aþaðýya düþme mekaniði
+                Rigidbody2D rb = fallingObject.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    rb.gravityScale = 3f;
+                }
             }
 
             // Yarým saniye bekle
             yield return new WaitForSeconds(0.3f);
         }
     }
+
+    // Kullanýcý skilli kullandýðýnda çaðrýlýr
+    public void UseCatapultSkill(int targetViewID)
+    {
+        StartCoroutine(CatapultCoroutine(targetViewID));
+    }
+
+
 
 
 
