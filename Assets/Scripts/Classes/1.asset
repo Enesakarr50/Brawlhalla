@@ -17,7 +17,7 @@ MonoBehaviour:
   CharacterJumpForce: 10
   characterJumpCount: 2
   FireRate: 0.38
-  FireSpeed: 22.35
+  FireSpeed: 30
   KnockBackRate: 1
   weaponName: 
   CharDesc: 
