@@ -20,9 +20,9 @@ MonoBehaviour:
   KnockBackRate: 1.65
   InGamePlayer: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
   InGameWeapon: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
-  CharacterImage: {fileID: 21300000, guid: b86d0db9457f24011888218122cc164a, type: 3}
+  CharacterImage: {fileID: 21300000, guid: 92b72fe9860391e498d880cef407b69d, type: 3}
   WeaponImage: {fileID: 21300000, guid: 436c5e63723127948af8857e903f658a, type: 3}
-  _passiveSkill: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  _passiveSkill: {fileID: 21300000, guid: 063d64b6e59d6224c94323f4ac1815cc, type: 3}
   _activeSkill: {fileID: 21300000, guid: 66efb24ed46044ab8a039599cbc47d7b, type: 3}
   Skill: {fileID: 11400000, guid: 2b1910ebdce201048acf795567d3d4aa, type: 2}
   projectilePrefab: {fileID: 3361236618418220482, guid: 461ddcf647c8576498cbcc75eeec375f, type: 3}
