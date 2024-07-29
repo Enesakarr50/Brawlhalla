@@ -22,7 +22,6 @@ public class CharacterSelection : MonoBehaviourPun
     public Image PassiveSkillPlayer2;
     public Image ActiveSkillPlayer2;
 
-
     // Seçim metodu
     public void ChooseChar(int index)
     {
@@ -62,33 +61,25 @@ public class CharacterSelection : MonoBehaviourPun
 
             playerComponent.Character = CurrentData;
 
-            if (photonView == null)
-            {
-                Debug.LogError("PhotonView is null.");
-                return;
-            }
-
-            if (photonView.IsMine)
-            {
-                if (CharImagePlayer1 == null || WeaponImagePlayer1 == null || PassiveSkillPlayer1 == null || ActiveSkillPlayer1 == null)
-                {
-                    Debug.LogError("Player 1 UI elements are not all assigned.");
-                    return;
-                }
-                UpdateUIForPlayer1();
-            }
-            else
-            {
-                if (CharImagePlayer2 == null || WeaponImagePlayer2 == null || PassiveSkillPlayer2 == null || ActiveSkillPlayer2 == null)
-                {
-                    Debug.LogError("Player 2 UI elements are not all assigned.");
-                    return;
-                }
-                UpdateUIForPlayer2();
-            }
+            // Send an RPC to update the UI for all players
+            photonView.RPC("UpdateUIForAllPlayers", RpcTarget.All, photonView.IsMine, index);
         }
     }
 
+    [PunRPC]
+    private void UpdateUIForAllPlayers(bool isMine, int index)
+    {
+        CurrentData = Characters[index];
+
+        if (isMine)
+        {
+            UpdateUIForPlayer1();
+        }
+        else
+        {
+            UpdateUIForPlayer2();
+        }
+    }
 
     private void UpdateUIForPlayer1()
     {
