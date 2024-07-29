@@ -49,6 +49,7 @@ MonoBehaviour:
   - SpawnMagicWall
   - OnCharacterSelected
   - CatapultCoroutine
+  - RPC_ApplyKnockback
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

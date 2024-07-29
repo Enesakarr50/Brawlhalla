@@ -852,8 +852,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 711982763}
-        m_TargetAssemblyTypeName: CharacterSellection, Assembly-CSharp
-        m_MethodName: choseChar
+        m_TargetAssemblyTypeName: CharacterSelection, Assembly-CSharp
+        m_MethodName: OnCharacterSelected
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1354,8 +1354,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 711982763}
-        m_TargetAssemblyTypeName: CharacterSellection, Assembly-CSharp
-        m_MethodName: choseChar
+        m_TargetAssemblyTypeName: CharacterSelection, Assembly-CSharp
+        m_MethodName: OnCharacterSelected
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1684,8 +1684,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 711982763}
-        m_TargetAssemblyTypeName: CharacterSellection, Assembly-CSharp
-        m_MethodName: choseChar
+        m_TargetAssemblyTypeName: CharacterSelection, Assembly-CSharp
+        m_MethodName: OnCharacterSelected
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1912,8 +1912,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 711982763}
-        m_TargetAssemblyTypeName: CharacterSellection, Assembly-CSharp
-        m_MethodName: choseChar
+        m_TargetAssemblyTypeName: CharacterSelection, Assembly-CSharp
+        m_MethodName: OnCharacterSelected
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
