@@ -121,7 +121,7 @@ public class Player : MonoBehaviourPun
         Vector2 direction = (mousePosition - transform.position).normalized;
         mousePosition.z = 0f;
 
-        photonView.RPC("SpawnBazuka", RpcTarget.Others, transform.position, firePoint.rotation, direction);
+        photonView.RPC("SpawnBazuka", RpcTarget.AllViaServer, transform.position, firePoint.rotation, direction);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
@@ -136,7 +136,7 @@ public class Player : MonoBehaviourPun
     private IEnumerator MagicWall()
     {
         isSkillOnCooldown = true;
-        photonView.RPC("SpawnMagicWall", RpcTarget.Others, transform.position);
+        photonView.RPC("SpawnMagicWall", RpcTarget.AllViaServer, transform.position);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
@@ -206,7 +206,7 @@ public class Player : MonoBehaviourPun
 
         if (targetViewID != -1)
         {
-            photonView.RPC("SpawnCatapult", RpcTarget.Others, targetViewID);
+            photonView.RPC("SpawnCatapult", RpcTarget.AllViaServer, targetViewID);
         }
 
         yield return new WaitForSeconds(Character.Skill.CoolDown);
@@ -251,9 +251,9 @@ public class Player : MonoBehaviourPun
 
     private IEnumerator DashCount()
     {
-        photonView.RPC("SetDash", RpcTarget.Others, true);
+        photonView.RPC("SetDash", RpcTarget.AllViaServer, true);
         yield return new WaitForSeconds(2);
-        photonView.RPC("SetDash", RpcTarget.Others, false);
+        photonView.RPC("SetDash", RpcTarget.AllViaServer, false);
         isDashing = false;
     }
 
