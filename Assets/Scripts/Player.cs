@@ -211,7 +211,7 @@ public class Player : MonoBehaviourPun
 
         if (targetViewID != -1)
         {
-            photonView.RPC("SpawnCatapult", RpcTarget.All, targetViewID);
+            photonView.RPC("CatapultCoroutine", RpcTarget.All, targetViewID);
         }
 
         yield return new WaitForSeconds(Character.Skill.CoolDown);
@@ -219,11 +219,6 @@ public class Player : MonoBehaviourPun
     }
 
     [PunRPC]
-    void SpawnCatapult(int targetViewID)
-    {
-        StartCoroutine(CatapultCoroutine(targetViewID));
-    }
-
     private IEnumerator CatapultCoroutine(int targetViewID)
     {
         for (int i = 0; i < 3; i++)
@@ -239,7 +234,7 @@ public class Player : MonoBehaviourPun
                 Vector3 spawnPosition = new Vector3(playerPosition.x, playerPosition.y + 10f, 0f);
 
                 // Nesneyi spawnla
-                GameObject fallingObject = PhotonNetwork.Instantiate("FallingObjectPrefab", spawnPosition, Quaternion.identity);
+                GameObject fallingObject = Instantiate(GameObject.Find("FallingObjectPrefab"), spawnPosition, Quaternion.identity);
 
                 // Aþaðýya düþme mekaniði
                 Rigidbody2D rb = fallingObject.GetComponent<Rigidbody2D>();
