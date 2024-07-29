@@ -20,6 +20,8 @@ public class Player : MonoBehaviourPun
     public bool isSkillOnCooldown;
     public Transform firePoint;
 
+    public GameObject pop;
+
     private void Start()
     {
         // Baþlangýç ayarlarý
@@ -234,7 +236,7 @@ public class Player : MonoBehaviourPun
                 Vector3 spawnPosition = new Vector3(playerPosition.x, playerPosition.y + 10f, 0f);
 
                 // Nesneyi spawnla
-                GameObject fallingObject = Instantiate(Character.Skill.ProjectilePrefeab, spawnPosition, Quaternion.identity);
+                GameObject fallingObject = Instantiate(pop, spawnPosition, Quaternion.identity);
 
                 // Aþaðýya düþme mekaniði
                 Rigidbody2D rb = fallingObject.GetComponent<Rigidbody2D>();

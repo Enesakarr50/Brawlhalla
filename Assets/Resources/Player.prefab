@@ -187,6 +187,7 @@ MonoBehaviour:
   isGrounded: 0
   isSkillOnCooldown: 0
   firePoint: {fileID: 0}
+  pop: {fileID: 3361236618418220482, guid: d89cb24872a66ab418706ee082442342, type: 3}
 --- !u!114 &4410094624726623612
 MonoBehaviour:
   m_ObjectHideFlags: 0
