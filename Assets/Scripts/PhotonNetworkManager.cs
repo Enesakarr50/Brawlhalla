@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PhotonNetworkManager : MonoBehaviourPunCallbacks
 {
-    public GameObject playerPrefab;
 
     void Start()
     {
@@ -25,16 +24,5 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions { MaxPlayers = 2 });
     }
 
-    public override void OnJoinedRoom()
-    {
-        if (playerPrefab != null)
-        {
-            Vector3 spawnPosition = new Vector3(Random.Range(-2f, 2f), 0, 0);
-            PhotonNetwork.Instantiate(playerPrefab.name, spawnPosition, Quaternion.identity);
-        }
-        else
-        {
-            Debug.LogError("PlayerPrefab is not set.");
-        }
-    }
+    
 }

@@ -12,20 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165e1c871e0b12342ac6a16124f53b51, type: 3}
   m_Name: 4
   m_EditorClassIdentifier: 
-  CharacterName: 
   CharacterSpeed: 3
   CharacterJumpForce: 10
   characterJumpCount: 2
   FireRate: 0.88
   FireSpeed: 31.35
   KnockBackRate: 1.65
-  weaponName: 
-  CharDesc: 
   InGamePlayer: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
   InGameWeapon: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
-  CharacterImage: {fileID: 0}
-  WeaponImage: {fileID: 0}
-  _passiveSkill: {fileID: 0}
-  _activeSkill: {fileID: 0}
+  CharacterImage: {fileID: 21300000, guid: b86d0db9457f24011888218122cc164a, type: 3}
+  WeaponImage: {fileID: 21300000, guid: 436c5e63723127948af8857e903f658a, type: 3}
+  _passiveSkill: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  _activeSkill: {fileID: 21300000, guid: 66efb24ed46044ab8a039599cbc47d7b, type: 3}
   Skill: {fileID: 11400000, guid: 2b1910ebdce201048acf795567d3d4aa, type: 2}
   projectilePrefab: {fileID: 3361236618418220482, guid: 461ddcf647c8576498cbcc75eeec375f, type: 3}
