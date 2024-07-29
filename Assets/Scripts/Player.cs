@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UIElements;
+using Photon.Pun.Demo.Asteroids;
 
 public class Player : MonoBehaviourPun
 {
@@ -124,7 +125,7 @@ public class Player : MonoBehaviourPun
 
 
         GameObject bazuka = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, firePoint.position, firePoint.rotation);
-        photonView.RPC("SpawnBazuka", RpcTarget.All, bazuka, direction);
+        photonView.RPC("SpawnBazuka", RpcTarget.All, bazuka.GetPhotonView().ViewID, direction);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
