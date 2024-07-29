@@ -123,16 +123,17 @@ public class Player : MonoBehaviourPun
         mousePosition.z = 0f;
 
 
-        GameObject bazuka = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, transform.position, firePoint.rotation);
+        GameObject bazuka = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, firePoint.position, firePoint.rotation);
         photonView.RPC("SpawnBazuka", RpcTarget.All, bazuka, direction);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 
     [PunRPC]
-    void SpawnBazuka(GameObject bazuka, Vector2 direction)
+    void SpawnBazuka(int bazukaID, Vector2 direction)
     {
-       
+        GameObject bazuka = PhotonView.Find(bazukaID).gameObject;
+        Rigidbody2D rb = bazuka.GetComponent<Rigidbody2D>();
         bazuka.GetComponent<Rigidbody2D>().velocity = direction * Character.Skill.ProjectileSpeed;
     }
 
