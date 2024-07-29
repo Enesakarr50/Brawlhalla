@@ -1,47 +1,42 @@
-using UnityEngine;
 using Photon.Pun;
+using System.Collections;
+using UnityEngine;
 
 public class mermi : MonoBehaviourPun
 {
-    public float knockbackDistance;
-    public float knockbackDuration = 0.5f;
-
-    private Vector3 knockbackStartPos;
-    private Vector3 knockbackEndPos;
-    private float knockbackStartTime;
-    private bool isKnockedBack;
-
-    void Update()
+    public CharacterData _cD;
+    public float kncokBack;
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (isKnockedBack)
-        {
-            float elapsed = (Time.time - knockbackStartTime) / knockbackDuration;
-            if (elapsed < 1f)
+        
+            if (collision.gameObject.CompareTag("Player"))
             {
-                transform.position = Vector3.Lerp(knockbackStartPos, knockbackEndPos, elapsed);
+                PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
+                if (pv != null && !pv.IsMine)
+                {
+                    Vector3 pushDirection = new Vector3 (collision.transform.position.x - transform.position.x, 0,0);
+                    photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, pushDirection.normalized * kncokBack);
+                    
+                }
             }
-            else
-            {
-                isKnockedBack = false;
-            }
-        }
-    }
 
-    public void ApplyKnockback(Vector3 direction)
-    {
-        if (photonView.IsMine)
-        {
-            photonView.RPC("RPC_ApplyKnockback", RpcTarget.All, direction);
-        }
+
+        PhotonNetwork.Destroy(gameObject);
     }
 
     [PunRPC]
-    public void RPC_ApplyKnockback(Vector3 direction)
+    void KnockBack(int viewID, Vector3 force)
     {
-        isKnockedBack = true;
-        knockbackStartTime = Time.time;
-        knockbackStartPos = transform.position;
-        knockbackEndPos = transform.position + direction.normalized * knockbackDistance;
-        PhotonNetwork.Destroy(gameObject);
+        PhotonView pv = PhotonView.Find(viewID);
+        if (pv != null)
+        {
+            Rigidbody2D rb = pv.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.AddForce(force);
+
+                
+            }
+        }
     }
 }
