@@ -189,16 +189,34 @@ public class Player : MonoBehaviourPun
     private IEnumerator Catapult()
     {
         isSkillOnCooldown = true;
-        photonView.RPC("SpawnCatapult", RpcTarget.All, firePoint.position);
+
+        
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        int targetViewID = -1;
+
+        foreach (GameObject player in players)
+        {
+            PhotonView pv = player.GetComponent<PhotonView>();
+            if (pv != null && !pv.IsMine) 
+            {
+                targetViewID = pv.ViewID;
+                break;
+            }
+        }
+
+        if (targetViewID != -1)
+        {
+            photonView.RPC("SpawnCatapult", RpcTarget.All, targetViewID);
+        }
+
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 
     [PunRPC]
-    void SpawnCatapult(Vector3 position, int targetViewID)
+    void SpawnCatapult(int targetViewID)
     {
         StartCoroutine(CatapultCoroutine(targetViewID));
-        Debug.Log("Catapult activated at " + position);
     }
 
     private IEnumerator CatapultCoroutine(int targetViewID)
@@ -230,16 +248,6 @@ public class Player : MonoBehaviourPun
             yield return new WaitForSeconds(0.3f);
         }
     }
-
-    // Kullanýcý skilli kullandýðýnda çaðrýlýr
-    public void UseCatapultSkill(int targetViewID)
-    {
-        StartCoroutine(CatapultCoroutine(targetViewID));
-    }
-
-
-
-
 
     private IEnumerator DashCount()
     {
