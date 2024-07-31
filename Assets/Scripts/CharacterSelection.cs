@@ -1,4 +1,6 @@
 using Photon.Pun;
+using System.ComponentModel;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -132,11 +134,20 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     {
         if (CurrentData != null)
         {
-           SceneManager.LoadScene(1);
+            photonView.RPC("SpawnPlayerRPC", RpcTarget.All);
         }
         else
         {
             Debug.Log("Karakter Seçilmedi. Karakter seçilmesi lazým!");
         }
+    }
+    [PunRPC]
+    public void SpawnPlayerRPC()
+    {
+        PhotonNetwork.Instantiate("Player", new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        DontDestroyOnLoad(players[0]);
+        DontDestroyOnLoad(players[1]);
+        SceneManager.LoadScene(1);
     }
 }
