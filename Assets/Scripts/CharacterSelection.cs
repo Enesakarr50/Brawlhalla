@@ -134,8 +134,8 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     {
         if (CurrentData != null)
         {
-            PhotonNetwork.Instantiate("Player", new Vector3(0, 2, 0), Quaternion.identity);
-            photonView.RPC("SpawnPlayerRPC", RpcTarget.All);
+            GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(0, 2, 0), Quaternion.identity);
+            photonView.RPC("SpawnPlayerRPC", RpcTarget.All,player);
         }
         else
         {
@@ -143,14 +143,9 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         }
     }
     [PunRPC]
-    public void SpawnPlayerRPC()
+    public void SpawnPlayerRPC(GameObject player)
     {
-        
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        DontDestroyOnLoad(players[0]);
-        DontDestroyOnLoad(players[1]);
+        DontDestroyOnLoad(player);
         SceneManager.LoadScene(1);
-        players[0].transform.position = new Vector3(0,0,0);
-        players[1].transform.position = new Vector3(0,0,0);
     }
 }
