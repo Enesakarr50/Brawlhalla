@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cinemachine;
+using Photon.Pun;
 
 public class DynamicCamera : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class DynamicCamera : MonoBehaviour
 
     private void Start()
     {
+        GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
         targetGroup = GetComponent<CinemachineTargetGroup>();
     }
 
