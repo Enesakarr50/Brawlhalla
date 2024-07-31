@@ -30,19 +30,31 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         }
     }
 
-    // Character selection method
+    // Seçim metodu
     public void ChooseChar(int index)
     {
-        if (Characters == null || Characters.Length == 0 || index < 0 || index >= Characters.Length)
+        if (Characters == null || Characters.Length == 0)
         {
-            Debug.LogError("Invalid character selection.");
+            Debug.LogError("Characters array is null or empty.");
+            return;
+        }
+
+        if (index < 0 || index >= Characters.Length)
+        {
+            Debug.LogError("Index out of bounds: " + index);
             return;
         }
 
         CurrentData = Characters[index];
-        if (CurrentData == null || PlayerPrefab == null)
+        if (CurrentData == null)
         {
-            Debug.LogError("Invalid character data or PlayerPrefab is null.");
+            Debug.LogError("Character data at index " + index + " is null.");
+            return;
+        }
+
+        if (PlayerPrefab == null)
+        {
+            Debug.LogError("PlayerPrefab is null.");
             return;
         }
 
@@ -56,16 +68,17 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         playerComponent.Character = CurrentData;
 
         // Send an RPC to update the UI for all players
-        photonView.RPC("UpdateUIForAllPlayers", RpcTarget.AllBuffered, index);
+        bool isMine = photonView.IsMine;
+        photonView.RPC("UpdateUIForAllPlayers", RpcTarget.AllBuffered, isMine, index);
         PlayerPrefs.SetInt("Index", index);
     }
 
     [PunRPC]
-    private void UpdateUIForAllPlayers(int index)
+    private void UpdateUIForAllPlayers(bool isMine, int index)
     {
         CurrentData = Characters[index];
 
-        if (photonView.IsMine)
+        if (isMine)
         {
             UpdateUIForPlayer1();
         }
@@ -77,32 +90,53 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
 
     private void UpdateUIForPlayer1()
     {
-        SetUI(CharImagePlayer1, WeaponImagePlayer1, PassiveSkillPlayer1, ActiveSkillPlayer1);
+        if (CharImagePlayer1 != null)
+        {
+            CharImagePlayer1.sprite = CurrentData.CharacterImage;
+        }
+        if (WeaponImagePlayer1 != null)
+        {
+            WeaponImagePlayer1.sprite = CurrentData.WeaponImage;
+        }
+        if (PassiveSkillPlayer1 != null)
+        {
+            PassiveSkillPlayer1.sprite = CurrentData._passiveSkill;
+        }
+        if (ActiveSkillPlayer1 != null)
+        {
+            ActiveSkillPlayer1.sprite = CurrentData._activeSkill;
+        }
     }
 
     private void UpdateUIForPlayer2()
     {
-        SetUI(CharImagePlayer2, WeaponImagePlayer2, PassiveSkillPlayer2, ActiveSkillPlayer2);
-    }
-
-    private void SetUI(Image charImage, Image weaponImage, Image passiveSkillImage, Image activeSkillImage)
-    {
-        if (charImage != null) charImage.sprite = CurrentData.CharacterImage;
-        if (weaponImage != null) weaponImage.sprite = CurrentData.WeaponImage;
-        if (passiveSkillImage != null) passiveSkillImage.sprite = CurrentData._passiveSkill;
-        if (activeSkillImage != null) activeSkillImage.sprite = CurrentData._activeSkill;
+        if (CharImagePlayer2 != null)
+        {
+            CharImagePlayer2.sprite = CurrentData.CharacterImage;
+        }
+        if (WeaponImagePlayer2 != null)
+        {
+            WeaponImagePlayer2.sprite = CurrentData.WeaponImage;
+        }
+        if (PassiveSkillPlayer2 != null)
+        {
+            PassiveSkillPlayer2.sprite = CurrentData._passiveSkill;
+        }
+        if (ActiveSkillPlayer2 != null)
+        {
+            ActiveSkillPlayer2.sprite = CurrentData._activeSkill;
+        }
     }
 
     public void SpawnPlayer()
     {
         if (CurrentData != null)
         {
-            PhotonNetwork.Instantiate(PlayerPrefab.name, Vector3.zero, Quaternion.identity);
-            SceneManager.LoadScene(1);
+           SceneManager.LoadScene(1);
         }
         else
         {
-            Debug.LogError("Character not selected. Please select a character.");
+            Debug.Log("Karakter Seçilmedi. Karakter seçilmesi lazým!");
         }
     }
 }
