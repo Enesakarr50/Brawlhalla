@@ -123,7 +123,12 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         if (CurrentData != null)
         {
             GameObject Player = PhotonNetwork.Instantiate("Player", new Vector2(0, 0), new Quaternion(0, 0, 0, 0));
-            PhotonNetwork.LoadLevel(1);
+            PhotonNetwork.AutomaticallySyncScene = true;
+            if (PhotonNetwork.IsMasterClient)
+            { 
+
+                    PhotonNetwork.LoadLevel(1);
+            }
         }
         else
         {
