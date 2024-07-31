@@ -1,6 +1,5 @@
 using Photon.Pun;
 using UnityEngine;
-using System.Collections;
 
 public class mermi : MonoBehaviourPun
 {
@@ -13,22 +12,22 @@ public class mermi : MonoBehaviourPun
         _rigidbody2 = collision.gameObject.GetComponent<Rigidbody2D>();
         if (_rigidbody2 != null)
         {
-            if (photonView.IsMine)
+            // KnockBack ve Destroy iþlemlerini tüm oyunculara gönder
+            photonView.RPC("ApplyKnockBack", RpcTarget.All, _rigidbody2.position, knockBackForce);
+
+            // Eðer bu istemci nesnenin sahibi veya MasterClient ise nesneyi yok et
+            if (photonView.IsMine || PhotonNetwork.IsMasterClient)
             {
-                // KnockBack ve Destroy iþlemlerini tüm oyunculara gönder
-                photonView.RPC("ApplyKnockBackAndDestroy", RpcTarget.All, _rigidbody2.position, knockBackForce);
+                PhotonNetwork.Destroy(gameObject);
             }
         }
     }
 
     [PunRPC]
-    void ApplyKnockBackAndDestroy(Vector2 targetPosition, float knockBack)
+    void ApplyKnockBack(Vector2 targetPosition, float knockBack)
     {
         Vector2 pushDirection = targetPosition - (Vector2)transform.position;
         _rigidbody2.AddForce(pushDirection.normalized * knockBack, ForceMode2D.Impulse);
-
-        // Mermiyi yok et
-        PhotonNetwork.Destroy(gameObject);
     }
 
     public void SetKnockBack(float knockBack)
