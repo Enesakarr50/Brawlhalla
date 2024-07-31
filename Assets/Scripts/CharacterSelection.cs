@@ -123,9 +123,10 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     {
         if (CurrentData != null)
         {
-            GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+            GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(0, 0, 0), Quaternion.identity);
             DontDestroyOnLoad(player);
             SceneManager.LoadScene(1);
+            photonView.RPC("OnPlayerSpawned", RpcTarget.AllBuffered);
         }
         else
         {
