@@ -123,11 +123,15 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     {
         if (CurrentData != null)
         {
-            // "Player" adýnda bir prefab'ý Resources klasöründen yükleyin ve instantiate edin.
-            GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(0, 0, 0), Quaternion.identity);
-            DontDestroyOnLoad(player);
+            // Her oyuncu kendi karakterini Photon üzerinden instantiate eder.
+            GameObject player = PhotonNetwork.Instantiate(PlayerPrefab.name, Vector3.zero, Quaternion.identity);
 
-            // Sahne yüklemesi
+            // Oyuncu verilerini güncelle
+            Player playerComponent = player.GetComponent<Player>();
+            playerComponent.Character = CurrentData;
+
+            // Sahne geçiþi
+            DontDestroyOnLoad(player);
             SceneManager.LoadScene(1);
         }
         else
