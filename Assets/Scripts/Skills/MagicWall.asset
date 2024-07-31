@@ -15,7 +15,7 @@ MonoBehaviour:
   SkillName: MagicWall
   CoolDown: 2
   Duration: 0
-  ProjectileSpeed: 5
+  ProjectileSpeed: 8
   Radius: 0
   SkillIcon: {fileID: 0}
   ProjectilePrefeab: {fileID: 3361236618418220482, guid: 3a793dfe4fa1ee045878da38745b0d6f, type: 3}
