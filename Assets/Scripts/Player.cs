@@ -143,18 +143,35 @@ public class Player : MonoBehaviourPun
     private IEnumerator MagicWall()
     {
         isSkillOnCooldown = true;
-        photonView.RPC("SpawnMagicWall", RpcTarget.All, transform.position);
+
+        // Mouse pozisyonunu al ve z deðerini sýfýrla
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0f;
+
+        // Magic Wall'u mouse pozisyonuna yerleþtir
+        GameObject Mwall = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, mousePosition, Quaternion.identity);
+
+        // Ýsteðe baðlý: Eðer Magic Wall'un hareket etmesini istemiyorsanýz, aþaðýdaki satýrý kaldýrabilirsiniz.
+        Mwall.GetComponent<Rigidbody2D>().velocity = Vector2.zero; // Hareket etmemesi için hýzý sýfýrla
+
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 
     [PunRPC]
-    void SpawnMagicWall(Vector3 position)
+    void SpawnMagicWall(int WallID, Vector2 direction)
     {
-        StartCoroutine(MagicWallCoroutine(position));
-        // Magic Wall oluþturma mekaniði YAZILACAK
-        Debug.Log("Magic Wall spawned at " + position);
+        GameObject Mwall = PhotonView.Find(WallID).gameObject;
+
+        // Hareket etmemesi için hýzý sýfýrla
+        Mwall.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+        // Gerekirse baþka ayarlamalarý yapýn
+        StartCoroutine(MagicWallCoroutine(Mwall.transform.position));
+
+        Debug.Log("Magic Wall spawned at " + direction);
     }
+
 
     private IEnumerator MagicWallCoroutine(Vector3 position)
     {
@@ -192,6 +209,7 @@ public class Player : MonoBehaviourPun
 
         PhotonNetwork.Destroy(wall); // Duvarý yok et
     }
+
 
     private IEnumerator Catapult()
     {
