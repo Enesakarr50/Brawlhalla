@@ -120,3 +120,5 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         {
             ActiveSkillPlayer2.sprite = CurrentData._activeSkill;
         }
+    }
+}
