@@ -2,7 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
-public class mermi : MonoBehaviourPun
+public class mermi : MonoBehaviourPunCallbacks
 {
     public CharacterData _cD;
     public float kncokBack;

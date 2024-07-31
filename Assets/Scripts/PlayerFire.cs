@@ -1,6 +1,5 @@
 using Photon.Pun;
 using UnityEngine;
-
 public class PlayerFire : MonoBehaviourPun
 {
     public CharacterData _characterData;
@@ -12,10 +11,7 @@ public class PlayerFire : MonoBehaviourPun
     {
         _characterData = gameObject.GetComponent<Player>().Character;
         GameObject fp = GameObject.FindGameObjectWithTag("FirePoint");
-        if (fp != null)
-        {
-            firePoint = fp.transform;
-        }
+        firePoint = fp.transform;
         bulletPrefab = _characterData.projectilePrefab;
     }
 
@@ -23,10 +19,7 @@ public class PlayerFire : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            if (firePoint != null)
-            {
-                RotateFirePointToMouse();
-            }
+            RotateFirePointToMouse();
 
             if (Input.GetMouseButton(0) && Time.time >= nextFireTime) // Sol fare tuþu ile ateþ etme
             {
@@ -38,8 +31,6 @@ public class PlayerFire : MonoBehaviourPun
 
     void RotateFirePointToMouse()
     {
-        if (firePoint == null) return;
-
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f; // Z eksenini sýfýrla çünkü 2D oyunda Z ekseni kullanýlmaz
 
@@ -56,8 +47,6 @@ public class PlayerFire : MonoBehaviourPun
 
     void Shot()
     {
-        if (firePoint == null) return;
-
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f; // Z eksenini sýfýrla çünkü 2D oyunda Z ekseni kullanýlmaz
 
@@ -73,12 +62,9 @@ public class PlayerFire : MonoBehaviourPun
     void ShootFire(int bulletViewID, Vector2 dir)
     {
         GameObject bullet = PhotonView.Find(bulletViewID).gameObject;
-        if (bullet != null)
-        {
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            mermi mer = bullet.GetComponent<mermi>();
-            mer.kncokBack = _characterData.KnockBackRate;
-            rb.velocity = dir * _characterData.FireSpeed; // Mermiyi belirlenen yöne doðru fýrlatmak için
-        }
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        mermi mer = bullet.GetComponent<mermi>();
+        mer.kncokBack = _characterData.KnockBackRate;
+        rb.velocity = dir * _characterData.FireSpeed; // Mermiyi belirlenen yöne doðru fýrlatmak için
     }
 }
