@@ -134,6 +134,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     {
         if (CurrentData != null)
         {
+            Instantiate(PlayerPrefab, new Vector3(0, 2, 0), Quaternion.identity);
             photonView.RPC("SpawnPlayerRPC", RpcTarget.All);
         }
         else
@@ -144,7 +145,6 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SpawnPlayerRPC()
     {
-        PhotonNetwork.Instantiate("Player", new Vector3(0, 2, 0), Quaternion.identity);
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         DontDestroyOnLoad(players[0]);
         DontDestroyOnLoad(players[1]);
