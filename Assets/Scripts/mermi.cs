@@ -12,22 +12,30 @@ public class mermi : MonoBehaviourPun
         _rigidbody2 = collision.gameObject.GetComponent<Rigidbody2D>();
         if (_rigidbody2 != null)
         {
-            // KnockBack ve Destroy iþlemlerini tüm oyunculara gönder
-            photonView.RPC("ApplyKnockBack", RpcTarget.All, _rigidbody2.position, knockBackForce);
-
-            // Eðer bu istemci nesnenin sahibi veya MasterClient ise nesneyi yok et
-            if (photonView.IsMine || PhotonNetwork.IsMasterClient)
-            {
-                PhotonNetwork.Destroy(gameObject);
-            }
+            // KnockBack iþlemlerini tüm oyunculara gönder
+            photonView.RPC("ApplyKnockBack", RpcTarget.All, photonView.ViewID, _rigidbody2.position, knockBackForce);
         }
     }
 
     [PunRPC]
-    void ApplyKnockBack(Vector2 targetPosition, float knockBack)
+    void ApplyKnockBack(int viewID, Vector2 targetPosition, float knockBack)
     {
-        Vector2 pushDirection = targetPosition - (Vector2)transform.position;
-        _rigidbody2.AddForce(pushDirection.normalized * knockBack, ForceMode2D.Impulse);
+        PhotonView targetPhotonView = PhotonView.Find(viewID);
+        if (targetPhotonView != null)
+        {
+            Rigidbody2D targetRigidbody2D = targetPhotonView.GetComponent<Rigidbody2D>();
+            if (targetRigidbody2D != null)
+            {
+                Vector2 pushDirection = targetPosition - (Vector2)transform.position;
+                targetRigidbody2D.AddForce(pushDirection.normalized * knockBack, ForceMode2D.Impulse);
+            }
+
+            // Eðer bu istemci nesnenin sahibi ise nesneyi yok et
+            if (targetPhotonView.IsMine)
+            {
+                PhotonNetwork.Destroy(targetPhotonView.gameObject);
+            }
+        }
     }
 
     public void SetKnockBack(float knockBack)
