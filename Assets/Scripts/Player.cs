@@ -24,7 +24,7 @@ public class Player : MonoBehaviourPun
 
     private void Start()
     {
-
+        // Baþlangýç ayarlarý
         GameObject fp = GameObject.FindGameObjectWithTag("FirePoint");
         firePoint = fp.transform;
         PlayerSprite.sprite = Character.InGamePlayer;
@@ -143,35 +143,18 @@ public class Player : MonoBehaviourPun
     private IEnumerator MagicWall()
     {
         isSkillOnCooldown = true;
-
-        // Mouse pozisyonunu al ve z deðerini sýfýrla
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0f;
-
-        // Magic Wall'u mouse pozisyonuna yerleþtir
-        GameObject Mwall = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, mousePosition, Quaternion.identity);
-
-        // Ýsteðe baðlý: Eðer Magic Wall'un hareket etmesini istemiyorsanýz, aþaðýdaki satýrý kaldýrabilirsiniz.
-        Mwall.GetComponent<Rigidbody2D>().velocity = Vector2.zero; // Hareket etmemesi için hýzý sýfýrla
-
+        photonView.RPC("SpawnMagicWall", RpcTarget.All, transform.position);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 
     [PunRPC]
-    void SpawnMagicWall(int WallID, Vector2 direction)
+    void SpawnMagicWall(Vector3 position)
     {
-        GameObject Mwall = PhotonView.Find(WallID).gameObject;
-
-        // Hareket etmemesi için hýzý sýfýrla
-        Mwall.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-
-        // Gerekirse baþka ayarlamalarý yapýn
-        StartCoroutine(MagicWallCoroutine(Mwall.transform.position));
-
-        Debug.Log("Magic Wall spawned at " + direction);
+        StartCoroutine(MagicWallCoroutine(position));
+        // Magic Wall oluþturma mekaniði YAZILACAK
+        Debug.Log("Magic Wall spawned at " + position);
     }
-
 
     private IEnumerator MagicWallCoroutine(Vector3 position)
     {
@@ -209,7 +192,6 @@ public class Player : MonoBehaviourPun
 
         PhotonNetwork.Destroy(wall); // Duvarý yok et
     }
-
 
     private IEnumerator Catapult()
     {

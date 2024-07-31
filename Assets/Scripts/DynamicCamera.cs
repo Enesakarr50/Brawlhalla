@@ -1,6 +1,5 @@
 using UnityEngine;
 using Cinemachine;
-using Photon.Pun;
 
 public class DynamicCamera : MonoBehaviour
 {
@@ -15,7 +14,6 @@ public class DynamicCamera : MonoBehaviour
 
     private void Start()
     {
- 
         targetGroup = GetComponent<CinemachineTargetGroup>();
     }
 
