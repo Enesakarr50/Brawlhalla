@@ -27,10 +27,8 @@ public class mermi : MonoBehaviourPun
         Vector2 pushDirection = targetPosition - (Vector2)transform.position;
         _rigidbody2.AddForce(pushDirection.normalized * knockBackForce, ForceMode2D.Impulse);
 
-        if (photonView.IsMine)
-        {
-            StartCoroutine(DestroyAfterDelay());
-        }
+      
+      
     }
 
     public void SetKnockBack(float knockBack)
@@ -38,9 +36,5 @@ public class mermi : MonoBehaviourPun
         knockBackForce = knockBack;
     }
 
-    private IEnumerator DestroyAfterDelay()
-    {
-        yield return new WaitForSeconds(destroyDelay);
-        PhotonNetwork.Destroy(gameObject);
-    }
+   
 }
