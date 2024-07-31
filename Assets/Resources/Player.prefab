@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 4410094624726623612}
   - component: {fileID: -8738126842100428499}
   - component: {fileID: -3333134813933539815}
-  - component: {fileID: -6409457085504799117}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -180,7 +179,7 @@ MonoBehaviour:
   WeaponSprite: {fileID: 508826713387715937}
   movementSpeed: 0
   jumpForce: 0
-  Character: {fileID: 11400000, guid: d4fa449e8e33b594a8a2500ea779436f, type: 2}
+  Character: {fileID: 11400000, guid: c2d9c5c9f14cc4a49bb9f16a330fc413, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -208,7 +207,7 @@ MonoBehaviour:
   observableSearch: 0
   ObservedComponents:
   - {fileID: -8738126842100428499}
-  - {fileID: -6409457085504799117}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -243,22 +242,6 @@ MonoBehaviour:
   _characterData: {fileID: 0}
   bulletPrefab: {fileID: 0}
   firePoint: {fileID: 0}
---- !u!114 &-6409457085504799117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6881338112002502665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 9999
 --- !u!1 &8904628256227567946
 GameObject:
   m_ObjectHideFlags: 0
