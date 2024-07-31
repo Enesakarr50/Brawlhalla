@@ -143,7 +143,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     [PunRPC]
     public void OnPlayerSpawned()
     {
-        GameObject player = PhotonNetwork.Instantiate(PlayerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject player = Instantiate(PlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         DontDestroyOnLoad(player);
         SceneManager.LoadScene(1);
     }
