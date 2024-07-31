@@ -28,7 +28,7 @@ public class mermi : MonoBehaviourPun
             if (targetRigidbody2D != null)
             {
                 Vector2 pushDirection = targetPosition - (Vector2)transform.position;
-                targetRigidbody2D.velocity = pushDirection * knockBack;
+                targetRigidbody2D.velocity = pushDirection;
             }
 
             // Eðer bu istemci nesnenin sahibi ise nesneyi yok et
