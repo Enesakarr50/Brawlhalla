@@ -8,6 +8,8 @@ public class CharacterData : ScriptableObject
 
     public int CharacterSpeed;
     public int CharacterJumpForce;
+    
+    
     public int characterJumpCount;
 
 
