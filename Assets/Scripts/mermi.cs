@@ -6,7 +6,7 @@ public class mermi : MonoBehaviourPun
 {
     [SerializeField] private CharacterData _cD;
     private Rigidbody2D _rigidbody2;
-    private float  kncokBack; // Knockback kuvveti
+    private float knockBackForce = 10f; // Knockback kuvveti
     [SerializeField] private float destroyDelay = 2f;    // Yok edilme gecikmesi
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -25,7 +25,7 @@ public class mermi : MonoBehaviourPun
     void KnockBack(Vector2 targetPosition)
     {
         Vector2 pushDirection = targetPosition - (Vector2)transform.position;
-        _rigidbody2.AddForce(pushDirection.normalized *   kncokBack, ForceMode2D.Impulse);
+        _rigidbody2.AddForce(pushDirection.normalized * knockBackForce, ForceMode2D.Impulse);
 
         if (photonView.IsMine)
         {
@@ -33,7 +33,10 @@ public class mermi : MonoBehaviourPun
         }
     }
 
-    
+    public void SetKnockBack(float knockBack)
+    {
+        knockBackForce = knockBack;
+    }
 
     private IEnumerator DestroyAfterDelay()
     {
