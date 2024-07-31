@@ -7,7 +7,6 @@ public class mermi : MonoBehaviourPun
     [SerializeField] private CharacterData _cD;
     private Rigidbody2D _rigidbody2;
     private float knockBackForce = 1f; // Knockback kuvveti
-    [SerializeField] private float destroyDelay = 2f;    // Yok edilme gecikmesi
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -18,6 +17,9 @@ public class mermi : MonoBehaviourPun
             {
                 photonView.RPC("KnockBack", RpcTarget.All, _rigidbody2.position);
             }
+
+            // Mermi deðdiðinde yok et
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 
@@ -26,15 +28,10 @@ public class mermi : MonoBehaviourPun
     {
         Vector2 pushDirection = targetPosition - (Vector2)transform.position;
         _rigidbody2.AddForce(pushDirection.normalized * knockBackForce, ForceMode2D.Impulse);
-
-      
-      
     }
 
     public void SetKnockBack(float knockBack)
     {
         knockBackForce = knockBack;
     }
-
-   
 }
