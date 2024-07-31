@@ -124,7 +124,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         {
             GameObject Player = PhotonNetwork.Instantiate("Player", new Vector2(0, 0), new Quaternion(0, 0, 0, 0));
             DontDestroyOnLoad(Player);
-            photonView.RPC("spawn",RpcTarget.AllBuffered, Player);
+            photonView.RPC("spawn",RpcTarget.AllBuffered);
         }
         else
         {
@@ -133,7 +133,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void spawn(GameObject player)
+    public void spawn()
     {
         SceneManager.LoadScene(1);
     }
