@@ -60,7 +60,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
 
         // Send an RPC to update the UI for all players
         bool isMine = photonView.IsMine;
-        photonView.RPC("UpdateUIForAllPlayers", RpcTarget.All, isMine, index);
+        photonView.RPC("UpdateUIForAllPlayers", RpcTarget.AllBuffered, isMine, index);
     }
 
     [PunRPC]
@@ -122,11 +122,17 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     {
         if (CurrentData != null)
         {
-            SceneManager.LoadScene(1);
+            // Optional: Save the selected character data to Photon Player properties
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+        {
+            { "SelectedCharacterIndex", CurrentData.Index}
+        });
+
+            SceneManager.LoadScene(1); // Load the game scene
         }
         else
         {
-            Debug.Log("Karakter Seçilmedi. Karakter seçilmesi lazým!");
+            Debug.Log("No character selected! Please select a character.");
         }
     }
 }

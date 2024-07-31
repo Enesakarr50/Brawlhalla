@@ -15,6 +15,7 @@ MonoBehaviour:
   CharacterSpeed: 3
   CharacterJumpForce: 10
   characterJumpCount: 2
+  Index: 3
   FireRate: 0.25
   FireSpeed: 36.5
   KnockBackRate: 0.1
