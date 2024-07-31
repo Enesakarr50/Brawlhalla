@@ -1,46 +1,42 @@
 using Photon.Pun;
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class mermi : MonoBehaviourPun
 {
-    [SerializeField] private CharacterData _cD;
-    private Rigidbody2D _rigidbody2;
-    private float knockBackForce = 10f; // Knockback kuvveti
-    [SerializeField] private float destroyDelay = 2f;    // Yok edilme gecikmesi
-
+    public CharacterData _cD;
+    public float kncokBack;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _rigidbody2 = collision.gameObject.GetComponent<Rigidbody2D>();
-        if (_rigidbody2 != null)
+
+        if (collision.gameObject.CompareTag("Player"))
         {
-            if (photonView.IsMine)
+            PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
+            if (pv != null && !pv.IsMine)
             {
-                photonView.RPC("KnockBack", RpcTarget.All, _rigidbody2.position);
+                Vector3 pushDirection = new Vector3(collision.transform.position.x - transform.position.x, 0, 0);
+                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, pushDirection.normalized * kncokBack);
+
             }
         }
+
+
+        PhotonNetwork.Destroy(gameObject);
     }
 
     [PunRPC]
-    void KnockBack(Vector2 targetPosition)
+    void KnockBack(int viewID, Vector3 force)
     {
-        Vector2 pushDirection = targetPosition - (Vector2)transform.position;
-        _rigidbody2.AddForce(pushDirection.normalized * knockBackForce, ForceMode2D.Impulse);
-
-        if (photonView.IsMine)
+        PhotonView pv = PhotonView.Find(viewID);
+        if (pv != null)
         {
-            StartCoroutine(DestroyAfterDelay());
+            Rigidbody2D rb = pv.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.gameObject.transform.position = Vector3.Lerp(pv.gameObject.transform.position, pv.gameObject.transform.position + force, 1);
+
+
+            }
         }
-    }
-
-    public void SetKnockBack(float knockBack)
-    {
-        knockBackForce = knockBack;
-    }
-
-    private IEnumerator DestroyAfterDelay()
-    {
-        yield return new WaitForSeconds(destroyDelay);
-        PhotonNetwork.Destroy(gameObject);
     }
 }
