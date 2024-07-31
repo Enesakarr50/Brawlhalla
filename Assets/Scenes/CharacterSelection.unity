@@ -631,7 +631,7 @@ MonoBehaviour:
   CurrentData: {fileID: 0}
   PlayerPrefab: {fileID: 6881338112002502665, guid: cb4456c00c9997a4087fbb3fc8c2c82e, type: 3}
   CharImagePlayer1: {fileID: 598528023}
-  WeaponImagePlayer1: {fileID: 598528023}
+  WeaponImagePlayer1: {fileID: 1772411609}
   PassiveSkillPlayer1: {fileID: 1006478420}
   ActiveSkillPlayer1: {fileID: 558053947}
   CharImagePlayer2: {fileID: 790602394}
