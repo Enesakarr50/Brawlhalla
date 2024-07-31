@@ -149,5 +149,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         DontDestroyOnLoad(players[0]);
         DontDestroyOnLoad(players[1]);
         SceneManager.LoadScene(1);
+        players[0].transform.position = new Vector3(0,0,0);
+        players[1].transform.position = new Vector3(0,0,0);
     }
 }
