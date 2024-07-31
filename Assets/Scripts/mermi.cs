@@ -28,7 +28,7 @@ public class mermi : MonoBehaviourPun
             if (targetRigidbody2D != null)
             {
                 Vector2 pushDirection = targetPosition - (Vector2)transform.position;
-                targetRigidbody2D.AddForce(pushDirection.normalized * knockBack, ForceMode2D.Impulse);
+                targetRigidbody2D.velocity = pushDirection * knockBack;
             }
 
             // Eðer bu istemci nesnenin sahibi ise nesneyi yok et
