@@ -24,7 +24,7 @@ public class Player : MonoBehaviourPun
 
     private void Start()
     {
-        // Baþlangýç ayarlarý
+        GameObject player = PhotonNetwork.Instantiate("Player",new Vector3(0,0,0), new Quaternion(0,0,0,0));
         GameObject fp = GameObject.FindGameObjectWithTag("FirePoint");
         firePoint = fp.transform;
         PlayerSprite.sprite = Character.InGamePlayer;

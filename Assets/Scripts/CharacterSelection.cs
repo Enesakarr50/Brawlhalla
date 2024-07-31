@@ -61,6 +61,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         // Send an RPC to update the UI for all players
         bool isMine = photonView.IsMine;
         photonView.RPC("UpdateUIForAllPlayers", RpcTarget.All, isMine, index);
+        PlayerPrefs.SetInt("Index",index);
     }
 
     [PunRPC]
@@ -122,8 +123,6 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     {
         if (CurrentData != null)
         {
-            GameObject Player = PhotonNetwork.Instantiate("Player",new Vector2(0,0), new Quaternion(0,0,0,0));
-            DontDestroyOnLoad(Player);
             SceneManager.LoadScene(1);
         }
         else
