@@ -123,16 +123,18 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         if (CurrentData != null)
         {
             GameObject Player = PhotonNetwork.Instantiate("Player", new Vector2(0, 0), new Quaternion(0, 0, 0, 0));
-            if(Player.GetPhotonView() == photonView.IsMine)
-            {
-                Debug.Log("a");
-                DontDestroyOnLoad(Player);
-                SceneManager.LoadScene(1);
-            }
+            DontDestroyOnLoad(Player);
+            photonView.RPC("spawn",RpcTarget.All, Player);
         }
         else
         {
             Debug.Log("Karakter Seçilmedi. Karakter seçilmesi lazým!");
         }
+    }
+
+    [PunRPC]
+    public void spawn(GameObject player)
+    {
+        SceneManager.LoadScene(1);
     }
 }
