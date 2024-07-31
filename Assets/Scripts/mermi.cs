@@ -15,7 +15,7 @@ public class mermi : MonoBehaviourPun
         {
             if (photonView.IsMine)
             {
-                photonView.RPC("KnockBack", RpcTarget.All, _rigidbody2.position);
+                photonView.RPC("KnockBack", RpcTarget.AllBufferedViaServer, _rigidbody2.position);
             }
 
             // Mermi deðdiðinde yok et
