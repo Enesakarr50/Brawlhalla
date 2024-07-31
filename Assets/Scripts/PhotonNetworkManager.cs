@@ -24,9 +24,5 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions { MaxPlayers = 2 });
        
     }
-    public override void OnJoinedRoom()
-    {
-        PhotonNetwork.Instantiate("Player", new Vector3(0, 0, 0), Quaternion.identity);
-    }
 
 }
