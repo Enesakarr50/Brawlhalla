@@ -143,54 +143,53 @@ public class Player : MonoBehaviourPun
     private IEnumerator MagicWall()
     {
         isSkillOnCooldown = true;
-        photonView.RPC("SpawnMagicWall", RpcTarget.All, transform.position);
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0f;
+
+        // Fire point pozisyonundan mouse pozisyonuna doðru yönü hesapla
+        Vector2 direction = (mousePosition - firePoint.position).normalized;
+
+        // Arctan2 fonksiyonu ile açýyý hesapla
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // Bu açýyý kullanarak bir Quaternion oluþtur
+        Quaternion wallRotation = Quaternion.Euler(new Vector3(0, 0, angle + 130));
+
+        GameObject Wall = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, firePoint.position, wallRotation);
+        StartCoroutine(ScaleAndDestroyWall(Wall));
+        photonView.RPC("SpawnMagicWall", RpcTarget.All, Wall.GetPhotonView().ViewID, direction);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 
     [PunRPC]
-    void SpawnMagicWall(Vector3 position)
+    void SpawnMagicWall(int WallID, Vector2 direction)
     {
-        StartCoroutine(MagicWallCoroutine(position));
-        // Magic Wall oluþturma mekaniði YAZILACAK
-        Debug.Log("Magic Wall spawned at " + position);
+        GameObject wall = PhotonView.Find(WallID).gameObject;
+        Rigidbody2D rb = wall.GetComponent<Rigidbody2D>();
+        rb.velocity = direction * Character.Skill.ProjectileSpeed;
     }
 
-    private IEnumerator MagicWallCoroutine(Vector3 position)
+    private IEnumerator ScaleAndDestroyWall(GameObject wall)
     {
-        GameObject wall = PhotonNetwork.Instantiate("MagicWallPrefab", position, Quaternion.identity);
-        Rigidbody2D wallRb = wall.GetComponent<Rigidbody2D>();
-        if (wallRb != null)
-        {
-            wallRb.velocity = new Vector2(10f, 0f); // Duvarýn hýzýný ayarlayýn
-        }
+        // Baþlangýç ölçeði
+        Vector3 initialScale = new Vector3(0.1f, 0.1f, 1f);
+        // Hedef ölçek
+        Vector3 targetScale = new Vector3(0.5f, 0.5f, 1f);
 
-        Vector3 initialScale = wall.transform.localScale;
-        Vector3 targetScale = new Vector3(2f, 5f, 0f); // Büyüme hedefi
-
-        float growthDuration = 1f; // Büyüme süresi
+        float growthDuration = 2f; // Büyüme süresi
         float elapsedTime = 0f;
 
         while (elapsedTime < growthDuration)
         {
+            // Duvarýn ölçüsünü zamanla büyüt
             wall.transform.localScale = Vector3.Lerp(initialScale, targetScale, elapsedTime / growthDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Duvarý yarým ay þekline dönüþtürme
-        float halfMoonDuration = 1f; // Yarým ay olma süresi
-        elapsedTime = 0f;
-        Vector3 finalScale = new Vector3(0f, targetScale.y, targetScale.z);
-
-        while (elapsedTime < halfMoonDuration)
-        {
-            wall.transform.localScale = Vector3.Lerp(targetScale, finalScale, elapsedTime / halfMoonDuration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        PhotonNetwork.Destroy(wall); // Duvarý yok et
+        // Duvarý yok et
+        PhotonNetwork.Destroy(wall);
     }
 
     private IEnumerator Catapult()
