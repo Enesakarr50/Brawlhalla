@@ -61,7 +61,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         // Send an RPC to update the UI for all players
         bool isMine = photonView.IsMine;
         photonView.RPC("UpdateUIForAllPlayers", RpcTarget.AllBuffered, isMine, index);
-        PlayerPrefs.SetInt("Index", index);
+        PlayerPrefs.SetInt("Index",index);
     }
 
     [PunRPC]
@@ -123,6 +123,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     {
         if (CurrentData != null)
         {
+<<<<<<< Updated upstream
             // Her oyuncu kendi karakterini Photon üzerinden instantiate eder.
             GameObject player = PhotonNetwork.Instantiate(PlayerPrefab.name, Vector3.zero, Quaternion.identity);
 
@@ -133,6 +134,10 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
             // Sahne geçiþi
             DontDestroyOnLoad(player);
             SceneManager.LoadScene(1);
+=======
+            GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(0, 0, 0), Quaternion.identity);
+            SceneManager.MoveGameObjectToScene(GameObject.FindGameObjectWithTag("Player"),SceneManager.GetSceneByBuildIndex(1));
+>>>>>>> Stashed changes
         }
         else
         {
