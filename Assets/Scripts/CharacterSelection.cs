@@ -123,12 +123,21 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     {
         if (CurrentData != null)
         {
-            GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(0, 0, 0), Quaternion.identity);
-            SceneManager.MoveGameObjectToScene(GameObject.FindGameObjectWithTag("Player"),SceneManager.GetSceneByName("SampleScene"));
+            // Her oyuncu kendi karakterini Photon üzerinden instantiate eder.
+            GameObject player = PhotonNetwork.Instantiate(PlayerPrefab.name, Vector3.zero, Quaternion.identity);
+
+            // Oyuncu verilerini güncelle
+            Player playerComponent = player.GetComponent<Player>();
+            playerComponent.Character = CurrentData;
+
+            // Sahne geçiþi
+            DontDestroyOnLoad(player);
+            SceneManager.LoadScene(1);
         }
         else
         {
             Debug.Log("Karakter Seçilmedi. Karakter seçilmesi lazým!");
         }
     }
+
 }
