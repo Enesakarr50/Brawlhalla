@@ -6,7 +6,7 @@ public class mermi : MonoBehaviourPun
 {
     [SerializeField] private CharacterData _cD;
     private Rigidbody2D _rigidbody2;
-    private float knockBackForce = 10f; // Knockback kuvveti
+    private float knockBackForce = 1f; // Knockback kuvveti
     [SerializeField] private float destroyDelay = 2f;    // Yok edilme gecikmesi
 
     private void OnCollisionEnter2D(Collision2D collision)
