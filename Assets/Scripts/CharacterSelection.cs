@@ -123,7 +123,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         if (CurrentData != null)
         {
            
-            photonView.RPC("spawn",RpcTarget.AllBuffered);
+            photonView.RPC("spawn",RpcTarget.OthersBuffered);
         }
         else
         {
