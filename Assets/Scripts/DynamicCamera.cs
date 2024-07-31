@@ -15,7 +15,7 @@ public class DynamicCamera : MonoBehaviour
 
     private void Start()
     {
-
+        GameObject player = PhotonNetwork.Instantiate( "Player", new Vector3(0, 0, 0), Quaternion.identity);
         targetGroup = GetComponent<CinemachineTargetGroup>();
     }
 

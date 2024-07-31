@@ -132,18 +132,11 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     {
         if (CurrentData != null)
         {
-            OnPlayerSpawned();
+           SceneManager.LoadScene(1);
         }
         else
         {
             Debug.Log("Karakter Seçilmedi. Karakter seçilmesi lazým!");
         }
-    }
-
-    public void OnPlayerSpawned()
-    {
-        GameObject player = PhotonNetwork.Instantiate(PlayerPrefab.name, new Vector3(0, 0, 0), Quaternion.identity);
-        DontDestroyOnLoad(player);
-        SceneManager.LoadScene(1);
     }
 }
