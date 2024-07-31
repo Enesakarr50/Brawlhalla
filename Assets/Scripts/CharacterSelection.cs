@@ -1,6 +1,4 @@
 using Photon.Pun;
-using System.ComponentModel;
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -22,15 +20,6 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     public Image WeaponImagePlayer2;
     public Image PassiveSkillPlayer2;
     public Image ActiveSkillPlayer2;
-
-    private void Start()
-    {
-        int selectedIndex = PlayerPrefs.GetInt("Index", -1);
-        if (selectedIndex != -1)
-        {
-            ChooseChar(selectedIndex);
-        }
-    }
 
     // Seçim metodu
     public void ChooseChar(int index)
@@ -71,8 +60,8 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
 
         // Send an RPC to update the UI for all players
         bool isMine = photonView.IsMine;
-        photonView.RPC("UpdateUIForAllPlayers", RpcTarget.AllBuffered, isMine, index);
-        PlayerPrefs.SetInt("Index", index);
+        photonView.RPC("UpdateUIForAllPlayers", RpcTarget.All, isMine, index);
+        PlayerPrefs.SetInt("Index",index);
     }
 
     [PunRPC]
@@ -134,18 +123,20 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     {
         if (CurrentData != null)
         {
-            GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(0, 2, 0), Quaternion.identity);
-            photonView.RPC("SpawnPlayerRPC", RpcTarget.All,player);
+            GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(0, 0, 0), Quaternion.identity);
+            DontDestroyOnLoad(player);
+            photonView.RPC("OnPlayerSpawned", RpcTarget.AllBuffered);
         }
         else
         {
             Debug.Log("Karakter Seçilmedi. Karakter seçilmesi lazým!");
         }
     }
+
     [PunRPC]
-    public void SpawnPlayerRPC(GameObject player)
+
+    public void OnPlayerSpawned()
     {
-        DontDestroyOnLoad(player);
         SceneManager.LoadScene(1);
     }
 }
