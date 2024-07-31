@@ -1,42 +1,43 @@
 using Photon.Pun;
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
 public class mermi : MonoBehaviourPun
 {
-    public CharacterData _cD;
-    public float kncokBack;
+    [SerializeField] private CharacterData _cD;
+    private Rigidbody2D _rigidbody2;
+    private float  kncokBack; // Knockback kuvveti
+    [SerializeField] private float destroyDelay = 2f;    // Yok edilme gecikmesi
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-        if (collision.gameObject.CompareTag("Player"))
+        _rigidbody2 = collision.gameObject.GetComponent<Rigidbody2D>();
+        if (_rigidbody2 != null)
         {
-            PhotonView pv = collision.gameObject.GetComponent<PhotonView>();
-            if (pv != null && !pv.IsMine)
+            if (photonView.IsMine)
             {
-                Vector3 pushDirection = new Vector3(collision.transform.position.x - transform.position.x, 0, 0);
-                photonView.RPC("KnockBack", RpcTarget.All, pv.ViewID, pushDirection.normalized * kncokBack);
-
+                photonView.RPC("KnockBack", RpcTarget.All, _rigidbody2.position);
             }
         }
-
-
-        PhotonNetwork.Destroy(gameObject);
     }
 
     [PunRPC]
-    void KnockBack(int viewID, Vector3 force)
+    void KnockBack(Vector2 targetPosition)
     {
-        PhotonView pv = PhotonView.Find(viewID);
-        if (pv != null)
+        Vector2 pushDirection = targetPosition - (Vector2)transform.position;
+        _rigidbody2.AddForce(pushDirection.normalized *   kncokBack, ForceMode2D.Impulse);
+
+        if (photonView.IsMine)
         {
-            Rigidbody2D rb = pv.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                rb.gameObject.transform.position = Vector3.Lerp(pv.gameObject.transform.position, pv.gameObject.transform.position + force, 1);
-
-
-            }
+            StartCoroutine(DestroyAfterDelay());
         }
+    }
+
+    
+
+    private IEnumerator DestroyAfterDelay()
+    {
+        yield return new WaitForSeconds(destroyDelay);
+        PhotonNetwork.Destroy(gameObject);
     }
 }
