@@ -1,4 +1,4 @@
-using Photon.Pun;
+ï»¿using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,7 +21,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     public Image PassiveSkillPlayer2;
     public Image ActiveSkillPlayer2;
 
-    // Seçim metodu
+    // SeÃ§im metodu
     public void ChooseChar(int index)
     {
         if (Characters == null || Characters.Length == 0)
@@ -128,7 +128,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.Log("Karakter Seçilmedi. Karakter seçilmesi lazým!");
+            Debug.Log("Karakter SeÃ§ilmedi. Karakter seÃ§ilmesi lazÃ½m!");
         }
     }
 }
