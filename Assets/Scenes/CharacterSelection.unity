@@ -517,9 +517,9 @@ GameObject:
   - component: {fileID: 711982762}
   - component: {fileID: 711982761}
   - component: {fileID: 711982760}
-  - component: {fileID: 711982763}
   - component: {fileID: 711982764}
   - component: {fileID: 711982765}
+  - component: {fileID: 711982766}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -577,33 +577,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &711982763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 711982759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66347ed2c09200945b8535210d29659a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Characters:
-  - {fileID: 11400000, guid: c2d9c5c9f14cc4a49bb9f16a330fc413, type: 2}
-  - {fileID: 11400000, guid: d4fa449e8e33b594a8a2500ea779436f, type: 2}
-  - {fileID: 11400000, guid: 0ee842e0c06b7d941885e7a8eb1680a0, type: 2}
-  - {fileID: 11400000, guid: 8e916404513ebe94d90847a38d6bd899, type: 2}
-  CurrentData: {fileID: 0}
-  PlayerPrefab: {fileID: 6881338112002502665, guid: cb4456c00c9997a4087fbb3fc8c2c82e, type: 3}
-  CharImagePlayer1: {fileID: 598528023}
-  WeaponImagePlayer1: {fileID: 1772411609}
-  PassiveSkillPlayer1: {fileID: 1006478420}
-  ActiveSkillPlayer1: {fileID: 558053947}
-  CharImagePlayer2: {fileID: 790602394}
-  WeaponImagePlayer2: {fileID: 9656063}
-  PassiveSkillPlayer2: {fileID: 1432092729}
-  ActiveSkillPlayer2: {fileID: 794992047}
 --- !u!114 &711982764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,6 +611,33 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &711982766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711982759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66347ed2c09200945b8535210d29659a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Characters:
+  - {fileID: 11400000, guid: c2d9c5c9f14cc4a49bb9f16a330fc413, type: 2}
+  - {fileID: 11400000, guid: d4fa449e8e33b594a8a2500ea779436f, type: 2}
+  - {fileID: 11400000, guid: 0ee842e0c06b7d941885e7a8eb1680a0, type: 2}
+  - {fileID: 11400000, guid: 8e916404513ebe94d90847a38d6bd899, type: 2}
+  CurrentData: {fileID: 0}
+  PlayerPrefab: {fileID: 6881338112002502665, guid: cb4456c00c9997a4087fbb3fc8c2c82e, type: 3}
+  CharImagePlayer1: {fileID: 598528023}
+  WeaponImagePlayer1: {fileID: 598528023}
+  PassiveSkillPlayer1: {fileID: 1006478420}
+  ActiveSkillPlayer1: {fileID: 558053947}
+  CharImagePlayer2: {fileID: 790602394}
+  WeaponImagePlayer2: {fileID: 9656063}
+  PassiveSkillPlayer2: {fileID: 1432092729}
+  ActiveSkillPlayer2: {fileID: 794992047}
 --- !u!1 &790602392
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,7 +891,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 711982763}
+      - m_Target: {fileID: 711982766}
         m_TargetAssemblyTypeName: CharacterSelection, Assembly-CSharp
         m_MethodName: ChooseChar
         m_Mode: 3
@@ -1394,7 +1394,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 711982763}
+      - m_Target: {fileID: 711982766}
         m_TargetAssemblyTypeName: CharacterSelection, Assembly-CSharp
         m_MethodName: ChooseChar
         m_Mode: 3
@@ -1724,7 +1724,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 711982763}
+      - m_Target: {fileID: 711982766}
         m_TargetAssemblyTypeName: CharacterSelection, Assembly-CSharp
         m_MethodName: ChooseChar
         m_Mode: 3
@@ -1856,7 +1856,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 711982763}
+      - m_Target: {fileID: 711982766}
         m_TargetAssemblyTypeName: CharacterSelection, Assembly-CSharp
         m_MethodName: SpawnPlayer
         m_Mode: 1
@@ -2084,7 +2084,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 711982763}
+      - m_Target: {fileID: 711982766}
         m_TargetAssemblyTypeName: CharacterSelection, Assembly-CSharp
         m_MethodName: ChooseChar
         m_Mode: 3
