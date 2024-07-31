@@ -52,12 +52,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
             return;
         }
 
-        if (PlayerPrefab == null)
-        {
-            Debug.LogError("PlayerPrefab is null.");
-            return;
-        }
-
+        // Karakter verisini Prefab'a aktarma
         Player playerComponent = PlayerPrefab.GetComponent<Player>();
         if (playerComponent == null)
         {
@@ -68,8 +63,7 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         playerComponent.Character = CurrentData;
 
         // Send an RPC to update the UI for all players
-        bool isMine = photonView.IsMine;
-        photonView.RPC("UpdateUIForAllPlayers", RpcTarget.AllBuffered, isMine, index);
+        photonView.RPC("UpdateUIForAllPlayers", RpcTarget.AllBuffered, photonView.IsMine, index);
         PlayerPrefs.SetInt("Index", index);
     }
 
@@ -126,17 +120,3 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         {
             ActiveSkillPlayer2.sprite = CurrentData._activeSkill;
         }
-    }
-
-    public void SpawnPlayer()
-    {
-        if (CurrentData != null)
-        {
-           SceneManager.LoadScene(1);
-        }
-        else
-        {
-            Debug.Log("Karakter Seçilmedi. Karakter seçilmesi lazým!");
-        }
-    }
-}
