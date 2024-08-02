@@ -10,7 +10,7 @@ public class CharacterSelection : SimulationBehaviour
     public CharacterData[] Characters;
     public CharacterData CurrentData;
     public GameObject PlayerPrefab;
-
+    //
     // Player 1 UI elements
     public Image CharImagePlayer1;
     public Image WeaponImagePlayer1;
