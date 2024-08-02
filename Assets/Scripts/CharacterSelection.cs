@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Fusion;
 using Fusion.Sockets;
-using static Unity.Collections.Unicode;
 
 public class CharacterSelection : SimulationBehaviour
 {
@@ -115,9 +114,27 @@ public class CharacterSelection : SimulationBehaviour
             ActiveSkillPlayer2.sprite = CurrentData._activeSkill;
         }
     }
+    public void ChangeScene()
+    {
+        
+        if (Runner == null)
+        {
+            Debug.LogError("Runner is null.");
+            return;
+        }
 
-    
+        if (Runner.IsSceneAuthority)
+        {
+            Runner.LoadScene(SceneRef.FromIndex(1), LoadSceneMode.Additive);
+        }
+        else
+        {
+            Debug.LogError("Runner is not scene authority.");
+        }
+    }
 
-   
+
+
+
 }
     
