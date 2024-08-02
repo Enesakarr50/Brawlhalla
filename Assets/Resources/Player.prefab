@@ -160,7 +160,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -180,7 +180,7 @@ MonoBehaviour:
   WeaponSprite: {fileID: 508826713387715937}
   movementSpeed: 0
   jumpForce: 0
-  Character: {fileID: 11400000, guid: d4fa449e8e33b594a8a2500ea779436f, type: 2}
+  Character: {fileID: 11400000, guid: c2d9c5c9f14cc4a49bb9f16a330fc413, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -208,7 +208,6 @@ MonoBehaviour:
   observableSearch: 0
   ObservedComponents:
   - {fileID: -841796948821208018}
-  - {fileID: -8443481228681491997}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -250,7 +249,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6881338112002502665}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 

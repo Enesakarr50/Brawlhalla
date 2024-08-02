@@ -1,8 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using Photon.Pun;
-using UnityEngine.UIElements;
-using Photon.Pun.Demo.Asteroids;
 
 public class Player : MonoBehaviourPun
 {
@@ -24,7 +22,6 @@ public class Player : MonoBehaviourPun
 
     private void Start()
     {
-        // Baþlangýç ayarlarý
         GameObject fp = GameObject.FindGameObjectWithTag("FirePoint");
         firePoint = fp.transform;
         PlayerSprite.sprite = Character.InGamePlayer;
@@ -35,12 +32,19 @@ public class Player : MonoBehaviourPun
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
         if (photonView.IsMine)
         {
-            // Yatay hareket
-            rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * movementSpeed, rb2d.velocity.y);
+            // Yön deðiþtirme
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if (Input.GetAxis("Horizontal") < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
 
             // Zýplama ve çift zýplama
             if (Input.GetKeyDown(KeyCode.W) && jumpCount < maxJumpCount)
@@ -61,22 +65,21 @@ public class Player : MonoBehaviourPun
                 StartCoroutine(DashCount());
             }
 
-            // Yön deðiþtirme
-            if (Input.GetAxis("Horizontal") > 0)
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-            else if (Input.GetAxis("Horizontal") < 0)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
-
             // Zemin kontrolü
             isGrounded = Physics2D.OverlapCircle(transform.position, 0.5f, groundLayer);
             if (isGrounded)
             {
                 jumpCount = 0; // Zýplama sýfýrlama
             }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (photonView.IsMine)
+        {
+            // Yatay hareket
+            rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * movementSpeed, rb2d.velocity.y);
         }
     }
 
@@ -125,7 +128,6 @@ public class Player : MonoBehaviourPun
         Vector2 direction = (mousePosition - transform.position).normalized;
         mousePosition.z = 0f;
 
-
         GameObject bazuka = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, firePoint.position, firePoint.rotation);
         photonView.RPC("SpawnBazuka", RpcTarget.All, bazuka.GetPhotonView().ViewID, direction);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
@@ -146,13 +148,8 @@ public class Player : MonoBehaviourPun
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f;
 
-        // Fire point pozisyonundan mouse pozisyonuna doðru yönü hesapla
         Vector2 direction = (mousePosition - firePoint.position).normalized;
-
-        // Arctan2 fonksiyonu ile açýyý hesapla
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // Bu açýyý kullanarak bir Quaternion oluþtur
         Quaternion wallRotation = Quaternion.Euler(new Vector3(0, 0, angle + 130));
 
         GameObject Wall = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, firePoint.position, wallRotation);
@@ -172,38 +169,31 @@ public class Player : MonoBehaviourPun
 
     private IEnumerator ScaleAndDestroyWall(GameObject wall)
     {
-        // Baþlangýç ölçeði
         Vector3 initialScale = new Vector3(0.1f, 0.1f, 1f);
-        // Hedef ölçek
         Vector3 targetScale = new Vector3(0.5f, 0.5f, 1f);
-
-        float growthDuration = 2f; // Büyüme süresi
+        float growthDuration = 2f;
         float elapsedTime = 0f;
 
         while (elapsedTime < growthDuration)
         {
-            // Duvarýn ölçüsünü zamanla büyüt
             wall.transform.localScale = Vector3.Lerp(initialScale, targetScale, elapsedTime / growthDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Duvarý yok et
         PhotonNetwork.Destroy(wall);
     }
 
     private IEnumerator Catapult()
     {
         isSkillOnCooldown = true;
-
-        
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         int targetViewID = -1;
 
         foreach (GameObject player in players)
         {
             PhotonView pv = player.GetComponent<PhotonView>();
-            if (pv != null && !pv.IsMine) 
+            if (pv != null && !pv.IsMine)
             {
                 targetViewID = pv.ViewID;
                 break;
@@ -224,28 +214,19 @@ public class Player : MonoBehaviourPun
     {
         for (int i = 0; i < 3; i++)
         {
-            // Hedef oyuncunun PhotonView'ini bul
             PhotonView targetView = PhotonView.Find(targetViewID);
             if (targetView != null)
             {
-                // Hedef oyuncunun anlýk pozisyonunu al
                 Vector3 playerPosition = targetView.transform.position;
-
-                // Spawn pozisyonunu hesapla (oyuncunun üstünden)
                 Vector3 spawnPosition = new Vector3(playerPosition.x, playerPosition.y + 10f, 0f);
 
-                // Nesneyi spawnla
                 GameObject fallingObject = Instantiate(pop, spawnPosition, Quaternion.identity);
-
-                // Aþaðýya düþme mekaniði
                 Rigidbody2D rb = fallingObject.GetComponent<Rigidbody2D>();
                 if (rb != null)
                 {
                     rb.gravityScale = 1f;
                 }
             }
-
-            // Yarým saniye bekle
             yield return new WaitForSeconds(5f);
         }
     }
