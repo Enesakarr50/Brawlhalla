@@ -22,6 +22,14 @@ public class Player : MonoBehaviourPun
 
     private void Start()
     {
+
+        PhotonNetwork.NetworkingClient.LoadBalancingPeer.NetworkSimulationSettings.IncomingLag = 100; // Gelen paketler için gecikme (milisaniye)
+        PhotonNetwork.NetworkingClient.LoadBalancingPeer.NetworkSimulationSettings.OutgoingLag = 100; // Giden paketler için gecikme (milisaniye)
+        PhotonNetwork.NetworkingClient.LoadBalancingPeer.NetworkSimulationSettings.IncomingJitter = 10; // Gelen paketler için dalgalanma (milisaniye)
+        PhotonNetwork.NetworkingClient.LoadBalancingPeer.NetworkSimulationSettings.OutgoingJitter = 10; // Giden paketler için dalgalanma (milisaniye)
+        PhotonNetwork.NetworkingClient.LoadBalancingPeer.NetworkSimulationSettings.IncomingLossPercentage = 1; // Gelen paketler için paket kaybý (yüzde)
+        PhotonNetwork.NetworkingClient.LoadBalancingPeer.NetworkSimulationSettings.OutgoingLossPercentage = 1; // Giden paketler için paket kaybý (yüzde)
+
         GameObject fp = GameObject.FindGameObjectWithTag("FirePoint");
         firePoint = fp.transform;
         PlayerSprite.sprite = Character.InGamePlayer;
