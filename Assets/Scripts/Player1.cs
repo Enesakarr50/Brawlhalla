@@ -37,8 +37,8 @@ public class Player : MonoBehaviourPun
 
     void Update()
     {
-        // photonview kontrolü
-      if (photonView.IsMine)
+        // NetworkObject kontrolü
+      if (NetworkObject.IsMine)
         {
             
         
@@ -114,10 +114,10 @@ public class Player : MonoBehaviourPun
     }
     private IEnumerator Invincibility()
     {
-        photonView.RPC("SetInvincibility", RpcTarget.OthersBuffered, true);
+        NetworkObject.RPC("SetInvincibility", Rpc.OthersBuffered, true);
         gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 0.2f);
         yield return new WaitForSeconds(Character.Skill.Duration);
-        photonView.RPC("SetInvincibility", RpcTarget.OthersBuffered, false);
+        NetworkObject.RPC("SetInvincibility", Rpc.OthersBuffered, false);
         gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 1f);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
@@ -162,9 +162,9 @@ public class Player : MonoBehaviourPun
     private IEnumerator DashCount()
     {
 
-        photonView.RPC("SetDash", RpcTarget.AllBuffered, true);
+        NetworkObject.RPC("SetDash", Rpc.AllBuffered, true);
         yield return new WaitForSeconds(2);
-        photonView.RPC("SetDash", RpcTarget.AllBuffered, false);
+        NetworkObject.RPC("SetDash", Rpc.AllBuffered, false);
         isDashing = false;
     }
 

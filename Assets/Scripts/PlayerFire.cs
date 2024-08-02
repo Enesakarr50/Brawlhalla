@@ -1,7 +1,6 @@
-using Photon.Pun;
 using UnityEngine;
 
-public class PlayerFire : MonoBehaviourPun
+public class PlayerFire : MonoBehaviour
 {
     public CharacterData _characterData;
     public GameObject bulletPrefab; // Mermi prefab'ý
@@ -18,15 +17,12 @@ public class PlayerFire : MonoBehaviourPun
 
     void Update()
     {
-        if (photonView.IsMine)
-        {
-            RotateFirePointToMouse();
+        RotateFirePointToMouse();
 
-            if (Input.GetMouseButton(0) && Time.time >= nextFireTime) // Sol fare tuþu ile ateþ etme
-            {
-                nextFireTime = Time.time + _characterData.FireRate;
-                Shot();
-            }
+        if (Input.GetMouseButton(0) && Time.time >= nextFireTime) // Sol fare tuþu ile ateþ etme
+        {
+            nextFireTime = Time.time + _characterData.FireRate;
+            Shot();
         }
     }
 
@@ -54,18 +50,13 @@ public class PlayerFire : MonoBehaviourPun
         // Ateþ etme yönünü belirle
         Vector2 direction = (mousePosition - firePoint.position).normalized;
 
-        // Mermiyi oluþtur ve RPC ile ateþ etme bilgisini tüm oyunculara gönder
-        GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
-        photonView.RPC("ShootFire", RpcTarget.All, bullet.GetPhotonView().ViewID, direction, _characterData.FireSpeed, _characterData.KnockBackRate);
-    }
+        // Mermiyi oluþtur
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
-    [PunRPC]
-    void ShootFire(int bulletViewID, Vector2 dir, float fireSpeed, float knockBackRate)
-    {
-        GameObject bullet = PhotonView.Find(bulletViewID).gameObject;
+        // Mermiye hýz ve yön ver
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        mermi mer = bullet.GetComponent<mermi>();
-        mer.SetKnockBack(knockBackRate); // Knockback ayarýný yapýlandýr
-        rb.velocity = dir * fireSpeed; // Mermiyi belirlenen yöne doðru fýrlatmak için
+        Mermi mer = bullet.GetComponent<Mermi>();
+        mer.SetKnockBack(_characterData.KnockBackRate); // Knockback ayarýný yapýlandýr
+        rb.velocity = direction * _characterData.FireSpeed; // Mermiyi belirlenen yöne doðru fýrlatmak için
     }
 }

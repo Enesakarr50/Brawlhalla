@@ -1,9 +1,11 @@
-﻿using Photon.Pun;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Fusion;
+using Fusion.Sockets;
+using static Unity.Collections.Unicode;
 
-public class CharacterSelection : MonoBehaviourPunCallbacks
+public class CharacterSelection : SimulationBehaviour
 {
     public CharacterData[] Characters;
     public CharacterData CurrentData;
@@ -58,16 +60,12 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
 
         playerComponent.Character = CurrentData;
 
-        // Send an RPC to update the UI for all players
-        bool isMine = photonView.IsMine;
-        photonView.RPC("UpdateUIForAllPlayers", RpcTarget.AllBuffered, isMine, index);
+        // Update UI for the current player
+        UpdateUI(isMine: true);
     }
 
-    [PunRPC]
-    private void UpdateUIForAllPlayers(bool isMine, int index)
+    private void UpdateUI(bool isMine)
     {
-        CurrentData = Characters[index];
-
         if (isMine)
         {
             UpdateUIForPlayer1();
@@ -118,24 +116,8 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         }
     }
 
-    public void SpawnPlayer()
-    {
-        if (CurrentData != null)
-        {
-           
-            photonView.RPC("spawn",RpcTarget.AllViaServer);
-        }
-        else
-        {
-            Debug.Log("Karakter Seçilmedi. Karakter seçilmesi lazým!");
-        }
-    }
+    
 
-    [PunRPC]
-    public void spawn()
-    {
-        GameObject Player = PhotonNetwork.Instantiate("Player", new Vector2(0, 0), new Quaternion(0, 0, 0, 0));
-        DontDestroyOnLoad(Player);
-        SceneManager.LoadScene(1);
-    }
+   
 }
+    

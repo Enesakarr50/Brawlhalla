@@ -1,8 +1,7 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
-using Photon.Pun;
 
-public class Player : MonoBehaviourPun
+public class Player : MonoBehaviour
 {
     public SpriteRenderer PlayerSprite;
     public SpriteRenderer WeaponSprite;
@@ -22,14 +21,6 @@ public class Player : MonoBehaviourPun
 
     private void Start()
     {
-
-        PhotonNetwork.NetworkingClient.LoadBalancingPeer.NetworkSimulationSettings.IncomingLag = 100; // Gelen paketler için gecikme (milisaniye)
-        PhotonNetwork.NetworkingClient.LoadBalancingPeer.NetworkSimulationSettings.OutgoingLag = 100; // Giden paketler için gecikme (milisaniye)
-        PhotonNetwork.NetworkingClient.LoadBalancingPeer.NetworkSimulationSettings.IncomingJitter = 10; // Gelen paketler için dalgalanma (milisaniye)
-        PhotonNetwork.NetworkingClient.LoadBalancingPeer.NetworkSimulationSettings.OutgoingJitter = 10; // Giden paketler için dalgalanma (milisaniye)
-        PhotonNetwork.NetworkingClient.LoadBalancingPeer.NetworkSimulationSettings.IncomingLossPercentage = 1; // Gelen paketler için paket kaybý (yüzde)
-        PhotonNetwork.NetworkingClient.LoadBalancingPeer.NetworkSimulationSettings.OutgoingLossPercentage = 1; // Giden paketler için paket kaybý (yüzde)
-
         GameObject fp = GameObject.FindGameObjectWithTag("FirePoint");
         firePoint = fp.transform;
         PlayerSprite.sprite = Character.InGamePlayer;
@@ -42,53 +33,47 @@ public class Player : MonoBehaviourPun
 
     private void Update()
     {
-        if (photonView.IsMine)
+        // YÃ¶n deÄŸiÅŸtirme
+        if (Input.GetAxis("Horizontal") > 0)
         {
-            // Yön deðiþtirme
-            if (Input.GetAxis("Horizontal") > 0)
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-            else if (Input.GetAxis("Horizontal") < 0)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (Input.GetAxis("Horizontal") < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
 
-            // Zýplama ve çift zýplama
-            if (Input.GetKeyDown(KeyCode.W) && jumpCount < maxJumpCount)
-            {
-                rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
-                jumpCount++;
-            }
+        // ZÄ±plama ve Ã§ift zÄ±plama
+        if (Input.GetKeyDown(KeyCode.W) && jumpCount < maxJumpCount)
+        {
+            rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
+            jumpCount++;
+        }
 
-            // Skill kullanýmý
-            if (Input.GetKeyDown(KeyCode.E) && Character.Skill != null && !isSkillOnCooldown)
-            {
-                UseSkill();
-            }
+        // Skill kullanÄ±mÄ±
+        if (Input.GetKeyDown(KeyCode.E) && Character.Skill != null && !isSkillOnCooldown)
+        {
+            UseSkill();
+        }
 
-            // Dash
-            if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
-            {
-                StartCoroutine(DashCount());
-            }
+        // Dash
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
+        {
+            StartCoroutine(DashCount());
+        }
 
-            // Zemin kontrolü
-            isGrounded = Physics2D.OverlapCircle(transform.position, 0.5f, groundLayer);
-            if (isGrounded)
-            {
-                jumpCount = 0; // Zýplama sýfýrlama
-            }
+        // Zemin kontrolÃ¼
+        isGrounded = Physics2D.OverlapCircle(transform.position, 0.5f, groundLayer);
+        if (isGrounded)
+        {
+            jumpCount = 0; // ZÄ±plama sÄ±fÄ±rlama
         }
     }
 
     private void FixedUpdate()
     {
-        if (photonView.IsMine)
-        {
-            // Yatay hareket
-            rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * movementSpeed, rb2d.velocity.y);
-        }
+        // Yatay hareket
+        rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * movementSpeed, rb2d.velocity.y);
     }
 
     private void UseSkill()
@@ -112,21 +97,11 @@ public class Player : MonoBehaviourPun
 
     private IEnumerator Invincibility()
     {
-        photonView.RPC("SetInvincibility", RpcTarget.OthersBuffered, true);
         PlayerSprite.material.color = new Color(1, 1, 1, 0.2f);
         yield return new WaitForSeconds(Character.Skill.Duration);
-        photonView.RPC("SetInvincibility", RpcTarget.OthersBuffered, false);
         PlayerSprite.material.color = new Color(1, 1, 1, 1f);
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
-    }
-
-    [PunRPC]
-    void SetInvincibility(bool isInvincible)
-    {
-        isSkillOnCooldown = isInvincible;
-        PlayerSprite.enabled = !isInvincible;
-        WeaponSprite.enabled = !isInvincible;
     }
 
     private IEnumerator BazukaSpawn()
@@ -136,18 +111,12 @@ public class Player : MonoBehaviourPun
         Vector2 direction = (mousePosition - transform.position).normalized;
         mousePosition.z = 0f;
 
-        GameObject bazuka = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, firePoint.position, firePoint.rotation);
-        photonView.RPC("SpawnBazuka", RpcTarget.All, bazuka.GetPhotonView().ViewID, direction);
+        GameObject bazuka = Instantiate(Character.Skill.ProjectilePrefeab, firePoint.position, firePoint.rotation);
+        Rigidbody2D rb = bazuka.GetComponent<Rigidbody2D>();
+        rb.velocity = direction * Character.Skill.ProjectileSpeed;
+
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
-    }
-
-    [PunRPC]
-    void SpawnBazuka(int bazukaID, Vector2 direction)
-    {
-        GameObject bazuka = PhotonView.Find(bazukaID).gameObject;
-        Rigidbody2D rb = bazuka.GetComponent<Rigidbody2D>();
-        bazuka.GetComponent<Rigidbody2D>().velocity = direction * Character.Skill.ProjectileSpeed;
     }
 
     private IEnumerator MagicWall()
@@ -160,19 +129,11 @@ public class Player : MonoBehaviourPun
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         Quaternion wallRotation = Quaternion.Euler(new Vector3(0, 0, angle + 130));
 
-        GameObject Wall = PhotonNetwork.Instantiate(Character.Skill.ProjectilePrefeab.name, firePoint.position, wallRotation);
+        GameObject Wall = Instantiate(Character.Skill.ProjectilePrefeab, firePoint.position, wallRotation);
         StartCoroutine(ScaleAndDestroyWall(Wall));
-        photonView.RPC("SpawnMagicWall", RpcTarget.All, Wall.GetPhotonView().ViewID, direction);
+
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
-    }
-
-    [PunRPC]
-    void SpawnMagicWall(int WallID, Vector2 direction)
-    {
-        GameObject wall = PhotonView.Find(WallID).gameObject;
-        Rigidbody2D rb = wall.GetComponent<Rigidbody2D>();
-        rb.velocity = direction * Character.Skill.ProjectileSpeed;
     }
 
     private IEnumerator ScaleAndDestroyWall(GameObject wall)
@@ -189,75 +150,37 @@ public class Player : MonoBehaviourPun
             yield return null;
         }
 
-        PhotonNetwork.Destroy(wall);
+        Destroy(wall);
     }
 
     private IEnumerator Catapult()
     {
         isSkillOnCooldown = true;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        int targetViewID = -1;
 
         foreach (GameObject player in players)
         {
-            PhotonView pv = player.GetComponent<PhotonView>();
-            if (pv != null && !pv.IsMine)
-            {
-                targetViewID = pv.ViewID;
-                break;
-            }
-        }
+            Vector3 playerPosition = player.transform.position;
+            Vector3 spawnPosition = new Vector3(playerPosition.x, playerPosition.y + 10f, 0f);
 
-        if (targetViewID != -1)
-        {
-            photonView.RPC("CatapultCoroutine", RpcTarget.All, targetViewID);
+            GameObject fallingObject = Instantiate(pop, spawnPosition, Quaternion.identity);
+            Rigidbody2D rb = fallingObject.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.gravityScale = 1f;
+            }
         }
 
         yield return new WaitForSeconds(Character.Skill.CoolDown);
         isSkillOnCooldown = false;
     }
 
-    [PunRPC]
-    private IEnumerator CatapultCoroutine(int targetViewID)
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            PhotonView targetView = PhotonView.Find(targetViewID);
-            if (targetView != null)
-            {
-                Vector3 playerPosition = targetView.transform.position;
-                Vector3 spawnPosition = new Vector3(playerPosition.x, playerPosition.y + 10f, 0f);
-
-                GameObject fallingObject = Instantiate(pop, spawnPosition, Quaternion.identity);
-                Rigidbody2D rb = fallingObject.GetComponent<Rigidbody2D>();
-                if (rb != null)
-                {
-                    rb.gravityScale = 1f;
-                }
-            }
-            yield return new WaitForSeconds(5f);
-        }
-    }
-
     private IEnumerator DashCount()
     {
-        photonView.RPC("SetDash", RpcTarget.All, true);
-        yield return new WaitForSeconds(2);
-        photonView.RPC("SetDash", RpcTarget.All, false);
-        isDashing = false;
-    }
-
-    [PunRPC]
-    void SetDash(bool isDash)
-    {
-        if (Input.GetAxis("Horizontal") > 0)
-        {
-            transform.position += new Vector3(2, 0, 0);
-        }
-        else if (Input.GetAxis("Horizontal") < 0)
-        {
-            transform.position += new Vector3(-2, 0, 0);
-        }
         isDashing = true;
+        Vector3 dashDirection = new Vector3(Input.GetAxis("Horizontal") > 0 ? 2 : -2, 0, 0);
+        transform.position += dashDirection;
+        yield return new WaitForSeconds(2);
+        isDashing = false;
     }
 }

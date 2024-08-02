@@ -23,7 +23,7 @@ public class PlayerFire : MonoBehaviourPun
 
     void Update()
     {
-        if (photonView.IsMine)
+        if (NetworkObject.IsMine)
         {
             RotateFirePointToMouse();
 

@@ -13,7 +13,7 @@ public class mermi : MonoBehaviourPun
         if (_rigidbody2 != null)
         {
             // KnockBack iþlemlerini tüm oyunculara gönder
-            photonView.RPC("ApplyKnockBack", RpcTarget.All, photonView.ViewID, _rigidbody2.position, knockBackForce);
+            NetworkObject.RPC("ApplyKnockBack", Rpc.All, NetworkObject.ViewID, _rigidbody2.position, knockBackForce);
         }
     }
 
@@ -21,10 +21,10 @@ public class mermi : MonoBehaviourPun
     void ApplyKnockBack(int viewID, Vector2 targetPosition, float knockBack)
     {
 
-        PhotonView targetPhotonView = PhotonView.Find(viewID);
-        if (targetPhotonView != null)
+        NetworkObject targetNetworkObject = NetworkObject.Find(viewID);
+        if (targetNetworkObject != null)
         {
-            Rigidbody2D targetRigidbody2D = targetPhotonView.GetComponent<Rigidbody2D>();
+            Rigidbody2D targetRigidbody2D = targetNetworkObject.GetComponent<Rigidbody2D>();
             if (targetRigidbody2D != null)
             {
                 Vector2 pushDirection = targetPosition - (Vector2)transform.position;
@@ -32,9 +32,9 @@ public class mermi : MonoBehaviourPun
             }
 
             // Eðer bu istemci nesnenin sahibi ise nesneyi yok et
-            if (targetPhotonView.IsMine)
+            if (targetNetworkObject.IsMine)
             {
-                PhotonNetwork.Destroy(targetPhotonView.gameObject);
+                PhotonNetwork.Destroy(targetNetworkObject.gameObject);
             }
         }
     }
