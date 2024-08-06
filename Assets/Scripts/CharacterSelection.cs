@@ -21,10 +21,12 @@ public class CharacterSelection : SimulationBehaviour
     public Image WeaponImagePlayer2;
     public Image PassiveSkillPlayer2;
     public Image ActiveSkillPlayer2;
+    private NetworkRunner nR;
 
     // Seçim metodu
     public void ChooseChar(int index)
     {
+        
         if (Characters == null || Characters.Length == 0)
         {
             Debug.LogError("Characters array is null or empty.");
@@ -119,7 +121,7 @@ public class CharacterSelection : SimulationBehaviour
         
         if (Runner == null)
         {
-            Debug.LogError("Runner is null.");
+            Debug.LogError(Runner);
             return;
         }
 
@@ -132,9 +134,5 @@ public class CharacterSelection : SimulationBehaviour
             Debug.LogError("Runner is not scene authority.");
         }
     }
-
-
-
-
 }
     

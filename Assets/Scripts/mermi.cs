@@ -1,7 +1,8 @@
-﻿using System.Collections;
+﻿using Fusion;
+using System.Collections;
 using UnityEngine;
 
-public class Mermi : MonoBehaviour
+public class Mermi : NetworkBehaviour
 {
     [SerializeField] private CharacterData _cD;
     private Rigidbody2D _rigidbody2;
