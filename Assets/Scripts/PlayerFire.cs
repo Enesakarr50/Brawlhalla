@@ -30,11 +30,6 @@ public class PlayerFire : NetworkBehaviour
 
     void Update()
     {
-        // Sadece yerel oyuncu ateþ etsin ve firePoint döndürsün
-        if (!Runner.LocalPlayer.IsRealPlayer)
-        {
-            return;
-        }
 
         RotateFirePointToMouse();
 
