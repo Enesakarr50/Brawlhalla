@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1919660496243553422}
   - component: {fileID: -7616835503943900201}
   - component: {fileID: 6768496657443031021}
-  - component: {fileID: -5287939068737002081}
+  - component: {fileID: 1354934694163738346}
   m_Layer: 0
   m_Name: 2
   m_TagString: Bullet
@@ -182,8 +182,8 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: -7616835503943900201}
-  - {fileID: -5287939068737002081}
---- !u!114 &-5287939068737002081
+  - {fileID: 1354934694163738346}
+--- !u!114 &1354934694163738346
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,16 +192,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3361236618418220482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5e690b5fb1084f5ab1c86457af401d4, type: 3}
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncScale: 0
   SyncParent: 0
-  _interpolationTarget: {fileID: 0}
-  UsePreciseRotation: 0
-  UseRenderSleepThresholds: 1
-  RenderThresholds:
-    UseEnergy: 1
-    Position: 0.01
-    Rotation: 0.01
-    Scale: 0.01
+  _autoAOIOverride: 0
+  DisableSharedModeInterpolation: 0
