@@ -30,8 +30,11 @@ public class PlayerFire : NetworkBehaviour
 
     void Update()
     {
-        // If NetworkBehaviour authority is not necessary, try removing it
-        // if (HasInputAuthority) // Uncomment this if you need to check authority
+        // Sadece yerel oyuncu ateþ etsin ve firePoint döndürsün
+        if (!Object.HasInputAuthority)
+        {
+            return;
+        }
 
         RotateFirePointToMouse();
 
