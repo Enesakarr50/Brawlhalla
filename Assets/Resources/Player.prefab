@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 2228004063755064252}
   - component: {fileID: -3333134813933539815}
   - component: {fileID: 693314866803101718}
-  - component: {fileID: -6642116817288073734}
+  - component: {fileID: -5032875532236828345}
+  - component: {fileID: -3773409973206126006}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -179,7 +180,7 @@ MonoBehaviour:
   WeaponSprite: {fileID: 508826713387715937}
   movementSpeed: 0
   jumpForce: 0
-  Character: {fileID: 11400000, guid: d4fa449e8e33b594a8a2500ea779436f, type: 2}
+  Character: {fileID: 11400000, guid: 0ee842e0c06b7d941885e7a8eb1680a0, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -221,8 +222,8 @@ MonoBehaviour:
   - {fileID: 6474502635854445751}
   NetworkedBehaviours:
   - {fileID: 2228004063755064252}
-  - {fileID: -6642116817288073734}
---- !u!114 &-6642116817288073734
+  - {fileID: -3773409973206126006}
+--- !u!114 &-5032875532236828345
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,13 +232,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 6881338112002502665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Script: {fileID: 11500000, guid: a9fd79d79a0fb459ababab9a78f00caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SyncScale: 1
-  SyncParent: 0
-  _autoAOIOverride: 0
-  DisableSharedModeInterpolation: 0
+  _physicsAuthority: 2
+  _physicsTiming: 3
+  ForwardOnly: 0
+  DeltaTimeMultiplier: 1
+  SetUnityFixedTimestep: 0
+--- !u!114 &-3773409973206126006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6881338112002502665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e690b5fb1084f5ab1c86457af401d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 1
+  _interpolationTarget: {fileID: 0}
+  UsePreciseRotation: 0
+  UseRenderSleepThresholds: 1
+  RenderThresholds:
+    UseEnergy: 1
+    Position: 0.01
+    Rotation: 0.01
+    Scale: 0.01
 --- !u!1 &8904628256227567946
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +273,6 @@ GameObject:
   - component: {fileID: 2330811066616553812}
   - component: {fileID: 508826713387715937}
   - component: {fileID: 6474502635854445751}
-  - component: {fileID: 8848690983803493590}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: FirePoint
@@ -340,21 +363,4 @@ MonoBehaviour:
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 8848690983803493590}
---- !u!114 &8848690983803493590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8904628256227567946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncScale: 0
-  SyncParent: 1
-  _autoAOIOverride: 1
-  DisableSharedModeInterpolation: 1
+  NetworkedBehaviours: []
