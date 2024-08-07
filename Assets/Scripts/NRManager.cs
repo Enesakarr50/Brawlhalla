@@ -184,7 +184,7 @@ public class NetworkRunnerManager : MonoBehaviour, INetworkRunnerCallbacks
         NetworkRunner player = GameObject.FindGameObjectWithTag("nr").GetComponent<NetworkRunner>();
         if(runner.LocalPlayer != null)
         {
-            player.Spawn(PlayerPrefab);
+            player.Spawn(PlayerPrefab,new Vector2(0,0), Quaternion.identity,runner.LocalPlayer);
         }
         
     }
