@@ -5,6 +5,7 @@ using Fusion;
 using Fusion.Sockets;
 using Unity.VisualScripting;
 using TMPro;
+using UnityEngine.Diagnostics;
 
 public class CharacterSelection : SimulationBehaviour
 {

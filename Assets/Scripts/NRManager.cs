@@ -182,12 +182,10 @@ public class NetworkRunnerManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         Debug.Log("OnSceneLoadDone");
         NetworkRunner player = GameObject.FindGameObjectWithTag("nr").GetComponent<NetworkRunner>();
-        if(runner.LocalPlayer != null)
-        {
-            player.Spawn(PlayerPrefab,new Vector2(0,0), Quaternion.identity,runner.LocalPlayer);
-            player.Spawn(PlayerPrefab,new Vector2(0,0), Quaternion.identity);
-        }
-        
+        NetworkObject Np = player.Spawn(PlayerPrefab);
+        player.LocalPlayer.Equals(Np);
+
+
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
