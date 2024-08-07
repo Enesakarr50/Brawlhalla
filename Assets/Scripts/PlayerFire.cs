@@ -1,12 +1,14 @@
 using UnityEngine;
+using Fusion;
 
-public class PlayerFire : MonoBehaviour
+public class PlayerFire : NetworkBehaviour
 {
     public CharacterData _characterData;
     public GameObject bulletPrefab; // Mermi prefab'ý
     public Transform firePoint; // Merminin fýrlatýlacaðý nokta
     float nextFireTime;
 
+    
     private void Start()
     {
         _characterData = gameObject.GetComponent<Player>().Character;
@@ -51,7 +53,7 @@ public class PlayerFire : MonoBehaviour
         Vector2 direction = (mousePosition - firePoint.position).normalized;
 
         // Mermiyi oluþtur
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        NetworkObject bullet = Runner.Spawn(bulletPrefab, firePoint.position ,firePoint.rotation);
 
         // Mermiye hýz ve yön ver
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
