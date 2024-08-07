@@ -185,6 +185,7 @@ public class NetworkRunnerManager : MonoBehaviour, INetworkRunnerCallbacks
         if(runner.LocalPlayer != null)
         {
             player.Spawn(PlayerPrefab,new Vector2(0,0), Quaternion.identity,runner.LocalPlayer);
+            player.Spawn(PlayerPrefab, new Vector2(0, 0), Quaternion.identity, runner.LocalPlayer);
         }
         
     }
