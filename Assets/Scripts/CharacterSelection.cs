@@ -27,7 +27,7 @@ public class CharacterSelection : SimulationBehaviour
 
     private void Start()
     {
-        _networkRunnerManager.StartGame(GameMode.Shared, "1");
+        _networkRunnerManager.StartGame(GameMode.Server, "1");
     }
     public void ChooseChar(int index)
     {
@@ -123,7 +123,7 @@ public class CharacterSelection : SimulationBehaviour
     }
     public void ChangeScene()
     {
-        SceneManager.LoadScene(1);
+        GameObject.FindGameObjectWithTag("nr").GetComponent<NetworkRunner>().LoadScene("SampleScene");
     }
 }
     

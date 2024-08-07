@@ -14,6 +14,7 @@ using UnityEngine;
     public event Action<NetworkRunner, PlayerRef> OnPlayerLeftRoom;
     public event Action<NetworkRunner, PlayerRef> OnPlayerJoinedSuccessFully;
 
+    public GameObject PlayerPrefab;
     public string LocalPlayerNickName { get; private set; }
 
     [SerializeField] private NetworkRunner networkRunnerPrefab;
@@ -65,8 +66,8 @@ using UnityEngine;
         {
             if (result.Ok)
             {
-                const string MAIN_SCENE_NAME = "MainGame";
-                runnerInstance.LoadScene(MAIN_SCENE_NAME);
+                const string MAIN_SCENE_NAME = "SampleScene";
+               // runnerInstance.LoadScene(MAIN_SCENE_NAME);
             }
             else
             {
@@ -179,6 +180,7 @@ using UnityEngine;
     public void OnSceneLoadDone(NetworkRunner runner)
     {
         Debug.Log("OnSceneLoadDone");
+        GameObject.FindGameObjectWithTag("nr").GetComponent<NetworkRunner>().Spawn(PlayerPrefab);
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
