@@ -5,6 +5,7 @@ using System;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using Fusion.Photon.Realtime;
+using static Unity.Collections.Unicode;
 
 /// <summary>
 /// NetworkRunnerManager is way we start our connection to Fusion
@@ -180,11 +181,10 @@ public class NetworkRunnerManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
-        Debug.Log("OnSceneLoadDone");
-        NetworkRunner player = GameObject.FindGameObjectWithTag("nr").GetComponent<NetworkRunner>();
-        NetworkObject Np = player.Spawn(PlayerPrefab);
-        player.LocalPlayer.Equals(Np);
-
+            Debug.Log("OnSceneLoadDone");
+            
+            runner.Spawn(PlayerPrefab, new Vector3(0, 1, 0), Quaternion.identity);
+        
 
     }
 
@@ -192,4 +192,5 @@ public class NetworkRunnerManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         Debug.Log("OnSceneLoadStart");
     }
+
 }
