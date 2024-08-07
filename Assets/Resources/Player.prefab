@@ -179,7 +179,7 @@ MonoBehaviour:
   WeaponSprite: {fileID: 508826713387715937}
   movementSpeed: 0
   jumpForce: 0
-  Character: {fileID: 11400000, guid: 0ee842e0c06b7d941885e7a8eb1680a0, type: 2}
+  Character: {fileID: 11400000, guid: d4fa449e8e33b594a8a2500ea779436f, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -235,8 +235,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SyncScale: 1
   SyncParent: 0
-  _autoAOIOverride: 1
-  DisableSharedModeInterpolation: 1
+  _autoAOIOverride: 0
+  DisableSharedModeInterpolation: 0
 --- !u!1 &8904628256227567946
 GameObject:
   m_ObjectHideFlags: 0
