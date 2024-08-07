@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Fusion;
 using Fusion.Sockets;
+using Unity.VisualScripting;
+using TMPro;
 
 public class CharacterSelection : SimulationBehaviour
 {
@@ -21,9 +23,12 @@ public class CharacterSelection : SimulationBehaviour
     public Image WeaponImagePlayer2;
     public Image PassiveSkillPlayer2;
     public Image ActiveSkillPlayer2;
-    private NetworkRunner nR;
+    public NetworkRunnerManager _networkRunnerManager;
 
-    // Seçim metodu
+    private void Start()
+    {
+        _networkRunnerManager.StartGame(GameMode.Shared, "1");
+    }
     public void ChooseChar(int index)
     {
         
@@ -118,21 +123,7 @@ public class CharacterSelection : SimulationBehaviour
     }
     public void ChangeScene()
     {
-        
-        if (Runner == null)
-        {
-            Debug.LogError(Runner);
-            return;
-        }
-
-        if (Runner.IsSceneAuthority)
-        {
-            Runner.LoadScene(SceneRef.FromIndex(1), LoadSceneMode.Additive);
-        }
-        else
-        {
-            Debug.LogError("Runner is not scene authority.");
-        }
+        SceneManager.LoadScene(1);
     }
 }
     
