@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Fusion;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     public SpriteRenderer PlayerSprite;
     public SpriteRenderer WeaponSprite;
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
 
     public GameObject pop;
 
+    
     private void Start()
     {
         GameObject fp = GameObject.FindGameObjectWithTag("FirePoint");
@@ -31,7 +33,8 @@ public class Player : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    
+ private void Update()
     {
         // Yön değiştirme
         if (Input.GetAxis("Horizontal") > 0)
@@ -72,7 +75,6 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Yatay hareket
         rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * movementSpeed, rb2d.velocity.y);
     }
 
