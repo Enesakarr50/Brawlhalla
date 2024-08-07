@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using Fusion.Photon.Realtime;
 
-    /// <summary>
-    /// NetworkRunnerManager is way we start our connection to Fusion
-    /// </summary>
-    public class NetworkRunnerManager : MonoBehaviour, INetworkRunnerCallbacks
+/// <summary>
+/// NetworkRunnerManager is way we start our connection to Fusion
+/// </summary>
+public class NetworkRunnerManager : MonoBehaviour, INetworkRunnerCallbacks
 {
     public event Action OnStartedRunnerConnection;
     public event Action<NetworkRunner, PlayerRef> OnPlayerLeftRoom;
@@ -180,7 +181,12 @@ using UnityEngine;
     public void OnSceneLoadDone(NetworkRunner runner)
     {
         Debug.Log("OnSceneLoadDone");
-        GameObject.FindGameObjectWithTag("nr").GetComponent<NetworkRunner>().Spawn(PlayerPrefab);
+        NetworkRunner player = GameObject.FindGameObjectWithTag("nr").GetComponent<NetworkRunner>();
+        if(runner.LocalPlayer != null)
+        {
+            player.Spawn(PlayerPrefab);
+        }
+        
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
