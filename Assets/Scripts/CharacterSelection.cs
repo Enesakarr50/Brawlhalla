@@ -27,7 +27,7 @@ public class CharacterSelection : SimulationBehaviour
 
     private void Start()
     {
-        _networkRunnerManager.StartGame(GameMode.Server, "1");
+        _networkRunnerManager.StartGame(GameMode.AutoHostOrClient, "1");
     }
     public void ChooseChar(int index)
     {
