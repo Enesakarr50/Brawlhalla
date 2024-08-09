@@ -6,6 +6,7 @@ using Fusion.Sockets;
 using Unity.VisualScripting;
 using TMPro;
 using UnityEngine.Diagnostics;
+using static Unity.Collections.Unicode;
 
 public class CharacterSelection : SimulationBehaviour
 {
@@ -25,10 +26,13 @@ public class CharacterSelection : SimulationBehaviour
     public Image PassiveSkillPlayer2;
     public Image ActiveSkillPlayer2;
     public NetworkRunnerManager _networkRunnerManager;
+    [Networked] public int Player { get; set; }
 
     private void Start()
     {
         _networkRunnerManager.StartGame(GameMode.Shared, "1");
+        Player++;
+        Debug.Log(Player);
     }
     public void ChooseChar(int index)
     {
@@ -67,26 +71,16 @@ public class CharacterSelection : SimulationBehaviour
 
         playerComponent.Character = CurrentData;
 
-        if (_networkRunnerManager.networkRunnerPrefab.IsSharedModeMasterClient)
-        {
-            UpdateUI(isMine: true);
-        }else
-        {
-            UpdateUI(isMine: false);
-        }
-        
-    }
-
-    private void UpdateUI(bool isMine)
-    {
-        if (isMine)
+        if (_networkRunnerManager.networkRunnerPrefab.LocalPlayer.IsNone)
         {
             UpdateUIForPlayer1();
-        }
-        else
+            Debug.Log(_networkRunnerManager.networkRunnerPrefab.LocalPlayer.AsIndex);
+        }else
         {
             UpdateUIForPlayer2();
+            Debug.Log(_networkRunnerManager.networkRunnerPrefab.LocalPlayer.AsIndex);
         }
+        
     }
 
     private void UpdateUIForPlayer1()
