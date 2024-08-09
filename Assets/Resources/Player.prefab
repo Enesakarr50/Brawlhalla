@@ -180,7 +180,7 @@ MonoBehaviour:
   WeaponSprite: {fileID: 508826713387715937}
   movementSpeed: 0
   jumpForce: 0
-  Character: {fileID: 11400000, guid: 8e916404513ebe94d90847a38d6bd899, type: 2}
+  Character: {fileID: 11400000, guid: 0ee842e0c06b7d941885e7a8eb1680a0, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 815618330
   ObjectInterest: 1
-  Flags: 262145
+  Flags: 786433
   NestedObjects:
   - {fileID: 1488438207566598115}
   NetworkedBehaviours:

@@ -183,7 +183,7 @@ public class NetworkRunnerManager : MonoBehaviour, INetworkRunnerCallbacks
     {
             Debug.Log("OnSceneLoadDone");
             
-            runner.Spawn(PlayerPrefab, new Vector3(0, 1, 0), Quaternion.identity);
+            runner.Spawn(PlayerPrefab, new Vector3(0, 1, 0), Quaternion.identity, runner.LocalPlayer);
         
 
     }

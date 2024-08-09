@@ -8,10 +8,8 @@ public class PlayerFire : NetworkBehaviour
     public Transform firePoint; // Merminin fýrlatýlacaðý nokta
     float nextFireTime;
 
-
     private void Start()
     {
-       
         if (firePoint == null)
         {
             Debug.LogError("FirePoint not found");
@@ -26,11 +24,11 @@ public class PlayerFire : NetworkBehaviour
         }
     }
 
-
-
     void Update()
     {
-        if (!Object.HasInputAuthority) return; // Yalnýzca yerel oyuncu ateþ edebilir
+        // Sadece yerel oyuncunun ateþ etmesi gerektiðini kontrol edin
+        if (!HasInputAuthority)
+            return;
 
         RotateFirePointToMouse();
 
@@ -41,9 +39,7 @@ public class PlayerFire : NetworkBehaviour
         }
     }
 
-
-
-        void RotateFirePointToMouse()
+    void RotateFirePointToMouse()
     {
         if (firePoint == null)
         {
@@ -61,7 +57,6 @@ public class PlayerFire : NetworkBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         firePoint.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
-
 
     void Shot()
     {
@@ -90,6 +85,4 @@ public class PlayerFire : NetworkBehaviour
             mer.SetKnockBack(_characterData.KnockBackRate);
         }
     }
-
-
 }
