@@ -180,7 +180,7 @@ MonoBehaviour:
   WeaponSprite: {fileID: 508826713387715937}
   movementSpeed: 0
   jumpForce: 0
-  Character: {fileID: 11400000, guid: 0ee842e0c06b7d941885e7a8eb1680a0, type: 2}
+  Character: {fileID: 11400000, guid: 8e916404513ebe94d90847a38d6bd899, type: 2}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -203,6 +203,10 @@ MonoBehaviour:
   _characterData: {fileID: 0}
   bulletPrefab: {fileID: 0}
   firePoint: {fileID: 2330811066616553812}
+  maxAmmo: 10
+  currentAmmo: 0
+  reloadTime: 2
+  reloadBarUI: {fileID: 6587677826681575617, guid: f488cceefd1d69041bed5d8515dc9806, type: 3}
 --- !u!114 &693314866803101718
 MonoBehaviour:
   m_ObjectHideFlags: 0

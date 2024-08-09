@@ -36,11 +36,14 @@ public class Mermi : NetworkBehaviour
         // Only proceed if collided with a player that is not the local player
         if (!IsRelevantCollision(collision)) return;
 
+        Debug.Log("Collision detected between: " + Object.InputAuthority + " and " + collision.gameObject.GetComponent<NetworkObject>().InputAuthority);
+
         ApplyKnockBack(collision);
 
         // Destroy the object if this client has authority
         if (Object.HasInputAuthority)
         {
+            Debug.Log("Bullet destroyed by client with InputAuthority: " + Object.InputAuthority);
             Runner.Despawn(Object); // Despawn the NetworkObject
         }
     }
@@ -48,7 +51,9 @@ public class Mermi : NetworkBehaviour
     private bool IsRelevantCollision(Collision2D collision)
     {
         NetworkObject netObject = collision.gameObject.GetComponent<NetworkObject>();
-        return netObject != null && netObject.InputAuthority != Object.InputAuthority;
+        bool relevant = netObject != null && netObject.InputAuthority != Object.InputAuthority;
+        Debug.Log("IsRelevantCollision: " + relevant);
+        return relevant;
     }
 
     private void ApplyKnockBack(Collision2D collision)
@@ -84,5 +89,3 @@ public class Mermi : NetworkBehaviour
         knockBackForce = knockBack;
     }
 }
-
-
