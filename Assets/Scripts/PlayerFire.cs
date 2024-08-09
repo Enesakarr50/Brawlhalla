@@ -1,26 +1,15 @@
 using UnityEngine;
-using UnityEngine.UI; // Slider UI kullanýmý için gerekli
 using Fusion;
 
 public class PlayerFire : NetworkBehaviour
 {
     public CharacterData _characterData;
-    public GameObject bulletPrefab;
-    public Transform firePoint;
+    public GameObject bulletPrefab; // Mermi prefab'ý
+    public Transform firePoint; // Merminin fýrlatýlacaðý nokta
     float nextFireTime;
-
-    public int maxAmmo = 10; // Maksimum mermi sayýsý
-    public int currentAmmo;
-    public float reloadTime = 2f; // Yeniden yükleme süresi
-    private bool isReloading = false;
-
-    public Slider reloadBarUI; // Slider UI elemaný
-    private float reloadProgress = 0f;
 
     private void Start()
     {
-        currentAmmo = maxAmmo;
-
         if (firePoint == null)
         {
             Debug.LogError("FirePoint not found");
@@ -33,32 +22,20 @@ public class PlayerFire : NetworkBehaviour
         {
             Debug.LogError("Bullet prefab not assigned!");
         }
-
-        reloadBarUI.gameObject.SetActive(false); // Reload barýný baþlangýçta gizle
     }
 
     void Update()
     {
-        if (isReloading)
-        {
-            HandleReload();
-            return;
-        }
-
+        // Sadece yerel oyuncunun ateþ etmesi gerektiðini kontrol edin
         if (!HasInputAuthority)
             return;
 
         RotateFirePointToMouse();
 
-        if (Input.GetMouseButton(0) && Time.time >= nextFireTime && currentAmmo > 0)
+        if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
         {
             nextFireTime = Time.time + _characterData.FireRate;
             Shot();
-        }
-
-        if (currentAmmo <= 0 && !isReloading)
-        {
-            StartReloading();
         }
     }
 
@@ -107,46 +84,5 @@ public class PlayerFire : NetworkBehaviour
         {
             mer.SetKnockBack(_characterData.KnockBackRate);
         }
-
-        currentAmmo--;
-        Debug.Log("Shot fired by client with InputAuthority: " + Object.InputAuthority + " | Current Ammo: " + currentAmmo);
     }
-
-    void StartReloading()
-    {
-        isReloading = true;
-        reloadProgress = 0f;
-        reloadBarUI.gameObject.SetActive(true); // Yeniden yükleme barýný göster
-        Debug.Log("Reloading...");
-    }
-
-    void HandleReload()
-    {
-        reloadProgress += Time.deltaTime / reloadTime;
-
-        // UI barýný güncelleme
-        if (reloadBarUI != null)
-        {
-            reloadBarUI.value = reloadProgress; // Barý doldurma oranýný güncelle
-        }
-
-        Debug.Log("Reload progress: " + reloadProgress);
-
-        if (reloadProgress >= 1f)
-        {
-            FinishReloading();
-        }
-    }
-
-    void FinishReloading()
-    {
-        Debug.Log("FinishReloading called");
-
-        isReloading = false;
-        currentAmmo = maxAmmo;
-        reloadProgress = 0f; // Reload progress'i sýfýrla
-        reloadBarUI.gameObject.SetActive(false); // Yeniden yükleme barýný gizle
-        Debug.Log("Reloaded! Current Ammo: " + currentAmmo);
-    }
-
 }
