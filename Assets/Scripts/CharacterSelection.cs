@@ -67,9 +67,12 @@ public class CharacterSelection : SimulationBehaviour
 
         playerComponent.Character = CurrentData;
 
-        if (_networkRunnerManager.networkRunnerPrefab)
+        if (_networkRunnerManager.networkRunnerPrefab.LocalPlayer.PlayerId == -1)
         {
             UpdateUI(isMine: true);
+        }else
+        {
+            Debug.Log(_networkRunnerManager.networkRunnerPrefab.LocalPlayer.PlayerId);
         }
         
     }
