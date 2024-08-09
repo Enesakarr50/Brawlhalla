@@ -11,21 +11,23 @@ using System.Linq;
 
 public class CharacterSelection : SimulationBehaviour
 {
+
     public CharacterData[] Characters;
     public CharacterData CurrentData;
     public GameObject PlayerPrefab;
     //
     // Player 1 UI elements
-    public Image CharImagePlayer1;
-    public Image WeaponImagePlayer1;
-    public Image PassiveSkillPlayer1;
-    public Image ActiveSkillPlayer1;
+
+    [Networked] public Image CharImagePlayer1 { get; private set; }
+    [Networked] public Image WeaponImagePlayer1 { get; private set; }
+    [Networked] public Image PassiveSkillPlayer1 { get; private set; }
+    [Networked] public Image ActiveSkillPlayer1 { get; private set; }
 
     // Player 2 UI elements
-    public Image CharImagePlayer2;
-    public Image WeaponImagePlayer2;
-    public Image PassiveSkillPlayer2;
-    public Image ActiveSkillPlayer2;
+    [Networked] public Image CharImagePlayer2 { get; private set; }
+    [Networked] public Image WeaponImagePlayer2 { get; private set; }
+    [Networked] public Image PassiveSkillPlayer2 { get; private set; }
+    [Networked] public Image ActiveSkillPlayer2 { get; private set; }
     public NetworkRunnerManager _networkRunnerManager;
     int playerID;
 
