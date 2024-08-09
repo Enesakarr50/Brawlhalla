@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using TMPro;
 using UnityEngine.Diagnostics;
 using static Unity.Collections.Unicode;
+using System.Linq;
 
 public class CharacterSelection : NetworkBehaviour
 {
@@ -26,13 +27,14 @@ public class CharacterSelection : NetworkBehaviour
     public Image PassiveSkillPlayer2;
     public Image ActiveSkillPlayer2;
     public NetworkRunnerManager _networkRunnerManager;
-    [Networked] public int Player { get; set; }
+    int playerID;
 
     private void Start()
     {
+
         _networkRunnerManager.StartGame(GameMode.Shared, "1");
-        Player++;
-        Debug.Log(Player);
+        playerID = _networkRunnerManager.networkRunnerPrefab.ActivePlayers.Count();
+
     }
     public void ChooseChar(int index)
     {
@@ -82,7 +84,10 @@ public class CharacterSelection : NetworkBehaviour
         }
         
     }
-
+    private void Update()
+    {
+        Debug.Log(playerID);
+    }
     private void UpdateUIForPlayer1()
     {
         if (CharImagePlayer1 != null)
