@@ -9,7 +9,7 @@ using UnityEngine.Diagnostics;
 using static Unity.Collections.Unicode;
 using System.Linq;
 
-public class CharacterSelection : NetworkBehaviour
+public class CharacterSelection : SimulationBehaviour
 {
     public CharacterData[] Characters;
     public CharacterData CurrentData;
@@ -33,7 +33,6 @@ public class CharacterSelection : NetworkBehaviour
     {
 
         _networkRunnerManager.StartGame(GameMode.Shared, "1");
-        playerID = _networkRunnerManager.networkRunnerPrefab.ActivePlayers.Count();
 
     }
     public void ChooseChar(int index)
@@ -73,20 +72,16 @@ public class CharacterSelection : NetworkBehaviour
 
         playerComponent.Character = CurrentData;
 
-        if (_networkRunnerManager.networkRunnerPrefab.LocalPlayer.IsNone)
+        if (GameObject.FindGameObjectWithTag("nr").GetComponent<NetworkRunner>().IsSharedModeMasterClient)
         {
             UpdateUIForPlayer1();
-            Debug.Log(_networkRunnerManager.networkRunnerPrefab.LocalPlayer.AsIndex);
+
         }else
         {
             UpdateUIForPlayer2();
-            Debug.Log(_networkRunnerManager.networkRunnerPrefab.LocalPlayer.AsIndex);
+
         }
         
-    }
-    private void Update()
-    {
-        Debug.Log(playerID);
     }
     private void UpdateUIForPlayer1()
     {
