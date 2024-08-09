@@ -109,7 +109,7 @@ public class CharacterSelection : SimulationBehaviour
         {
             CharImagePlayer2.sprite = CurrentData.CharacterImage;
         }
-        if (WeaponImagePlayer2 != null)
+        if (WeaponImagePlayer2 != null) 
         {
             WeaponImagePlayer2.sprite = CurrentData.WeaponImage;
         }
