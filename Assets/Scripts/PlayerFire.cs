@@ -30,6 +30,7 @@ public class PlayerFire : NetworkBehaviour
 
     void Update()
     {
+        if (!Object.HasInputAuthority) return; // Yalnýzca yerel oyuncu ateþ edebilir
 
         RotateFirePointToMouse();
 
@@ -42,7 +43,7 @@ public class PlayerFire : NetworkBehaviour
 
 
 
-    void RotateFirePointToMouse()
+        void RotateFirePointToMouse()
     {
         if (firePoint == null)
         {
