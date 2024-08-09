@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine.Diagnostics;
 using static Unity.Collections.Unicode;
 
-public class CharacterSelection : SimulationBehaviour
+public class CharacterSelection : NetworkBehaviour
 {
     public CharacterData[] Characters;
     public CharacterData CurrentData;
