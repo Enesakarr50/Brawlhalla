@@ -73,6 +73,7 @@ public class CharacterSelection : SimulationBehaviour
         }else
         {
             Debug.Log(_networkRunnerManager.networkRunnerPrefab.LocalPlayer.PlayerId);
+            UpdateUI(isMine: false);
         }
         
     }
