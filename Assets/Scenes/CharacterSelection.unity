@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 9656062}
   - component: {fileID: 9656064}
   - component: {fileID: 9656063}
+  - component: {fileID: 9656065}
   m_Layer: 5
   m_Name: WepImage
   m_TagString: Untagged
@@ -198,6 +199,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9656061}
   m_CullTransparentMesh: 1
+--- !u!114 &9656065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9656061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 990904405
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &125443201
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +431,7 @@ GameObject:
   - component: {fileID: 558053946}
   - component: {fileID: 558053948}
   - component: {fileID: 558053947}
+  - component: {fileID: 558053949}
   m_Layer: 5
   m_Name: ActiveImage
   m_TagString: Untagged
@@ -477,6 +496,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558053945}
   m_CullTransparentMesh: 1
+--- !u!114 &558053949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558053945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 351915053
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &598528021
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,6 +524,7 @@ GameObject:
   - component: {fileID: 598528022}
   - component: {fileID: 598528024}
   - component: {fileID: 598528023}
+  - component: {fileID: 598528025}
   m_Layer: 5
   m_Name: Player1_Image
   m_TagString: Untagged
@@ -552,6 +589,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 598528021}
   m_CullTransparentMesh: 1
+--- !u!114 &598528025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598528021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2214894112
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &711982759
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,6 +714,7 @@ GameObject:
   - component: {fileID: 790602393}
   - component: {fileID: 790602395}
   - component: {fileID: 790602394}
+  - component: {fileID: 790602396}
   m_Layer: 5
   m_Name: Player2_Image
   m_TagString: Untagged
@@ -724,6 +779,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 790602392}
   m_CullTransparentMesh: 1
+--- !u!114 &790602396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790602392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2469940488
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &794992045
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,6 +807,7 @@ GameObject:
   - component: {fileID: 794992046}
   - component: {fileID: 794992048}
   - component: {fileID: 794992047}
+  - component: {fileID: 794992049}
   m_Layer: 5
   m_Name: ActiveImage
   m_TagString: Untagged
@@ -799,6 +872,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794992045}
   m_CullTransparentMesh: 1
+--- !u!114 &794992049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794992045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 1878143403
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &809440560
 GameObject:
   m_ObjectHideFlags: 0
@@ -1202,6 +1292,7 @@ GameObject:
   - component: {fileID: 1006478419}
   - component: {fileID: 1006478421}
   - component: {fileID: 1006478420}
+  - component: {fileID: 1006478422}
   m_Layer: 5
   m_Name: PasImage
   m_TagString: Untagged
@@ -1266,6 +1357,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006478418}
   m_CullTransparentMesh: 1
+--- !u!114 &1006478422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006478418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2776996990
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &1064798194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,6 +1721,7 @@ GameObject:
   - component: {fileID: 1432092728}
   - component: {fileID: 1432092730}
   - component: {fileID: 1432092729}
+  - component: {fileID: 1432092731}
   m_Layer: 5
   m_Name: PasImage
   m_TagString: Untagged
@@ -1677,6 +1786,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1432092727}
   m_CullTransparentMesh: 1
+--- !u!114 &1432092731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432092727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 2003173488
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &1503582112
 GameObject:
   m_ObjectHideFlags: 0
@@ -2128,6 +2254,7 @@ GameObject:
   - component: {fileID: 1772411608}
   - component: {fileID: 1772411610}
   - component: {fileID: 1772411609}
+  - component: {fileID: 1772411611}
   m_Layer: 5
   m_Name: WepImage
   m_TagString: Untagged
@@ -2192,6 +2319,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1772411607}
   m_CullTransparentMesh: 1
+--- !u!114 &1772411611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772411607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 537288182
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &1808840133
 GameObject:
   m_ObjectHideFlags: 0
