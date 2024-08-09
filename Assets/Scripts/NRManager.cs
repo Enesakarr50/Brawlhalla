@@ -19,7 +19,7 @@ public class NetworkRunnerManager : MonoBehaviour, INetworkRunnerCallbacks
     public GameObject PlayerPrefab;
     public string LocalPlayerNickName { get; private set; }
 
-    [SerializeField] private NetworkRunner networkRunnerPrefab;
+    [SerializeField] public NetworkRunner networkRunnerPrefab;
     private NetworkRunner runnerInstance;
 
     //Preforms a shutdown which will lead to a call

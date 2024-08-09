@@ -67,8 +67,11 @@ public class CharacterSelection : SimulationBehaviour
 
         playerComponent.Character = CurrentData;
 
-        // Update UI for the current player
-        UpdateUI(isMine: true);
+        if (_networkRunnerManager.networkRunnerPrefab)
+        {
+            UpdateUI(isMine: true);
+        }
+        
     }
 
     private void UpdateUI(bool isMine)
@@ -109,7 +112,7 @@ public class CharacterSelection : SimulationBehaviour
         {
             CharImagePlayer2.sprite = CurrentData.CharacterImage;
         }
-        if (WeaponImagePlayer2 != null) 
+        if (WeaponImagePlayer2 != null)
         {
             WeaponImagePlayer2.sprite = CurrentData.WeaponImage;
         }

@@ -208,7 +208,6 @@ GameObject:
   m_Component:
   - component: {fileID: 125443202}
   - component: {fileID: 125443203}
-  - component: {fileID: 125443204}
   m_Layer: 0
   m_Name: NRManagers
   m_TagString: Untagged
@@ -245,18 +244,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 6881338112002502665, guid: cb4456c00c9997a4087fbb3fc8c2c82e, type: 3}
   networkRunnerPrefab: {fileID: 7032628298998323919, guid: 8325aa57f4a39624c9b211766ee99069, type: 3}
---- !u!114 &125443204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125443201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc20053792203bf408357d9e37d93149, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &346803491
 GameObject:
   m_ObjectHideFlags: 0
