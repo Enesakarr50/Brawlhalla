@@ -6,71 +6,83 @@ public class Mermi : NetworkBehaviour
 {
     [SerializeField] private CharacterData _cD;
     private Rigidbody2D _rigidbody2;
-    private float knockBackForce = 5f; // Knockback kuvveti
+    private float knockBackForce = 5f; // Knockback force
+    private bool isInitialized = false;
 
     private void Start()
     {
+        InitializeRigidbody();
+    }
+
+    private void InitializeRigidbody()
+    {
+        if (isInitialized) return;
+
         _rigidbody2 = GetComponent<Rigidbody2D>();
         if (_rigidbody2 != null)
         {
             _rigidbody2.interpolation = RigidbodyInterpolation2D.Interpolate;
             _rigidbody2.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            isInitialized = true;
+        }
+        else
+        {
+            Debug.LogWarning("Rigidbody2D not found on Mermi object.");
         }
     }
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Check if the collision is with a player and not the local player
-        NetworkObject netObject = collision.gameObject.GetComponent<NetworkObject>();
-        if (netObject != null && netObject.InputAuthority != Object.InputAuthority)
-        {
-            _rigidbody2 = collision.gameObject.GetComponent<Rigidbody2D>();
-            if (_rigidbody2 != null)
-            {
-                Vector2 collisionPoint = collision.contacts[0].point;
-                ApplyKnockBack(_rigidbody2, collisionPoint, knockBackForce);
-            }
+        // Only proceed if collided with a player that is not the local player
+        if (!IsRelevantCollision(collision)) return;
 
-            // If this client is the owner of the object, destroy it
-            if (Object.HasInputAuthority)
-            {
-                Runner.Despawn(Object); // Despawn the NetworkObject
-            }
+        ApplyKnockBack(collision);
+
+        // Destroy the object if this client has authority
+        if (Object.HasInputAuthority)
+        {
+            Runner.Despawn(Object); // Despawn the NetworkObject
         }
     }
 
-
-
-    void ApplyKnockBack(Rigidbody2D targetRigidbody2D, Vector2 collisionPoint, float knockBack)
+    private bool IsRelevantCollision(Collision2D collision)
     {
-        if (targetRigidbody2D != null)
+        NetworkObject netObject = collision.gameObject.GetComponent<NetworkObject>();
+        return netObject != null && netObject.InputAuthority != Object.InputAuthority;
+    }
+
+    private void ApplyKnockBack(Collision2D collision)
+    {
+        Rigidbody2D targetRigidbody = collision.gameObject.GetComponent<Rigidbody2D>();
+        if (targetRigidbody != null)
         {
-            Vector2 pushDirection = (targetRigidbody2D.position - collisionPoint).normalized;
-            StartCoroutine(ApplyKnockbackSmooth(targetRigidbody2D, pushDirection * knockBack));
+            Vector2 collisionPoint = collision.contacts[0].point;
+            Vector2 pushDirection = (targetRigidbody.position - collisionPoint).normalized;
+            StartCoroutine(ApplyKnockbackSmooth(targetRigidbody, pushDirection * knockBackForce));
         }
     }
 
     private IEnumerator ApplyKnockbackSmooth(Rigidbody2D rb, Vector2 force)
     {
-        float duration = 0.1f; // Knockback süresini kısalt
-        float elapsed = 0f;
-
+        float duration = 0.1f; // Reduced knockback duration
         Vector2 initialVelocity = rb.velocity;
+        Vector2 targetVelocity = initialVelocity + force;
 
+        float elapsed = 0f;
         while (elapsed < duration)
         {
-            rb.velocity = Vector2.Lerp(initialVelocity, force, elapsed / duration);
+            rb.velocity = Vector2.Lerp(initialVelocity, targetVelocity, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        rb.velocity = initialVelocity; // Başlangıç hızına geri dön
+        rb.velocity = targetVelocity; // Maintain the final knockback velocity
     }
-
 
     public void SetKnockBack(float knockBack)
     {
         knockBackForce = knockBack;
     }
 }
+
+
