@@ -18,16 +18,16 @@ public class CharacterSelection : SimulationBehaviour
     //
     // Player 1 UI elements
 
-    [Networked] public Image CharImagePlayer1 { get; private set; }
-    [Networked] public Image WeaponImagePlayer1 { get; private set; }
-    [Networked] public Image PassiveSkillPlayer1 { get; private set; }
-    [Networked] public Image ActiveSkillPlayer1 { get; private set; }
+    public Image CharImagePlayer1;
+    public Image WeaponImagePlayer1;
+    public Image PassiveSkillPlayer1;
+    public Image ActiveSkillPlayer1;
 
     // Player 2 UI elements
-    [Networked] public Image CharImagePlayer2 { get; private set; }
-    [Networked] public Image WeaponImagePlayer2 { get; private set; }
-    [Networked] public Image PassiveSkillPlayer2 { get; private set; }
-    [Networked] public Image ActiveSkillPlayer2 { get; private set; }
+    public Image CharImagePlayer2;
+    public Image WeaponImagePlayer2;
+    public Image PassiveSkillPlayer2;
+    public Image ActiveSkillPlayer2;
     public NetworkRunnerManager _networkRunnerManager;
     int playerID;
 
@@ -104,7 +104,7 @@ public class CharacterSelection : SimulationBehaviour
             ActiveSkillPlayer1.sprite = CurrentData._activeSkill;
         }
     }
-
+    
     private void UpdateUIForPlayer2()
     {
         if (CharImagePlayer2 != null)
